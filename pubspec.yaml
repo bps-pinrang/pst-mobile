@@ -7,19 +7,61 @@ environment:
 
 dependencies: 
   cupertino_icons: ^1.0.2
-  get: 4.6.5
-  google_fonts: 3.0.1
-  dio: 4.0.6
-  dio_http2_adapter: 2.0.0
-  slang: 2.6.2
+  get: any
+  google_fonts: any
+  dio: any
+  dio_http2_adapter: any
+  slang: any
+  flutter_config: any
+  carousel_slider: any
+  dots_indicator: any
+  flutter_spinkit: any
+  font_awesome_flutter: any
+  url_launcher: any
+  flutter_tawk: any
+  permission_handler: any
+  path_provider: any
+  extended_image: any
+  marquee: any
+  shimmer: any
+  lottie: any
+  share_plus: any
+  connectivity_plus: any
+  device_info_plus: any
+  decimal: any
+  reactive_forms: any
+  reactive_phone_form_field: any
+  percent_indicator: any
+  package_info_plus: any
+  flutter_downloader: any
+  get_storage: any
+  sliding_up_panel: any
+  infinite_scroll_pagination: any
+  animate_do: any
+  showcaseview: 1.1.7
+  line_icons: 2.0.1
+  dartz: 0.10.1
+  flutter_svg: 1.1.3
+  smooth_page_indicator: 1.0.0+2
   flutter: 
     sdk: flutter
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
+  change_app_package_name: any
+  flutter_launcher_icons: any
   flutter_test: 
     sdk: flutter
 
+flutter_icons: 
+  image_path: assets/launchers/launcher_icon.png
+  android: true
+  ios: true
+  min_sdk_android: 19
+
 flutter: 
+  assets: 
+    - assets/logo/
+    - assets/animations/
   uses-material-design: true
 

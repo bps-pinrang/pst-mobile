@@ -3,10 +3,14 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
-  static const HOME = _Paths.HOME;
+  static const home = _Paths.home;
+  static const splashScreen = _Paths.splashScreen;
+  static const onBoarding = _Paths.onBoarding;
 }
 
 abstract class _Paths {
   _Paths._();
-  static const HOME = '/home';
+  static const home = '/home';
+  static const splashScreen = '/splash-screen';
+  static const onBoarding = '/on-boarding';
 }
