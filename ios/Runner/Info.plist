@@ -6,6 +6,11 @@
 	<string>All files have been downloaded</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+    <key>CFBundleLocalizations</key>
+    <array>
+       <string>en</string>
+       <string>de</string>
+    </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -28,6 +33,14 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app need access to calendar.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app need access to camera.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app need access to library.</string>
+	<key>PermissionGroupNotification</key>
+	<string>This app needs permission to send notification.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
