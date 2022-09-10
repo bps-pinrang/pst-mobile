@@ -25,6 +25,10 @@
       "book_appointment": "Booking\nKunjungan",
       "official_statistics_news": "Berita Resmi\nStatistik",
       "molasapp": "Molasapp"
+    },
+    "video": {
+      "one": "Video",
+      "other": "Video"
     }
   },
   "onBoarding": {

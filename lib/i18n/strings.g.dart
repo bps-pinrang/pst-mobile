@@ -1,9 +1,9 @@
 /// Generated file. Do not edit.
 ///
 /// Locales: 2
-/// Strings: 80 (40 per locale)
+/// Strings: 84 (42 per locale)
 ///
-/// Built on 2022-08-30 at 02:37 UTC
+/// Built on 2022-09-09 at 09:44 UTC
 
 
 // coverage:ignore-file
@@ -170,6 +170,10 @@ class _StringsLabelEn {
 	late final _StringsLabelBtnEn btn = _StringsLabelBtnEn._(_root);
 	late final _StringsLabelPageEn page = _StringsLabelPageEn._(_root);
 	late final _StringsLabelMenuEn menu = _StringsLabelMenuEn._(_root);
+	String video({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('en'))(count,
+		one: 'Video',
+		other: 'Videos',
+	);
 }
 
 // Path: onBoarding
@@ -420,6 +424,10 @@ class _StringsLabelId implements _StringsLabelEn {
 	@override late final _StringsLabelBtnId btn = _StringsLabelBtnId._(_root);
 	@override late final _StringsLabelPageId page = _StringsLabelPageId._(_root);
 	@override late final _StringsLabelMenuId menu = _StringsLabelMenuId._(_root);
+	@override String video({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('id'))(count,
+		one: 'Video',
+		other: 'Video',
+	);
 }
 
 // Path: onBoarding
@@ -656,6 +664,10 @@ extension on _StringsEn {
 			'label.menu.book_appointment': 'Book\nAppointment',
 			'label.menu.official_statistics_news': 'Official\nStatistics\nNews',
 			'label.menu.molasapp': 'Molasapp',
+			'label.video': ({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('en'))(count,
+				one: 'Video',
+				other: 'Videos',
+			),
 			'onBoarding.title.publication': 'Publication',
 			'onBoarding.title.statistics': 'Statistics',
 			'onBoarding.title.activeHour': '24/7',
@@ -710,6 +722,10 @@ extension on _StringsId {
 			'label.menu.book_appointment': 'Booking\nKunjungan',
 			'label.menu.official_statistics_news': 'Berita Resmi\nStatistik',
 			'label.menu.molasapp': 'Molasapp',
+			'label.video': ({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('id'))(count,
+				one: 'Video',
+				other: 'Video',
+			),
 			'onBoarding.title.publication': 'Publikasi',
 			'onBoarding.title.statistics': 'Statistik',
 			'onBoarding.title.activeHour': '24/7',

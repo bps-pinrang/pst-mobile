@@ -25,6 +25,10 @@
       "book_appointment": "Book\nAppointment",
       "official_statistics_news": "Official\nStatistics\nNews",
       "molasapp": "Molasapp"
+    },
+    "video": {
+      "one": "Video",
+      "other": "Videos"
     }
   },
   "onBoarding": {
