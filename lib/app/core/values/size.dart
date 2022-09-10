@@ -5,7 +5,7 @@ const kSpacingS = EdgeInsets.all(4);
 const kSpacingSV = EdgeInsets.symmetric(vertical: 4);
 const kSpacingSH = EdgeInsets.symmetric(horizontal: 4);
 
-/// Between buttons, icon and text inside menu items, between text and checkbox, radio button and switch.
+/// Between buttons, icons and text inside menu items, between text and checkbox, radio button and switch.
 const kSpacingM = EdgeInsets.all(8);
 const kSpacingMV = EdgeInsets.symmetric(vertical: 8);
 const kSpacingMH = EdgeInsets.symmetric(horizontal: 8);
@@ -24,18 +24,6 @@ const kSpacingXLH = EdgeInsets.symmetric(horizontal: 24);
 const kSpacingXXL = EdgeInsets.all(48);
 const kSpacingXXLV = EdgeInsets.symmetric(vertical: 48);
 const kSpacingXXLH = EdgeInsets.symmetric(horizontal: 48);
-
-const kSizedBox = SizedBox();
-const kSizedBoxW4 = SizedBox(width: 4);
-const kSizedBoxH4 = SizedBox(height: 4);
-const kSizedBoxW8 = SizedBox(width: 8);
-const kSizedBoxH8 = SizedBox(height: 8);
-const kSizedBoxW14 = SizedBox(width: 16);
-const kSizedBoxH14 = SizedBox(height: 16);
-const kSizedBoxW24 = SizedBox(width: 24);
-const kSizedBoxH24 = SizedBox(height: 24);
-const kSizedBoxW48 = SizedBox(width: 48);
-const kSizedBoxH48 = SizedBox(height: 48);
 
 const kPadding8 = EdgeInsets.all(8);
 const kPadding8H = EdgeInsets.symmetric(horizontal: 8);
