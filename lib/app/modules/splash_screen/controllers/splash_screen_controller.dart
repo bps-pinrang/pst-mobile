@@ -9,6 +9,7 @@ import 'package:pst_online/app/core/utils/helper.dart';
 import '../../../core/values/strings.dart';
 import '../../../data/models/failure.dart';
 import '../../../routes/app_pages.dart';
+import '../../../../i18n/strings.g.dart';
 
 class SplashScreenController extends GetxController {
   final box = GetStorage();
@@ -29,9 +30,11 @@ class SplashScreenController extends GetxController {
       return const Right(false);
     }
 
-    return const Left(
+    return Left(
       Failure(
-          title: 'Kesalahan!', message: 'Masih ada izin yang belum disetujui!'),
+        title: t.dialogs.title.failure,
+        message: t.dialogs.message.failure.permission,
+      ),
     );
   }
 
@@ -41,7 +44,7 @@ class SplashScreenController extends GetxController {
   }
 
   void checkIfFirstSeen() {
-    if(!box.hasData(kStorageKeyIsFirstSeen)) {
+    if (!box.hasData(kStorageKeyIsFirstSeen)) {
       isFirstSeen.value = true;
       box.write(kStorageKeyIsFirstSeen, false);
       return;
@@ -51,13 +54,12 @@ class SplashScreenController extends GetxController {
   }
 
   void pageNavigation() {
-    var page = Routes.home;
-
     if (isFirstSeen.value) {
-      Get.offNamed(Routes.onBoarding, arguments: page);
-    } else {
-      Get.offNamed(page);
+      Get.offAllNamed(Routes.onBoarding);
+      return;
     }
+
+    Get.offNamed(Routes.home);
   }
 
   @override

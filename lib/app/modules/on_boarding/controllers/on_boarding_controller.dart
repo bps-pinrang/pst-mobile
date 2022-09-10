@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:get/get.dart';
 import 'package:pst_online/app/core/enums/app_animation.dart';
 import 'package:pst_online/app/core/values/color.dart';
+import 'package:pst_online/app/core/values/strings.dart';
+import '../../../../i18n/strings.g.dart';
 
 class OnBoardingController extends GetxController {
   final items = [
@@ -22,21 +24,18 @@ class OnBoardingController extends GetxController {
     kColorSuccess,
   ].obs;
 
-  final content = <Map<String,String>>[
+  final content = <Map<String, String>>[
     {
-      'title': 'Publikasi',
-      'message':
-          'Akses berbagai publikasi, rilis, data, dan berbagai insight menarik dari BPS Kabupaten Pinrang',
+      kDataKeyTitle: t.onBoarding.title.publication,
+      kDataKeyMessage: t.onBoarding.caption.publication,
     },
     {
-      'title': 'Statistik',
-      'message':
-          'Akses data-data statistik, analisis, dan indikator strategis Kabupaten Pinrang',
+      kDataKeyTitle: t.onBoarding.title.statistics,
+      kDataKeyMessage: t.onBoarding.caption.statistics,
     },
     {
-      'title': '24/7',
-      'message':
-          'Akses kapan saja, dimana saja, PST Mobile siap melayani anda 7 x 24 jam.',
+      kDataKeyTitle: t.onBoarding.title.activeHour,
+      kDataKeyMessage: t.onBoarding.caption.activeHour,
     },
   ].obs;
 
@@ -44,4 +43,8 @@ class OnBoardingController extends GetxController {
   final activeMessagePage = 0.obs;
   final CarouselController imageController = CarouselController();
   final CarouselController messageController = CarouselController();
+
+  double get headerPosition {
+    return 24;
+  }
 }

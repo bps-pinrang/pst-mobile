@@ -9,20 +9,24 @@ import 'package:lottie/lottie.dart';
 import 'package:pst_online/app/core/enums/app_logo.dart';
 import 'package:pst_online/app/core/values/color.dart';
 import 'package:pst_online/app/core/values/size.dart';
+import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/core/values/style.dart';
 import 'package:pst_online/app/routes/app_pages.dart';
+import '../../../../i18n/strings.g.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../core/utils/view_helper.dart';
 import '../controllers/on_boarding_controller.dart';
 
 class OnBoardingView extends GetView<OnBoardingController> {
-  const OnBoardingView({Key? key}) : super(key: key);
+  const OnBoardingView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.light,
         statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
@@ -49,7 +53,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
               fit: StackFit.expand,
               children: [
                 Positioned(
-                  top: Get.statusBarHeight - 40,
+                  top: controller.headerPosition,
                   left: 0,
                   right: 0,
                   child: Column(
@@ -63,12 +67,19 @@ class OnBoardingView extends GetView<OnBoardingController> {
                               child: Row(
                                 children: [
                                   Text(
-                                    'Powered by ',
-                                    style: kTextStyleCaption,
+                                    t.poweredBy,
+                                    style: kTextStyleCaption.copyWith(
+                                      fontSize: 8,
+                                    ),
+                                    semanticsLabel:
+                                        '${t.poweredBy} Lottie Files',
+                                  ),
+                                  const SizedBox(
+                                    width: 2,
                                   ),
                                   SvgPicture.asset(
                                     AppLogo.lottieFiles.value,
-                                    width: Get.width * 0.15,
+                                    width: Get.width * 0.1,
                                   ),
                                 ],
                               ),
@@ -79,24 +90,28 @@ class OnBoardingView extends GetView<OnBoardingController> {
                                     ? 1
                                     : 0,
                                 duration: 500.milliseconds,
-                                child: TextButton(
-                                  onPressed:
-                                      controller.activeImagePage.value > 0
-                                          ? () => Get.offAllNamed(Routes.home)
-                                          : null,
-                                  child: Obx(
-                                    () => Text(
-                                      'Lewati',
-                                      style: kTextStyleBody1.copyWith(
+                                child: Semantics(
+                                  label: t.semantics.btn.skip,
+                                  child: TextButton(
+                                    onPressed:
+                                        controller.activeImagePage.value > 0
+                                            ? () => Get.offAllNamed(Routes.home)
+                                            : null,
+                                    child: Obx(
+                                      () => Text(
+                                        t.label.btn.skip,
+                                        textAlign: TextAlign.end,
+                                        style: kTextStyleBody1.copyWith(
                                           fontWeight: FontWeight.w700,
                                           color: controller.indicatorColors[
-                                              controller
-                                                  .activeImagePage.value]),
+                                              controller.activeImagePage.value],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -110,29 +125,24 @@ class OnBoardingView extends GetView<OnBoardingController> {
                                     height: Get.height * 0.2,
                                     fit: BoxFit.cover,
                                   ),
-                                  kSizedBoxH14,
+                                  verticalSpace(16),
                                   Container(
                                     width: double.infinity,
                                     padding: kPadding16H8V,
-                                    child: RichText(
-                                      textAlign: TextAlign.end,
-                                      text: TextSpan(
-                                        text: 'Animation by ',
-                                        style: kTextStyleCaption.copyWith(
-                                          fontSize: 10,
-                                          color: kColorNeutral70,
+                                    child: Text.rich(
+                                      t.animationBy(
+                                        name: TextSpan(
+                                          text: animation.author,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                        children: [
-                                          TextSpan(
-                                            text: animation.author,
-                                            style: kTextStyleCaption.copyWith(
-                                              fontWeight: FontWeight.w700,
-                                              color: kColorNeutral80,
-                                              fontSize: 10,
-                                            ),
-                                          )
-                                        ],
                                       ),
+                                      style: kTextStyleCaption.copyWith(
+                                        fontSize: 8,
+                                        color: kColorNeutral70,
+                                      ),
+                                      textAlign: TextAlign.end,
                                     ),
                                   ),
                                 ],
@@ -153,7 +163,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
                           onScrolled: (page) {
                             controller.activeImagePage.value = page!.round();
                           },
-                          pageSnapping: false,
+                          pageSnapping: true,
                         ),
                       ),
                     ],
@@ -188,7 +198,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
                             ),
                           ),
                         ),
-                        kSizedBoxH48,
+                        verticalSpace(48),
                         CarouselSlider(
                           carouselController: controller.messageController,
                           items: controller.content
@@ -198,19 +208,19 @@ class OnBoardingView extends GetView<OnBoardingController> {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 24),
                                       child: Text(
-                                        element['title']!.toUpperCase(),
+                                        element[kDataKeyTitle]!.toUpperCase(),
                                         style: kTextStyleTitle1.copyWith(
-                                          fontSize: 72,
+                                          fontSize: 36,
                                         ),
                                       ),
                                     ),
-                                    kSizedBoxH14,
+                                    verticalSpace(14),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 24,
                                       ),
                                       child: Text(
-                                        element['message']!,
+                                        element[kDataKeyMessage]!,
                                         style: kTextStyleTitle5.copyWith(
                                           fontWeight: FontWeight.w400,
                                         ),
@@ -234,7 +244,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
                               controller.activeMessagePage.value =
                                   page!.round();
                             },
-                            pageSnapping: false,
+                            pageSnapping: true,
                           ),
                         ),
                         Row(
@@ -252,99 +262,115 @@ class OnBoardingView extends GetView<OnBoardingController> {
                                 height: 30,
                               ),
                             ),
-                            kSizedBoxW14,
+                            horizontalSpace(14),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Obx(
-                                  () => AnimatedContainer(
-                                    duration: 500.milliseconds,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          controller.activeImagePage.value == 0
-                                              ? kColorNeutral50
-                                              : kColorErrorPressed,
-                                      boxShadow:
-                                          controller.activeImagePage.value == 0
-                                              ? null
-                                              : [
-                                                  BoxShadow(
-                                                    color: kColorErrorPressed
-                                                        .withOpacity(0.4),
-                                                    spreadRadius: 4,
-                                                    blurRadius: 10,
-                                                  )
-                                                ],
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(100),
-                                      elevation: 0,
-                                      child: InkWell(
-                                        onTap: () {
-                                          controller.imageController
-                                              .previousPage();
-                                          controller.messageController
-                                              .previousPage();
-                                        },
+                                  () => Semantics(
+                                    label: t.semantics.btn.prev,
+                                    child: AnimatedContainer(
+                                      duration: 500.milliseconds,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            controller.activeImagePage.value ==
+                                                    0
+                                                ? kColorNeutral50
+                                                : kColorErrorPressed,
+                                        boxShadow:
+                                            controller.activeImagePage.value ==
+                                                    0
+                                                ? null
+                                                : [
+                                                    BoxShadow(
+                                                      color: kColorErrorPressed
+                                                          .withOpacity(0.4),
+                                                      spreadRadius: 4,
+                                                      blurRadius: 10,
+                                                    )
+                                                  ],
                                         borderRadius:
                                             BorderRadius.circular(100),
-                                        child: const Padding(
-                                          padding: kPadding16,
-                                          child: Icon(
-                                            Icons.chevron_left,
-                                            color: kColorNeutral10,
+                                      ),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        elevation: 0,
+                                        child: InkWell(
+                                          onTap: () {
+                                            controller.imageController
+                                                .previousPage();
+                                            controller.messageController
+                                                .previousPage();
+                                          },
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          child: const Padding(
+                                            padding: kPadding16,
+                                            child: Icon(
+                                              Icons.chevron_left,
+                                              color: kColorNeutral10,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                kSizedBoxW8,
+                                horizontalSpace(8),
                                 Obx(
-                                  () => AnimatedContainer(
-                                    duration: 500.milliseconds,
-                                    decoration: BoxDecoration(
-                                      color: controller.indicatorColors[
-                                          controller.activeImagePage.value],
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: controller.indicatorColors[
-                                                  controller
-                                                      .activeImagePage.value]
-                                              .withOpacity(0.4),
-                                          spreadRadius: 4,
-                                          blurRadius: 10,
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(100),
-                                      elevation: 0,
-                                      child: InkWell(
-                                        onTap: controller
-                                                    .activeImagePage.value ==
-                                                2
-                                            ? () => Get.offAllNamed(Routes.home)
-                                            : () {
-                                                controller.imageController
-                                                    .nextPage();
-                                                controller.messageController
-                                                    .nextPage();
-                                              },
+                                  () => Semantics(
+                                    label: controller.activeImagePage.value == 2
+                                        ? t.semantics.btn.done
+                                        : t.semantics.btn.next,
+                                    child: AnimatedContainer(
+                                      duration: 500.milliseconds,
+                                      decoration: BoxDecoration(
+                                        color: controller.indicatorColors[
+                                            controller.activeImagePage.value],
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: controller.indicatorColors[
+                                                    controller
+                                                        .activeImagePage.value]
+                                                .withOpacity(0.4),
+                                            spreadRadius: 4,
+                                            blurRadius: 10,
+                                          )
+                                        ],
                                         borderRadius:
                                             BorderRadius.circular(100),
-                                        child: Padding(
-                                          padding: kPadding16,
-                                          child: Icon(
-                                            controller.activeImagePage.value ==
-                                                    2
-                                                ? Icons.check
-                                                : Icons.chevron_right,
-                                            color: kColorNeutral10,
+                                      ),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        elevation: 0,
+                                        child: InkWell(
+                                          onTap: controller
+                                                      .activeImagePage.value ==
+                                                  2
+                                              ? () =>
+                                                  Get.offAllNamed(Routes.home)
+                                              : () {
+                                                  controller.imageController
+                                                      .nextPage();
+                                                  controller.messageController
+                                                      .nextPage();
+                                                },
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          child: Padding(
+                                            padding: kPadding16,
+                                            child: Icon(
+                                              controller.activeImagePage
+                                                          .value ==
+                                                      2
+                                                  ? Icons.check
+                                                  : Icons.chevron_right,
+                                              color: kColorNeutral10,
+                                            ),
                                           ),
                                         ),
                                       ),
