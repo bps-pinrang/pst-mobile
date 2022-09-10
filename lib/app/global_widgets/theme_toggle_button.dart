@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:pst_online/app/core/services/theme_service.dart';
 
 class ThemeToggleButton extends StatelessWidget {
-  const ThemeToggleButton({Key? key}) : super(key: key);
+  const ThemeToggleButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +14,14 @@ class ThemeToggleButton extends StatelessWidget {
           ThemeService().changeThemeMode();
         },
         icon: isDark!
-            ? const Icon(Icons.dark_mode_outlined)
-            : const Icon(Icons.dark_mode),
+            ? const Icon(
+                Icons.dark_mode_rounded,
+                color: Colors.blueGrey,
+              )
+            : Icon(
+                Icons.light_mode_rounded,
+                color: Colors.orange.shade400,
+              ),
       ),
       initialValue: ThemeService().isLightTheme(),
     );
