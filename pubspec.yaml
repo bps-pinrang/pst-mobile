@@ -38,18 +38,25 @@ dependencies:
   sliding_up_panel: any
   infinite_scroll_pagination: any
   animate_do: any
-  showcaseview: 1.1.7
-  line_icons: 2.0.1
-  dartz: 0.10.1
-  flutter_svg: 1.1.3
-  smooth_page_indicator: 1.0.0+2
-  internet_connection_checker: 0.0.1+4
-  intl: 0.17.0
-  slang_flutter: 2.7.0
-  drop_shadow: 0.0.1+4
-  flutter_staggered_animations: 1.0.0
-  flutter_animated_icons: 1.0.1
-  supabase_flutter: 0.3.3
+  showcaseview: any
+  line_icons: any
+  dartz: any
+  flutter_svg: any
+  smooth_page_indicator: any
+  internet_connection_checker: any
+  intl: any
+  slang_flutter: any
+  drop_shadow: any
+  flutter_staggered_animations: any
+  flutter_animated_icons: any
+  supabase_flutter: any
+  youtube_player_flutter: any
+  dynamic_color: any
+  sliding_sheet: any
+  persistent_bottom_nav_bar: any
+  im_stepper: any
+  mask_text_input_formatter: 2.4.0
+  fl_chart: 0.55.1
   flutter: 
     sdk: flutter
   flutter_localizations: 
@@ -57,6 +64,8 @@ dependencies:
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
+  json_serializable: any
+  json_annotation: any
   change_app_package_name: any
   flutter_launcher_icons: any
   build_runner: any
