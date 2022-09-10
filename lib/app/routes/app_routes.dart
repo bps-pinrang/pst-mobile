@@ -6,6 +6,10 @@ abstract class Routes {
   static const home = _Paths.home;
   static const splashScreen = _Paths.splashScreen;
   static const onBoarding = _Paths.onBoarding;
+  static const warningScreen = _Paths.warningScreen;
+  static const liveChat = _Paths.liveChat;
+  static const register = _Paths.register;
+  static const login = _Paths.login;
 }
 
 abstract class _Paths {
@@ -13,4 +17,8 @@ abstract class _Paths {
   static const home = '/home';
   static const splashScreen = '/splash-screen';
   static const onBoarding = '/on-boarding';
+  static const warningScreen = '/warning-screen';
+  static const liveChat = '/live-chat';
+  static const register = '/register';
+  static const login = '/login';
 }
