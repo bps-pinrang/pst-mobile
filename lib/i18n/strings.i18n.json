@@ -1,0 +1,86 @@
+{
+  "poweredBy": "Powered by",
+  "animationBy(rich)": "Animation by $name",
+  "noInternet": "No internet connection!",
+  "label": {
+    "btn": {
+      "skip": "Skip",
+      "see_more": "See More"
+    },
+    "page": {
+      "infographic": {
+        "one": "Infographic",
+        "other": "Infographics"
+      }
+    },
+    "menu": {
+      "publication": {
+        "one": "Publication",
+        "other": "Publications"
+      },
+      "data_table": "Data Table",
+      "statistics": "Statistics",
+      "news": "News",
+      "live_chat": "Live Chat",
+      "book_appointment": "Book\nAppointment",
+      "official_statistics_news": "Official\nStatistics\nNews",
+      "molasapp": "Molasapp"
+    },
+    "video": {
+      "one": "Video",
+      "other": "Videos"
+    }
+  },
+  "onBoarding": {
+    "title": {
+      "publication": "Publication",
+      "statistics": "Statistics",
+      "activeHour": "24/7"
+    },
+    "caption": {
+      "publication": "Access various publications, releases, data, and various interesting insights from BPS Pinrang Regency",
+      "statistics": "Access to statistical data, analysis, and strategic indicators for Pinrang Regency",
+      "activeHour": "Access anytime, anywhere, PST Mobile is ready to serve you 7 x 24 hours."
+    }
+  },
+  "semantics": {
+    "appName": "Integrated Statisticak Service Mobile",
+    "pstLogo": "Integrated Statistical Service Logo",
+    "lottieFilesLogo": "Lottie Files Logo",
+    "rbBpsLogo": "Central Bureau of Statistics Bureaucratic Reform Logo",
+    "bpsLogo": "Logo of the Central Bureau of Statistics of Pinrang Regency",
+    "bpsCoreValueLogo": "Basic Values Logo of the Central Bureau of Statistics. P I A (PIA), an acronym for Professional or Professional, Integritas or Integrity, and Amanah or Trustworthy.",
+    "noInternet": "No internet connection!. Please check your connection, wifi, or data connection!",
+    "btn": {
+      "notification": "Notification Button. Press here to see list of notifications you've received.",
+      "search": "Search Button. Press here to search for content of P S T Mobile.",
+      "next": "Next Button. Press here to go to the next item.",
+      "prev": "Previous Button. Press here to go to the previous item.",
+      "skip": "Skip Button. Press here to skip to the next page.",
+      "done": "Done Button. Press here to finish the slideshow."
+    },
+    "dialogs": {
+      "title": {
+        "failure": {
+          "header": "Failure!"
+        }
+      },
+      "message": {
+        "failure": {
+          "permission": "There is some permissions your not granted! Please give apps required permission to make it worked properly!"
+        }
+      }
+    }
+  },
+  "dialogs": {
+    "title": {
+      "failure": "Failure!",
+      "success": "Success!"
+    },
+    "message": {
+      "failure": {
+        "permission": "There is some permissions your not granted!"
+      }
+    }
+  }
+}

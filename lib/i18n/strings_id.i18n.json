@@ -1,0 +1,86 @@
+{
+  "poweredBy": "Dipersembahkan oleh",
+  "animationBy(rich)": "Animasi oleh $name",
+  "noInternet": "Tidak ada koneksi internet!",
+  "label": {
+    "btn": {
+      "skip": "Lewati",
+      "see_more": "Lihat Semua"
+    },
+    "page": {
+      "infographic": {
+        "one": "Infografis",
+        "other": "Infografis"
+      }
+    },
+    "menu": {
+      "publication": {
+        "one": "Publikasi",
+        "other": "Publikasi"
+      },
+      "data_table": "Data Tabel",
+      "statistics": "Statistik",
+      "news": "Berita",
+      "live_chat": "Konsultasi\nLangsung",
+      "book_appointment": "Booking\nKunjungan",
+      "official_statistics_news": "Berita Resmi\nStatistik",
+      "molasapp": "Molasapp"
+    },
+    "video": {
+      "one": "Video",
+      "other": "Video"
+    }
+  },
+  "onBoarding": {
+    "title": {
+      "publication": "Publikasi",
+      "statistics": "Statistik",
+      "activeHour": "24/7"
+    },
+    "caption": {
+      "publication": "Akses berbagai publikasi, rilis, data, dan berbagai insight menarik dari BPS Kabupaten Pinrang",
+      "statistics": "Akses data-data statistik, analisis, dan indikator strategis Kabupaten Pinrang",
+      "activeHour": "Akses kapan saja, dimana saja, PST Mobile siap melayani anda 7 x 24 jam."
+    }
+  },
+  "semantics": {
+    "appName": "Pelayanan Statistik Terpadu P S T Mobile",
+    "pstLogo": "Logo Pelayanan Statistik Terpadu",
+    "lottieFilesLogo": "Logo Lottie Files",
+    "rbBpsLogo": "Logo Reformasi Birokrasi Badan Pusat Statistik",
+    "bpsLogo": "Logo Badan Pusat Statistik (BPS) Kabupaten Pinrang",
+    "bpsCoreValueLogo": "Logo nilai dasar/core values Badan Pusat Statistik. P I A (PIA), akronim dari Profesional, Integritas, dan Amanah.",
+    "noInternet": "Tidak ada koneksi internet!. Periksa koneksi anda, wifi, atau koneksi data anda!",
+    "btn": {
+      "notification": "Tombol Notifikasi. Tekan untuk melihat daftar notifikasi atau pemberitahuan.",
+      "search": "Tombol Pencarian. Tekan disini untuk mencari konten P S T Mobile.",
+      "next": "Tombol Selanjutnya. Tekan disini untuk melihat konten selanjutnya.",
+      "prev": "Tombol Sebelumnya. Tekan disini untuk melihat konten sebelumnya.",
+      "skip": "Tombol Lewati. Tekan disini untuk langsung ke halaman terakhir atau halaman selanjutnya.",
+      "done": "Tombol Selesai. Tekan disini untuk mengakhiri petunjuk atau tayangan slide."
+    },
+    "dialogs": {
+      "title": {
+        "failure": {
+          "header": "Kesalahan!"
+        }
+      },
+      "message": {
+        "failure": {
+          "permission": "Masih ada izin yang belum anda izinkan! Mohon izinkan izin yang diperlukan agar aplikasi dapat berjalan sebagaimana mestinya!"
+        }
+      }
+    }
+  },
+  "dialogs": {
+    "title": {
+      "failure": "Kesalahan!",
+      "success": "Berhasil!"
+    },
+    "message": {
+      "failure": {
+        "permission": "Masih ada izin yang belum anda izinkan!"
+      }
+    }
+  }
+}
