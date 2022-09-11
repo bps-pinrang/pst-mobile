@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:pst_online/app/core/extensions/custom_color.dart';
+import 'package:pst_online/app/global_widgets/coming_soon.dart';
 
 import '../../../core/values/size.dart';
 import '../../../global_widgets/unauthenticated_placeholder.dart';
@@ -12,7 +13,6 @@ import '../controllers/home_controller.dart';
 class NotificationView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Obx(() => _buildBody(context)),
     );
@@ -28,13 +28,16 @@ class NotificationView extends GetView<HomeController> {
         height: Get.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            UnauthenticatedPlaceholder()
-          ],
+          children: const [UnauthenticatedPlaceholder()],
         ),
       );
     }
 
-    return const Center(child: Text('Profile'));
+    return const Center(
+      child: Padding(
+        padding: kPadding16,
+        child: ComingSoon(),
+      ),
+    );
   }
 }

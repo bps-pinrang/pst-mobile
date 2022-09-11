@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:pst_online/app/core/extensions/custom_color.dart';
+import 'package:pst_online/app/global_widgets/coming_soon.dart';
 
 import '../../../core/values/size.dart';
 import '../../../global_widgets/unauthenticated_placeholder.dart';
@@ -34,6 +35,11 @@ class BookingHistoryView extends GetView<HomeController> {
       );
     }
 
-    return const Center(child: Text('Profile'));
+    return const Center(
+      child: Padding(
+        padding: kPadding16,
+        child: ComingSoon(),
+      ),
+    );
   }
 }
