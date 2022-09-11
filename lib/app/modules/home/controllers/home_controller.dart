@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -5,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:pst_online/app/core/utils/helper.dart';
+import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/strings.dart';
+import 'package:pst_online/app/data/models/app_user.dart';
 import 'package:pst_online/app/data/models/banner_model.dart';
 import 'package:pst_online/app/data/models/dynamic_table/data_response.dart';
 import 'package:pst_online/app/data/providers/youtube_provider.dart';
@@ -30,7 +34,7 @@ class HomeController extends GetxController {
   );
 
   final client = Supabase.instance.client;
-  Rx<User?> user = Rx(null);
+  Rx<AppUser?> user = Rx(null);
   Rxn<DataResponse> totalPopulation = Rxn(null);
   YoutubePlayerController youtubePlayerController = YoutubePlayerController(
     initialVideoId: 'z-7yCWZ6B-U',
@@ -47,6 +51,8 @@ class HomeController extends GetxController {
   );
 
   final activeCarousel = 0.obs;
+  final appName = ''.obs;
+  final appVersion = ''.obs;
 
   final banners = List<BannerModel>.empty(growable: true).obs;
   final totalPopulationsData = List<FlSpot>.empty(growable: true).obs;
@@ -64,13 +70,20 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     provider = GetInstance().find<ApiProvider>();
+    appVersion.value = await getAppVersion(
+      prefix: 'Versi ',
+      showBuildNumber: true,
+    );
+    appName.value = await getAppName();
     super.onInit();
-    _authentication();
-    loadBanners();
-    loadTotalPopulations();
+    await Future.wait([
+      _authentication(),
+      loadBanners(),
+      loadTotalPopulations(),
+    ]);
   }
 
-  void _authentication() async {
+  Future<void> _authentication() async {
     final session = box.read(kStorageKeySession);
 
     if (session != null) {
@@ -80,7 +93,37 @@ class HomeController extends GetxController {
       }
     }
 
-    user.value = client.auth.user();
+    final userData = box.read(kStorageKeyUser);
+
+    if(userData == null) {
+      return;
+    }
+
+    user.value = AppUser.fromJson(jsonDecode(userData));
+  }
+
+  Future<void> handleLogout() async {
+    try {
+      showLoadingDialog();
+      await client.auth.signOut();
+
+      if(Get.isDialogOpen!) {
+        Get.back();
+      }
+
+      box.remove(kStorageKeyUser);
+      box.remove(kStorageKeyToken);
+      box.remove(kStorageKeySession);
+      user.value = null;
+      _authentication();
+      persistentTabController.jumpToTab(0);
+    } catch (e) {
+      showGetSnackBar(
+        title: 'Kesalahan!',
+        message: 'Terjadi kesalahan saat mencoba keluar dari aplikasi!',
+        variant: 'error',
+      );
+    }
   }
 
   dynamic onPageChanged(int page, reason) {
@@ -110,7 +153,11 @@ class HomeController extends GetxController {
       banners.value =
           (result.data as List).map((e) => BannerModel.fromJson(e)).toList();
     } catch (e) {
-      print(e.toString());
+      showGetSnackBar(
+        title: 'Kesalahan',
+        message: 'Terjadi kesalahan saat memuat banner: ${e.toString()}',
+        variant: 'error',
+      );
       isBannerError.value = true;
     } finally {
       isBannerLoading.value = false;
@@ -133,10 +180,10 @@ class HomeController extends GetxController {
           final data = response.data.values.toList();
           final periods = response.dataPeriods;
           var dataPopulations = List<FlSpot>.empty(growable: true);
-
+          final currentYear = DateTime.now().year;
           for (var i = 0; i < data.length; i++) {
             final value = int.parse(periods[i].label);
-            if(value >= 2010 && value <= 2022) {
+            if (value >= currentYear - 10 && value <= currentYear) {
               dataPopulations.add(
                 FlSpot(
                   value.toDouble(),
@@ -153,7 +200,6 @@ class HomeController extends GetxController {
       //
     }
   }
-
 
   @override
   void onClose() {
