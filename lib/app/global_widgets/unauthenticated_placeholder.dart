@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
+import 'package:pst_online/app/global_widgets/lottie_with_author.dart';
 
 import '../core/enums/app_animation.dart';
 import '../core/enums/button_size.dart';
@@ -14,24 +14,18 @@ class UnauthenticatedPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Center(
       child: Column(
-        crossAxisAlignment:
-        CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Lottie.asset(
-            AppAnimation.login.value,
+          LottieWithAuthor(
+            title: 'Oooppss',
+            message: 'Anda harus masuk terlebih dahulu!',
+            animation: AppAnimation.login,
             height: Get.height * 0.3,
+            semanticLabel:
+                'Anda harus masuk atau mendaftar terlebih dahulu untuk menggunakan fitur ini!',
           ),
-          verticalSpace(8),
-          Text(
-            'Oopppss',
-            style: theme.textTheme.titleLarge,
-          ),
-          verticalSpace(8),
-          const Text(
-              'Anda harus masuk terlebih dahulu!'),
           verticalSpace(8),
           AppButton(
             size: ButtonSize.large,

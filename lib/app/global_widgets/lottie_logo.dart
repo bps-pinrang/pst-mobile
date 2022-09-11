@@ -37,7 +37,7 @@ class LottieLogo extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(
+        FittedBox(
           child: Text.rich(
             t.animationBy(
               name: TextSpan(
