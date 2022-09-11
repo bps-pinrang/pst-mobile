@@ -23,6 +23,7 @@ const kEnvKeyBPSApiBaseUrl = 'BPS_API_BASE_URL';
 const kEnvKeyDomain = 'DOMAIN';
 const kEnvKeyYoutubeApiKey = 'YOUTUBE_API_KEY';
 const kEnvKeyYoutubeChannelId = 'YOUTUBE_CHANNEL_ID';
+const kEnvKeyTawkToChatUrl = 'TAWK_TO_CHAT_URL';
 
 const kDataKeyModel = 'model';
 const kDataKeyTitle = 'title';
