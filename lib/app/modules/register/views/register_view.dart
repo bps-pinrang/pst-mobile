@@ -264,7 +264,6 @@ class RegisterView extends GetView<RegisterController> {
                                     'Pilih jenis kelamin terlebih dahulu!',
                               },
                               onChanged: (value) {
-                                print(form.rawValue);
                               },
                               prefixIcon: LineIcons.genderless,
                               formControl: form.control(kFormKeyGenderId),
@@ -286,7 +285,6 @@ class RegisterView extends GetView<RegisterController> {
                                     'Pilih pendidikan terakhir terlebih dahulu!',
                               },
                               onChanged: (value) {
-                                print(form.rawValue);
                               },
                               prefixIcon: LineIcons.school,
                               formControl: form.control(kFormKeyEducationId),
@@ -318,7 +316,6 @@ class RegisterView extends GetView<RegisterController> {
                                     'Pilih pekerjaan terlebih dahulu!',
                               },
                               onChanged: (value) {
-                                print(form.rawValue);
                               },
                               prefixIcon: LineIcons.alternateFileAlt,
                               formControl: form.control(kFormKeyJobId),
@@ -343,7 +340,6 @@ class RegisterView extends GetView<RegisterController> {
                                     'Pilih jenis institusi terlebih dahulu!',
                               },
                               onChanged: (value) {
-                                print(form.rawValue);
                                 controller.loadInstitutions(form
                                     .control(kFormKeyInstitutionCategoryId)
                                     .value);
@@ -473,11 +469,14 @@ class RegisterView extends GetView<RegisterController> {
                         Expanded(
                           child: AppButton.primary(
                             buttonSize: ButtonSize.large,
+                            isBusy: controller.isProcessing.value,
                             label: controller.currentStep.value == 2
                                 ? 'Daftar'
                                 : 'Selanjutnya',
                             onPressed: controller.currentStep.value == 2
-                                ? (formInstance.valid ? () {} : null)
+                                ? (formInstance.valid
+                                    ? controller.registerUser
+                                    : null)
                                 : () {
                                     controller.currentStep.value += 1;
                                   },
@@ -579,7 +578,6 @@ class _InstitutionSection extends StatelessWidget {
             'Pilih institusi terlebih dahulu!',
       },
       onChanged: (value) {
-        print(form.rawValue);
       },
       prefixIcon: LineIcons.building,
       formControl: form.control(kFormKeyInstitutionId),
