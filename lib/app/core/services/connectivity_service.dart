@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -8,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 
 import '../../routes/app_pages.dart';
 import '../enums/app_animation.dart';
+import '../utils/view_helper.dart';
 import '../values/strings.dart';
 import '../../../../i18n/strings.g.dart';
 
@@ -27,8 +27,6 @@ class ConnectivityService extends GetxService {
     _connectivity.onConnectivityChanged.listen(
       (data) {
         try {
-          print('connection: $data');
-
           final isFirstSeen = !box.hasData(kStorageKeyIsFirstSeen);
 
           if ([
@@ -61,12 +59,20 @@ class ConnectivityService extends GetxService {
             },
           );
         } on PlatformException catch (e) {
-          debugPrint(e.toString());
+          showGetSnackBar(
+            title: 'Kesalahan',
+            message: 'Terjadi kesalahan saat mengecek koneksi: ${e.toString()}',
+            variant: 'error',
+          );
         }
       },
     ).onError(
       (error) {
-        debugPrint(error.toString());
+        showGetSnackBar(
+          title: 'Kesalahan',
+          message: 'Terjadi kesalahan saat mengecek koneksi: ${error.toString()}',
+          variant: 'error',
+        );
       },
     );
   }
