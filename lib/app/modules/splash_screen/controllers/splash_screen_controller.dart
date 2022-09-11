@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -67,6 +68,12 @@ class SplashScreenController extends GetxController {
     appVersion.value = await getAppVersion();
     checkIfFirstSeen();
     await askPermissions();
+    await Future.wait([
+      FirebaseAnalytics.instance.logAppOpen(),
+      FirebaseAnalytics.instance.setCurrentScreen(
+        screenName: 'Splash',
+      )
+    ]);
     loadPage();
     super.onInit();
   }

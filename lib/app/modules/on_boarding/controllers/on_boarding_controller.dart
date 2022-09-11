@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get/get.dart';
 import 'package:pst_online/app/core/enums/app_animation.dart';
 import 'package:pst_online/app/core/values/color.dart';
@@ -46,5 +47,13 @@ class OnBoardingController extends GetxController {
 
   double get headerPosition {
     return 24;
+  }
+
+  @override
+  void onInit() async {
+    await FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'OnBoarding',
+    );
+    super.onInit();
   }
 }

@@ -55,8 +55,13 @@ dependencies:
   sliding_sheet: any
   persistent_bottom_nav_bar: any
   im_stepper: any
-  mask_text_input_formatter: 2.4.0
-  fl_chart: 0.55.1
+  mask_text_input_formatter: any
+  fl_chart: any
+  upgrader: any
+  firebase_core: any
+  firebase_analytics: any
+  age_calculator: any
+  firebase_crashlytics: any
   flutter: 
     sdk: flutter
   flutter_localizations: 

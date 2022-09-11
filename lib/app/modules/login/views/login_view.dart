@@ -8,6 +8,7 @@ import 'package:pst_online/app/core/enums/app_logo.dart';
 import 'package:pst_online/app/core/enums/button_size.dart';
 import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/size.dart';
+import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/global_widgets/app_button.dart';
 import 'package:pst_online/app/global_widgets/app_password_field.dart';
 import 'package:pst_online/app/global_widgets/app_text_field.dart';
@@ -15,6 +16,7 @@ import 'package:pst_online/app/global_widgets/theme_toggle_button.dart';
 import 'package:pst_online/app/routes/app_pages.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
+import '../../../global_widgets/coming_soon.dart';
 import '../controllers/login_controller.dart';
 import '../../../../i18n/strings.g.dart';
 
@@ -72,7 +74,7 @@ class LoginView extends GetView<LoginController> {
                   AppTextField(
                     label: 'Email',
                     prefixIcon: Icons.alternate_email_rounded,
-                    formControl: form.control('email'),
+                    formControl: form.control(kFormKeyEmail),
                     validationMessages: {
                       ValidationMessage.required: (control) =>
                           'Email tidak boleh kosong!',
@@ -80,12 +82,13 @@ class LoginView extends GetView<LoginController> {
                           'Email tidak valid!',
                     },
                     keyboardType: TextInputType.emailAddress,
-                    onSubmitted: (control) => form.control('password').focus(),
+                    onSubmitted: (control) =>
+                        form.control(kFormKeyPassword).focus(),
                   ),
                   verticalSpace(16),
                   AppPasswordField(
                     label: 'Password',
-                    formControl: form.control('password'),
+                    formControl: form.control(kFormKeyPassword),
                     validationMessages: {
                       ValidationMessage.required: (control) =>
                           'Password tidak boleh kosong!',
@@ -101,17 +104,31 @@ class LoginView extends GetView<LoginController> {
                       AppButton.flat(
                         buttonSize: ButtonSize.small,
                         label: 'Lupa Password?',
-                        onPressed: () {},
+                        onPressed: () {
+                          showBottomSheetDialog(
+                            context: context,
+                            content: const ComingSoon(),
+                          );
+                        },
                       ),
                     ],
                   ),
                   verticalSpace(16),
                   ReactiveFormConsumer(
-                    builder: (_, formInstance, child) => AppButton.primary(
-                      buttonSize: ButtonSize.large,
-                      label: 'Masuk',
-                      onPressed: formInstance.valid ? () {} : null,
-                      isDense: true,
+                    builder: (_, formInstance, child) => Obx(
+                      () => AppButton.primary(
+                        buttonSize: ButtonSize.large,
+                        label: controller.isProcessing.value
+                            ? 'Memproses'
+                            : 'Masuk',
+                        onPressed: formInstance.valid
+                            ? (controller.isProcessing.value
+                                ? () {}
+                                : controller.login)
+                            : null,
+                        isDense: true,
+                        isBusy: controller.isProcessing.value,
+                      ),
                     ),
                   ),
                   verticalSpace(32),
