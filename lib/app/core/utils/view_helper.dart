@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pst_online/app/core/enums/app_animation.dart';
 import 'package:pst_online/app/core/enums/button_variant.dart';
+import 'package:pst_online/app/core/extensions/custom_color.dart';
 import 'package:pst_online/app/core/values/color.dart';
 import 'package:pst_online/app/core/values/size.dart';
 import 'package:pst_online/app/global_widgets/app_button.dart';
@@ -165,4 +166,80 @@ Color checkFloatingLabelColor(
   }
 
   return isFocus ? kColorPrimary : theme.colorScheme.onSurface;
+}
+
+void showGetSnackBar({
+  Widget? leading,
+  required String title,
+  required String message,
+  String variant = 'info',
+  double overlayBlur = 0.0,
+  bool isDismissible = true,
+  bool showProgressIndicator = false,
+}) async {
+  try {
+    final textTheme = Get.textTheme;
+    final theme = Get.theme;
+    var bgColor = theme.primaryColor;
+    final extensionColor = theme.extension<CustomColors>();
+
+    if (variant == 'success') {
+      bgColor = extensionColor!.success!;
+    }
+
+    if (variant == 'error') {
+      bgColor = theme.errorColor;
+    }
+
+    if (_checkIsAnythingOnScreen()) Get.back();
+    Get.showSnackbar(
+      GetSnackBar(
+        icon: leading,
+        titleText: Text(
+          title,
+          style: textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        borderRadius: 12,
+        margin: kPadding16,
+        backgroundColor: bgColor,
+        duration: 3.seconds,
+        isDismissible: isDismissible,
+        messageText: Text(
+          message,
+          style: textTheme.caption?.copyWith(
+            color: Colors.white,
+          ),
+          maxLines: 10,
+          overflow: TextOverflow.ellipsis,
+        ),
+        overlayBlur: overlayBlur,
+        mainButton: IconButton(
+          icon: const Icon(
+            Icons.close,
+            color: Colors.white,
+          ),
+          onPressed: Get.back,
+          iconSize: 16,
+          splashColor: null,
+        ),
+        overlayColor: theme.shadowColor.withOpacity(0.2),
+        padding: kPadding8,
+        snackPosition: SnackPosition.BOTTOM,
+        showProgressIndicator: showProgressIndicator,
+        snackStyle: SnackStyle.FLOATING,
+        boxShadows: [
+          BoxShadow(
+            color: bgColor.withOpacity(0.2),
+            blurRadius: 10,
+            spreadRadius: 6,
+          )
+        ],
+      ),
+    );
+  } catch (e) {
+    //
+  }
 }
