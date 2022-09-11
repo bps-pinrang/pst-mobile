@@ -12,6 +12,8 @@ const kTableUserJobs = 'user_jobs';
 const kStorageKeyIsDarkMode = 'is_dark_mode';
 const kStorageKeyIsFirstSeen = 'is_first_seen';
 const kStorageKeySession = 'session';
+const kStorageKeyToken = 'token';
+const kStorageKeyUser = 'user';
 
 const kEnvKeySupabaseApiUrl = 'SUPABASE_API_URL';
 const kEnvKeySupabaseApiKey = 'SUPABASE_API_KEY';
@@ -182,6 +184,15 @@ const kJsonKeyNextPageToken = 'nextPageToken';
 const kJsonKeyPrevPageToken = 'prevPageToken';
 const kJsonKeyVideoId = 'videoId';
 const kJsonKeyVideoPublishedAt = 'videoPublishedAt';
+const kJsonKeyBirthday = 'birthday';
+const kJsonKeyPhone = 'phone';
+const kJsonKeyEducation = 'education';
+const kJsonKeyJob = 'job';
+const kJsonKeyInstitution = 'institution';
+const kJsonKeyGender = 'gender';
+const kJsonKeyNationalId = 'national_id';
+const kJsonKeyEmail = 'email';
+
 
 const kQueryKeyId = 'id';
 const kQueryKeyPart = 'part';
