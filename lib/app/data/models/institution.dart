@@ -9,6 +9,7 @@ part 'institution.g.dart';
 class Institution {
   final int id;
   final String name;
+  @JsonKey(name: 'institution_category')
   final InstitutionCategory? institutionCategory;
 
   Institution({required this.id, required this.name, this.institutionCategory});

@@ -13,5 +13,5 @@ class Job {
 
   factory Job.fromJson(Map<String, dynamic> json) => _$JobFromJson(json);
 
-  Map<String,dynamic> toMap() => _$JobToJson(this);
+  Map<String,dynamic> toJson() => _$JobToJson(this);
 }
