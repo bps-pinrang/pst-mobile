@@ -1,17 +1,30 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:pst_online/app/core/enums/tables/institution_columns.dart';
+import 'package:pst_online/app/core/enums/tables/user_job_columns.dart';
 import 'package:pst_online/app/core/enums/tables/user_profile_columns.dart';
+import 'package:pst_online/app/core/exceptions/app_exception.dart';
+import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/strings.dart';
+import 'package:pst_online/app/data/models/app_user.dart';
 import 'package:pst_online/app/data/models/education.dart';
 import 'package:pst_online/app/data/models/gender.dart';
 import 'package:pst_online/app/data/models/institution.dart';
 import 'package:pst_online/app/data/models/institution_category.dart';
 import 'package:pst_online/app/data/models/job.dart';
+import 'package:pst_online/app/routes/app_pages.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:reactive_phone_form_field/reactive_phone_form_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../data/models/user_job.dart';
+
 class RegisterController extends GetxController {
+  final box = GetStorage();
+
   var dateFormatter = MaskTextInputFormatter(
     mask: '####-##-##',
     filter: {'#': RegExp(r'[0-9]')},
@@ -77,6 +90,7 @@ class RegisterController extends GetxController {
   );
 
   final currentStep = 0.obs;
+  final isProcessing = false.obs;
 
   final client = Supabase.instance.client;
 
@@ -105,7 +119,12 @@ class RegisterController extends GetxController {
       genders.value =
           (result.data as List).map((e) => Gender.fromJson(e)).toList();
     } catch (e) {
-      print(e.toString());
+      showGetSnackBar(
+        title: 'Kesalahan',
+        message:
+            'Terjadi kesalahan saat memuat data jenis kelamin: ${e.toString()}',
+        variant: 'error',
+      );
     }
   }
 
@@ -159,34 +178,152 @@ class RegisterController extends GetxController {
 
   Future<void> registerUser() async {
     try {
+      isProcessing.value = true;
+      final data = form.rawValue;
+
       var result = await client.auth.signUp(
-        form.control(kFormKeyEmail).value,
-        form.control(kFormKeyPassword).value,
+        data[kFormKeyEmail].toString(),
+        data[kFormKeyPassword].toString(),
       );
 
       final user = result.user;
       final session = result.data?.persistSessionString;
+      final token = result.data?.accessToken;
 
       if (user == null && session == null) {
-        throw Exception('Gagal membuat akun!');
+        throw AppException(result.error?.message ?? 'Kesalahan!');
       }
 
-      final profileResult = await client.from(kTableUserProfiles).insert({
-        UserProfileColumns.userId.key: user?.id,
-        UserProfileColumns.name.key: form.control(kFormKeyName).value,
-        UserProfileColumns.genderId.key: form.control(kFormKeyGenderId).value,
-        UserProfileColumns.educationId.key:
-            form.control(kFormKeyEducationId).value,
-        UserProfileColumns.phone.key:
-            (form.control(kFormKeyPhone).value as PhoneNumber)
-                .getFormattedNsn(),
-        UserProfileColumns.dateOfBirth.key:
-            DateTime.parse(form.control(kFormKeyDateOfBirth).value),
-        UserProfileColumns.nationalId.key:
-            form.control(kFormKeyNationalIdentificationNumber).value,
-      }).execute();
+      final results = await Future.wait([
+        _saveUserProfile(user?.id, data),
+        _saveUserJob(user?.id, data),
+      ]);
+
+      final userJob = await client
+          .from(kTableUserJobs)
+          .select(
+              '*,institution:institution_id (id,name, institution_category: category_id (id,name)), job:job_id (id,name)')
+          .eq(UserJobColumns.id.key,
+              results.last!.data[0][UserJobColumns.id.key])
+          .single()
+          .execute();
+
+      final job = UserJob.fromJson(userJob.data);
+
+      final phoneNumber = (data[kFormKeyPhone] as PhoneNumber).international;
+
+      final appUserData = {
+        kJsonKeyId: user!.id,
+        kJsonKeyName: data[kFormKeyName],
+        kJsonKeyGender: genders
+            .firstWhere(
+              (element) => element.id == data[kFormKeyGenderId],
+            )
+            .toJson(),
+        kJsonKeyBirthday: data[kFormKeyDateOfBirth],
+        kJsonKeyEmail: data[kFormKeyEmail],
+        kJsonKeyNationalId: data[kFormKeyNationalIdentificationNumber],
+        kJsonKeyPhone: phoneNumber,
+        kJsonKeyEducation: educations
+            .firstWhere((element) => element.id == data[kFormKeyEducationId])
+            .toJson(),
+        kJsonKeyJob: job.toJson(),
+      };
+
+      final AppUser appUser = AppUser.fromJson(appUserData);
+
+      box.write(kStorageKeySession, session);
+      box.write(kStorageKeyToken, token);
+      box.write(kStorageKeyUser, jsonEncode(appUser.toJson()));
+      Get.offAllNamed(Routes.home);
     } catch (e) {
-      //
+      client.auth.signOut();
+      showGetSnackBar(
+          title: 'Kesalahan!',
+          message: 'Gagal menambahkan user: ${e.toString()}!',
+          variant: 'error');
+    } finally {
+      isProcessing.value = false;
+    }
+  }
+
+  Future<PostgrestResponse?> _saveUserProfile(
+      String? userId, Map<String, dynamic> data) async {
+    try {
+      if (userId == null) {
+        throw AppException('Gagal menambahkan data user!');
+      }
+
+      final phoneNumber = (data[kFormKeyPhone] as PhoneNumber).international;
+      final formData = {
+        UserProfileColumns.userId.key: userId,
+        UserProfileColumns.name.key: data[kFormKeyName],
+        UserProfileColumns.genderId.key: data[kFormKeyGenderId],
+        UserProfileColumns.educationId.key: data[kFormKeyEducationId],
+        UserProfileColumns.phone.key: phoneNumber,
+        UserProfileColumns.dateOfBirth.key: data[kFormKeyDateOfBirth],
+        UserProfileColumns.nationalId.key:
+            data[kFormKeyNationalIdentificationNumber],
+      };
+
+      final profileResult =
+          await client.from(kTableUserProfiles).insert(formData).execute();
+      return profileResult;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<PostgrestResponse?> _saveUserJob(
+      String? userId, Map<String, dynamic> data) async {
+    try {
+      if (userId == null) {
+        throw AppException('Gagal menambahkan data user!');
+      }
+
+      late Map<String, dynamic> userJobData;
+      final endDate = data[kFormKeyEndDate] != null &&
+              data[kFormKeyEndDate].toString().isNotEmpty
+          ? data[kFormKeyEndDate]
+          : null;
+      if (data[kFormKeyInstitutionId] != null) {
+        userJobData = {
+          UserJobColumns.userId.key: userId,
+          UserJobColumns.jobId.key: data[kFormKeyJobId],
+          UserJobColumns.jobName.key: data[kFormKeyJobName],
+          UserJobColumns.institutionId.key: data[kFormKeyInstitutionId],
+          UserJobColumns.startDate.key: data[kFormKeyStartDate],
+          UserJobColumns.endDate.key: endDate,
+        };
+      } else {
+        final institutionData = {
+          InstitutionColumns.name.key: data[kFormKeyInstitutionName],
+          InstitutionColumns.categoryId.key:
+              data[kFormKeyInstitutionCategoryId],
+        };
+
+        final result = await client
+            .from(kTableInstitutions)
+            .insert(institutionData)
+            .execute();
+
+        final Institution institution = Institution.fromJson(result.data[0]);
+
+        userJobData = {
+          UserJobColumns.userId.key: userId,
+          UserJobColumns.jobId.key: data[kFormKeyJobId],
+          UserJobColumns.jobName.key: data[kFormKeyJobName],
+          UserJobColumns.institutionId.key: institution.id,
+          UserJobColumns.startDate.key: data[kFormKeyStartDate],
+          UserJobColumns.endDate.key: endDate,
+        };
+      }
+
+      final result =
+          await client.from(kTableUserJobs).insert(userJobData).execute();
+      return result;
+    } catch (e) {
+      rethrow;
     }
   }
 
