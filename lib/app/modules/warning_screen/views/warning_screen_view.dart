@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pst_online/app/core/enums/app_logo.dart';
 import 'package:pst_online/app/core/values/color.dart';
 import 'package:pst_online/app/core/values/size.dart';
-import 'package:pst_online/app/global_widgets/lottie_logo.dart';
+import 'package:pst_online/app/global_widgets/lottie_with_author.dart';
 
-import '../../../core/utils/view_helper.dart';
 import '../controllers/warning_screen_controller.dart';
 import '../../../../i18n/strings.g.dart';
 
@@ -35,36 +33,11 @@ class WarningScreenView extends GetView<WarningScreenController> {
               children: [
                 Align(
                   alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Lottie.asset(
-                        controller.animation.value,
-                        width: Get.width * 0.6,
-                      ),
-                      verticalSpace(8),
-                      Focus(
-                        autofocus: true,
-                        includeSemantics: true,
-                        child: Text(
-                          controller.message,
-                          semanticsLabel: controller.semantics,
-                        ),
-                      ),
-                      verticalSpace(24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: LottieLogo(
-                              author: controller.animation.author,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                  child: LottieWithAuthor(
+                    animation: controller.animation,
+                    message: controller.message,
+                    semanticLabel: controller.semantics,
+                    title: 'Perhatian',
                   ),
                 ),
                 Positioned(
