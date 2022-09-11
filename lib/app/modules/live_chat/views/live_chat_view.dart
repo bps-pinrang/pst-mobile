@@ -15,37 +15,48 @@ class LiveChatView extends GetView<LiveChatController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title:  Text(t.label.menu.live_chat.replaceFirst('\n', ' ')),
-      ),
-      body: Tawk(
-        directChatLink:
-            'https://tawk.to/chat/62fe427437898912e963c394/1gaoj76u5',
-        visitor: TawkVisitor(
-          name: 'Fajrian Aidil Pratama',
-          email: 'fajrianaidilp@gmail.com',
+    return WillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(t.label.menu.live_chat.replaceFirst('\n', ' ')),
+          actions: [
+            IconButton(
+              onPressed: Get.back,
+              icon: const Icon(Icons.close),
+            )
+          ],
         ),
-        onLoad: () => print('ERROR'),
-        onLinkTap: (url) => launchUrl(
-          Uri.parse(url),
-          mode: LaunchMode.externalApplication,
-        ),
-        placeholder: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Lottie.asset(
-                AppAnimation.loader.value,
-                width: 80,
-                height: 80,
+        body: Obx(
+          () => Tawk(
+            directChatLink: controller.liveChatUrl.value,
+            visitor: TawkVisitor(
+              name: controller.name.value,
+              email: controller.email.value,
+            ),
+            onLinkTap: (url) => launchUrl(
+              Uri.parse(url),
+              mode: LaunchMode.externalApplication,
+            ),
+            placeholder: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    AppAnimation.loader.value,
+                    width: 80,
+                    height: 80,
+                  ),
+                  verticalSpace(8),
+                  const Text('Sedang memuat live chat!')
+                ],
               ),
-              verticalSpace(8),
-              const Text('Sedang memuat live chat!')
-            ],
+            ),
           ),
         ),
       ),
+      onWillPop: () async {
+        return false;
+      },
     );
   }
 }
