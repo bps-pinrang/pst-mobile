@@ -21,6 +21,7 @@ import 'package:pst_online/app/core/values/color.dart';
 import 'package:pst_online/app/core/values/size.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/global_widgets/app_button.dart';
+import 'package:pst_online/app/global_widgets/coming_soon.dart';
 import 'package:pst_online/app/global_widgets/menu_button.dart';
 import 'package:pst_online/app/global_widgets/theme_toggle_button.dart';
 import 'package:pst_online/app/global_widgets/unauthenticated_placeholder.dart';
@@ -56,7 +57,7 @@ class MainView extends GetView<HomeController> {
             ),
             floating: false,
             pinned: true,
-            scrolledUnderElevation: 0.0,
+            surfaceTintColor: theme.canvasColor,
             actions: [
               FadeInRight(
                 delay: 500.milliseconds,
@@ -124,13 +125,12 @@ class MainView extends GetView<HomeController> {
                               bgColor: theme.colorScheme.errorContainer,
                               textColor: theme.colorScheme.onErrorContainer,
                               label: t.label.menu.publication(count: 2),
-                              onTap: () => showConfirmationDialog(
-                                context,
-                                title: 'Yakin?',
-                                content:
-                                    'Apakah anda yakin ingin melakukan ini?',
-                                onConfirm: () {},
-                              ),
+                              onTap: () {
+                                showBottomSheetDialog(
+                                  context: context,
+                                  content: const ComingSoon(),
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -147,7 +147,12 @@ class MainView extends GetView<HomeController> {
                               label: t.label.menu.data_table,
                               bgColor: theme.colorScheme.primaryContainer,
                               textColor: theme.colorScheme.onPrimaryContainer,
-                              onTap: () {},
+                              onTap: () {
+                                showBottomSheetDialog(
+                                  context: context,
+                                  content: const ComingSoon(),
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -164,7 +169,12 @@ class MainView extends GetView<HomeController> {
                               label: t.label.menu.statistics,
                               bgColor: extensionColor?.successContainer,
                               textColor: extensionColor?.onSuccessContainer,
-                              onTap: () {},
+                              onTap: () {
+                                showBottomSheetDialog(
+                                  context: context,
+                                  content: const ComingSoon(),
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -199,10 +209,21 @@ class MainView extends GetView<HomeController> {
                               bgColor: theme.colorScheme.errorContainer,
                               textColor: theme.colorScheme.onErrorContainer,
                               onTap: () {
-                                showBottomSheetDialog(
-                                  context,
-                                  content: const UnauthenticatedPlaceholder(),
-                                );
+                                final user = controller.user.value;
+                                if (user != null) {
+                                  Get.toNamed(
+                                    Routes.liveChat,
+                                    arguments: {
+                                      kFormKeyEmail: user.email,
+                                      kFormKeyName: user.name,
+                                    },
+                                  );
+                                } else {
+                                  showBottomSheetDialog(
+                                    context: context,
+                                    content: const ComingSoon(),
+                                  );
+                                }
                               },
                             ),
                           ),
@@ -220,10 +241,20 @@ class MainView extends GetView<HomeController> {
                               bgColor: theme.colorScheme.primaryContainer,
                               textColor: theme.colorScheme.onPrimaryContainer,
                               label: t.label.menu.book_appointment,
-                              onTap: () => showBottomSheetDialog(
-                                context,
-                                content: const UnauthenticatedPlaceholder(),
-                              ),
+                              onTap: (){
+                                final user = controller.user.value;
+                                if (user != null) {
+                                  showBottomSheetDialog(
+                                    context: context,
+                                    content: const ComingSoon(),
+                                  );
+                                } else {
+                                  showBottomSheetDialog(
+                                    context: context,
+                                    content: const UnauthenticatedPlaceholder(),
+                                  );
+                                }
+                              },
                             ),
                           ),
                         ),
@@ -240,7 +271,12 @@ class MainView extends GetView<HomeController> {
                               label: t.label.menu.official_statistics_news,
                               bgColor: theme.colorScheme.errorContainer,
                               textColor: theme.colorScheme.onErrorContainer,
-                              onTap: () {},
+                              onTap: () {
+                                showBottomSheetDialog(
+                                  context: context,
+                                  content: const ComingSoon(),
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -259,10 +295,16 @@ class MainView extends GetView<HomeController> {
                               textColor: extensionColor?.onSuccessContainer,
                               onTap: () async {
                                 if (!await launchUrl(
-                                    Uri.parse(
-                                        'https://wa.me/6285232448912?text=Halo'),
-                                    mode: LaunchMode.externalApplication)) {
-                                  throw Exception('Gagal menjalankan url!');
+                                  Uri.parse(
+                                    'https://wa.me/6285232448912?text=Halo',
+                                  ),
+                                  mode: LaunchMode.externalApplication,
+                                )) {
+                                  showGetSnackBar(
+                                    title: 'Kesalahan!',
+                                    message: 'Gagal menjalankan Molasapp!',
+                                    variant: 'error',
+                                  );
                                 }
                               },
                             ),
@@ -288,7 +330,12 @@ class MainView extends GetView<HomeController> {
                         size: ButtonSize.small,
                         variant: ButtonVariant.flat,
                         label: t.label.btn.see_more,
-                        onPressed: () {},
+                        onPressed: () {
+                          showBottomSheetDialog(
+                            context: context,
+                            content: const ComingSoon(),
+                          );
+                        },
                       )
                     ],
                   ),
@@ -326,136 +373,177 @@ class MainView extends GetView<HomeController> {
                   ),
                   child: Column(
                     children: [
-                      Text(
-                        controller.totalPopulation.value?.variables.first
-                                ?.label ??
-                            '',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      verticalSpace(32),
                       Container(
                         constraints: BoxConstraints(
                           maxHeight: Get.height * 0.25,
                           maxWidth: Get.width,
                         ),
                         child: Obx(
-                          () => LineChart(
-                            LineChartData(
-                              gridData: FlGridData(
-                                show: true,
-                                drawVerticalLine: true,
-                                horizontalInterval: 2,
-                                verticalInterval: 1,
-                                getDrawingHorizontalLine: (value) {
-                                  return FlLine(
-                                    color: theme.dividerColor,
-                                    strokeWidth: 0.8,
-                                  );
-                                },
-                                getDrawingVerticalLine: (value) {
-                                  return FlLine(
-                                    color: theme.dividerColor,
-                                    strokeWidth: 0.7,
-                                  );
-                                },
-                              ),
-                              titlesData: FlTitlesData(
-                                show: true,
-                                rightTitles: AxisTitles(
-                                  sideTitles: SideTitles(showTitles: false),
+                          () {
+                            final data = controller.totalPopulation.value;
+                            final xLabel = data?.derivedDataPeriods.first.label;
+                            final yLabel = data?.variables.first?.unit;
+                            final location = data?.verticalVariables.first;
+                            final level = location?.val == 7315
+                                ? 'Kabupaten'
+                                : data?.verticalVariableLabel;
+                            final title =
+                                '${data?.variables.first?.label} $level ${location?.label}';
+                            return LineChart(
+                              LineChartData(
+                                gridData: FlGridData(
+                                  show: true,
+                                  drawVerticalLine: true,
+                                  horizontalInterval: 2,
+                                  verticalInterval: 1,
+                                  getDrawingHorizontalLine: (value) {
+                                    return FlLine(
+                                      color: theme.dividerColor,
+                                      strokeWidth: 0.8,
+                                    );
+                                  },
+                                  getDrawingVerticalLine: (value) {
+                                    return FlLine(
+                                      color: theme.dividerColor,
+                                      strokeWidth: 0.7,
+                                    );
+                                  },
                                 ),
-                                topTitles: AxisTitles(
-                                  sideTitles: SideTitles(showTitles: false),
-                                ),
-                                bottomTitles: AxisTitles(
-                                  axisNameWidget: Text(
-                                    'Tahun',
-                                    style: theme.textTheme.labelLarge,
+                                titlesData: FlTitlesData(
+                                  show: true,
+                                  rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false),
                                   ),
-                                  sideTitles: SideTitles(
-                                    showTitles: true,
-                                    reservedSize: 30,
-                                    interval: 1,
-                                    getTitlesWidget: (value, meta) {
-                                      return SideTitleWidget(
-                                        axisSide: meta.axisSide,
-                                        child: Text(
-                                          value.toStringAsFixed(0),
-                                          style:
-                                              theme.textTheme.caption?.copyWith(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
+                                  topTitles: AxisTitles(
+                                    axisNameWidget: Text(
+                                      title,
+                                      style:
+                                          theme.textTheme.labelLarge?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  bottomTitles: AxisTitles(
+                                    axisNameWidget: Text(
+                                      xLabel.toString(),
+                                      style: theme.textTheme.labelLarge,
+                                    ),
+                                    sideTitles: SideTitles(
+                                      showTitles: true,
+                                      reservedSize: 30,
+                                      interval: 1,
+                                      getTitlesWidget: (value, meta) {
+                                        return SideTitleWidget(
+                                          axisSide: meta.axisSide,
+                                          child: Text(
+                                            value.toStringAsFixed(0),
+                                            style: theme.textTheme.caption
+                                                ?.copyWith(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  leftTitles: AxisTitles(
+                                    axisNameWidget: Text(
+                                      yLabel.toString(),
+                                      style: theme.textTheme.labelLarge,
+                                    ),
+                                    sideTitles: SideTitles(
+                                      showTitles: true,
+                                      interval: 2,
+                                      getTitlesWidget: (value, meta) {
+                                        return SideTitleWidget(
+                                          axisSide: meta.axisSide,
+                                          space: 8.0,
+                                          child: Text(meta.formattedValue),
+                                        );
+                                      },
+                                      reservedSize: 42,
+                                    ),
+                                  ),
+                                ),
+                                borderData: FlBorderData(
+                                  show: true,
+                                  border: Border(
+                                    left: BorderSide(
+                                      color: theme.dividerColor,
+                                      width: 1,
+                                    ),
+                                    bottom: BorderSide(
+                                      color: theme.dividerColor,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                lineTouchData: LineTouchData(
+                                  touchTooltipData: LineTouchTooltipData(
+                                    tooltipBgColor: theme.canvasColor,
+                                    tooltipRoundedRadius: 12,
+                                    getTooltipItems: (spots) {
+                                      final textStyle =
+                                          theme.textTheme.labelLarge?.copyWith(
+                                                color:
+                                                    theme.colorScheme.primary,
+                                                fontWeight: FontWeight.w400,
+                                              ) ??
+                                              theme.textTheme.bodyMedium!;
+                                      return [
+                                        LineTooltipItem(
+                                            '$xLabel ${spots.first.x.toStringAsFixed(0)}:\n',
+                                            textStyle,
+                                            textAlign: TextAlign.start,
+                                            children: [
+                                              TextSpan(
+                                                text: spots.first.y
+                                                    .toStringAsFixed(0),
+                                                style: textStyle.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: ' $yLabel',
+                                              )
+                                            ]),
+                                      ];
                                     },
                                   ),
                                 ),
-                                leftTitles: AxisTitles(
-                                  axisNameWidget: Text(
-                                    controller.totalPopulation.value?.variables
-                                            .first?.unit ??
-                                        '',
-                                    style: theme.textTheme.labelLarge,
+                                lineBarsData: [
+                                  LineChartBarData(
+                                    spots:
+                                        controller.totalPopulationsData.value,
+                                    preventCurveOverShooting: true,
+                                    isCurved: true,
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        theme.primaryColor,
+                                        theme.primaryColorLight,
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                    barWidth: 5,
+                                    isStrokeCapRound: true,
+                                    shadow: Shadow(
+                                      color: theme.colorScheme.primary
+                                          .withOpacity(0.5),
+                                      blurRadius: 10,
+                                    ),
+                                    dotData: FlDotData(
+                                      show: false,
+                                    ),
+                                    belowBarData: BarAreaData(
+                                      show: true,
+                                    ),
                                   ),
-                                  sideTitles: SideTitles(
-                                    showTitles: true,
-                                    interval: 2,
-                                    getTitlesWidget: (value, meta) {
-                                      return SideTitleWidget(
-                                        axisSide: meta.axisSide,
-                                        space: 8.0,
-                                        child: Text(meta.formattedValue),
-                                      );
-                                    },
-                                    reservedSize: 42,
-                                  ),
-                                ),
+                                ],
                               ),
-                              borderData: FlBorderData(
-                                show: true,
-                                border: Border(
-                                  left: BorderSide(
-                                    color: theme.dividerColor,
-                                    width: 1,
-                                  ),
-                                  bottom: BorderSide(
-                                    color: theme.dividerColor,
-                                    width: 1,
-                                  ),
-                                ),
-                              ),
-                              
-                              lineBarsData: [
-                                LineChartBarData(
-                                  spots: controller.totalPopulationsData.value,
-                                  isCurved: true,
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      theme.primaryColor,
-                                      theme.primaryColorLight,
-                                    ],
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                  ),
-                                  barWidth: 5,
-                                  isStrokeCapRound: true,
-                                 shadow: Shadow(
-                                   color: theme.colorScheme.primary.withOpacity(0.5),
-                                   blurRadius: 10,
-                                 ),
-                                  dotData: FlDotData(
-                                    show: false,
-                                  ),
-                                  belowBarData: BarAreaData(
-                                    show: true,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                            );
+                          },
                         ),
                       ),
                     ],
