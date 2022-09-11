@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -235,6 +236,21 @@ class RegisterController extends GetxController {
       box.write(kStorageKeySession, session);
       box.write(kStorageKeyToken, token);
       box.write(kStorageKeyUser, jsonEncode(appUser.toJson()));
+
+      await Future.wait([
+        FirebaseAnalytics.instance.logSignUp(
+          signUpMethod: 'Email',
+        ),
+        FirebaseAnalytics.instance.setCurrentScreen(
+          screenName: 'Register',
+        ),
+      ]);
+
+      showGetSnackBar(
+        title: 'Pendaftaran berhasil!',
+        message: 'Selamat datang ${appUser.name}',
+        variant: 'success',
+      );
       Get.offAllNamed(Routes.home);
     } catch (e) {
       client.auth.signOut();

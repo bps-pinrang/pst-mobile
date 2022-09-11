@@ -3,6 +3,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
@@ -63,7 +64,10 @@ class MainView extends GetView<HomeController> {
                 delay: 500.milliseconds,
                 child: IconButton(
                   onPressed: () {
-                    controller.loadTotalPopulations();
+                    showBottomSheetDialog(
+                      context: context,
+                      content: const ComingSoon(),
+                    );
                   },
                   icon: Icon(
                     LineIcons.search,
@@ -191,7 +195,12 @@ class MainView extends GetView<HomeController> {
                               label: t.label.menu.news,
                               bgColor: extensionColor?.warningContainer,
                               textColor: extensionColor?.onWarningContainer,
-                              onTap: () => Get.toNamed(Routes.register),
+                              onTap: () {
+                                showBottomSheetDialog(
+                                  context: context,
+                                  content: const ComingSoon(),
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -241,7 +250,7 @@ class MainView extends GetView<HomeController> {
                               bgColor: theme.colorScheme.primaryContainer,
                               textColor: theme.colorScheme.onPrimaryContainer,
                               label: t.label.menu.book_appointment,
-                              onTap: (){
+                              onTap: () {
                                 final user = controller.user.value;
                                 if (user != null) {
                                   showBottomSheetDialog(
@@ -358,6 +367,32 @@ class MainView extends GetView<HomeController> {
                   ),
                 ),
                 verticalSpace(16),
+                Padding(
+                  padding: kPadding16H,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Grafik',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: theme.colorScheme.onBackground,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      AppButton(
+                        size: ButtonSize.small,
+                        variant: ButtonVariant.flat,
+                        label: t.label.btn.see_more,
+                        onPressed: () {
+                          showBottomSheetDialog(
+                            context: context,
+                            content: const ComingSoon(),
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                ),
                 Container(
                   margin: kPadding16,
                   padding: kPadding16,
@@ -654,16 +689,25 @@ class MainView extends GetView<HomeController> {
             final storage = Supabase.instance.client.storage
                 .from(FlutterConfig.get(kEnvKeySupabaseBucketName));
             final imageUrl = storage.getPublicUrl(banner.image).data;
-            return ClipRRect(
+            return InkWell(
               borderRadius: BorderRadius.circular(12),
-              child: ExtendedImage.network(
-                imageUrl ?? '',
-                width: Get.width,
-                border: Border.all(color: theme.dividerColor),
-                fit: BoxFit.fill,
-                semanticLabel:
-                    '${banner.title}. ${Bidi.stripHtmlIfNeeded(banner.description)}',
+              onTap: () async {
+                await FirebaseAnalytics.instance.logSelectContent(
+                  contentType: kTableBanners,
+                  itemId: banner.id.toString(),
+                );
+              },
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
+                child: ExtendedImage.network(
+                  imageUrl ?? '',
+                  width: Get.width,
+                  border: Border.all(color: theme.dividerColor),
+                  fit: BoxFit.fill,
+                  semanticLabel:
+                      '${banner.title}. ${Bidi.stripHtmlIfNeeded(banner.description)}',
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             );
           },

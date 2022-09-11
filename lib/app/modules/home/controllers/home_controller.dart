@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:age_calculator/age_calculator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:pst_online/app/core/enums/tables/user_profile_columns.dart';
 import 'package:pst_online/app/core/utils/helper.dart';
 import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/strings.dart';
@@ -95,11 +98,47 @@ class HomeController extends GetxController {
 
     final userData = box.read(kStorageKeyUser);
 
-    if(userData == null) {
+    if (userData == null) {
       return;
     }
 
     user.value = AppUser.fromJson(jsonDecode(userData));
+    await Future.wait([
+      FirebaseAnalytics.instance.setUserId(id: user.value?.id),
+      FirebaseAnalytics.instance.setUserProperty(
+        name: kJsonKeyGender,
+        value: user.value?.gender.name,
+      ),
+      FirebaseAnalytics.instance.setUserProperty(
+        name: kJsonKeyEmail,
+        value: user.value?.email,
+      ),
+      FirebaseAnalytics.instance.setUserProperty(
+        name: kJsonKeyPhone,
+        value: user.value?.phone,
+      ),
+      FirebaseAnalytics.instance.setUserProperty(
+        name: kJsonKeyEducation,
+        value: user.value?.education.name,
+      ),
+      FirebaseAnalytics.instance.setUserProperty(
+        name: kJsonKeyJob,
+        value: user.value?.userJob.name ?? user.value?.userJob.job.name,
+      ),
+      FirebaseAnalytics.instance.setUserProperty(
+        name: kJsonKeyInstitution,
+        value: user.value?.userJob.institution.name,
+      ),
+      FirebaseAnalytics.instance.setUserProperty(
+        name: kJsonKeyCategory,
+        value: user.value?.userJob.institution.institutionCategory?.name,
+      ),
+      FirebaseAnalytics.instance.setUserProperty(
+        name: 'age',
+        value: AgeCalculator.age(user.value!.birthday).years.toString(),
+      ),
+      FirebaseAnalytics.instance.setCurrentScreen(screenName: 'Main')
+    ]);
   }
 
   Future<void> handleLogout() async {
@@ -107,7 +146,7 @@ class HomeController extends GetxController {
       showLoadingDialog();
       await client.auth.signOut();
 
-      if(Get.isDialogOpen!) {
+      if (Get.isDialogOpen!) {
         Get.back();
       }
 
@@ -117,6 +156,15 @@ class HomeController extends GetxController {
       user.value = null;
       _authentication();
       persistentTabController.jumpToTab(0);
+      await Future.wait([
+        FirebaseAnalytics.instance.resetAnalyticsData(),
+        FirebaseAnalytics.instance.logEvent(
+          name: 'User Logout',
+          parameters: {
+            UserProfileColumns.userId.key: user.value?.id,
+          },
+        ),
+      ]);
     } catch (e) {
       showGetSnackBar(
         title: 'Kesalahan!',
