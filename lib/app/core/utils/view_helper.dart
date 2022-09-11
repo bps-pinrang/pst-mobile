@@ -1,7 +1,9 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pst_online/app/core/enums/app_animation.dart';
 import 'package:pst_online/app/core/enums/button_variant.dart';
 import 'package:pst_online/app/core/extensions/custom_color.dart';
@@ -111,15 +113,16 @@ Future<void> showConfirmationDialog(
   }
 }
 
-Future showBottomSheetDialog(
-  BuildContext context, {
+Future showBottomSheetDialog({
+  BuildContext? context,
   Widget Function(BuildContext context, SheetState state)? headerBuilder,
   Widget Function(BuildContext context, SheetState state)? footerBuilder,
   required Widget content,
 }) async {
   Widget Function(BuildContext context, SheetState state)? header =
       headerBuilder;
-  final theme = Theme.of(context);
+  final theme = Get.theme;
+  final localContext = context ?? Get.context!;
   header ??= (_, __) => Padding(
         padding: kPadding16V,
         child: Container(
@@ -132,7 +135,7 @@ Future showBottomSheetDialog(
         ),
       );
   return await showSlidingBottomSheet(
-    context,
+    localContext,
     resizeToAvoidBottomInset: true,
     builder: (ctx) => SlidingSheetDialog(
       cornerRadius: 16,
@@ -141,7 +144,7 @@ Future showBottomSheetDialog(
       headerBuilder: header,
       snapSpec: const SnapSpec(
         initialSnap: 0.8,
-        snappings: [0.4, 0.8, 1.0],
+        snappings: [0.8, 1.0],
       ),
       builder: (_, state) => Material(
         child: Padding(
@@ -242,4 +245,55 @@ void showGetSnackBar({
   } catch (e) {
     //
   }
+}
+
+Future<void> showLoadingDialog({String? label, RxDouble? progress}) async {
+  if (_checkIsAnythingOnScreen()) {
+    Get.back();
+  }
+  final theme = Get.theme;
+  return Get.defaultDialog(
+      title: 'Mohon Tunggu',
+      titleStyle: theme.textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.w600,
+      ),
+      barrierDismissible: false,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SpinKitFadingCircle(
+                color: theme.colorScheme.primary,
+                size: 30.0,
+              ),
+              horizontalSpace(8),
+              Text(label ?? 'Memproses permintaan anda!'),
+            ],
+          ),
+          if (progress != null) ...[
+            verticalSpace(16),
+            Obx(
+              () => LinearPercentIndicator(
+                percent: progress / 100,
+                backgroundColor: kColorSuccess.withOpacity(0.4),
+                progressColor: kColorSuccess,
+                animateFromLastPercent: true,
+                animation: true,
+                animationDuration: 100,
+                barRadius: const Radius.circular(12),
+              ),
+            ),
+            verticalSpace(4),
+            Obx(
+              () => Text(
+                '${progress.value.toPrecision(0)}%',
+                textAlign: TextAlign.end,
+                style: theme.textTheme.bodySmall,
+              ),
+            )
+          ]
+        ],
+      ));
 }
