@@ -1,12 +1,21 @@
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-Future<String> getAppVersion() async {
+Future<String> getAppVersion({String prefix = 'v', bool showBuildNumber = false}) async {
   final PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String version = packageInfo.version;
   StringBuffer buffer = StringBuffer();
-  buffer.writeAll(['v', version]);
+  buffer.writeAll([prefix, version]);
+  if(showBuildNumber) {
+    buffer.writeAll([' - ', packageInfo.buildNumber]);
+  }
   return buffer.toString();
+}
+
+
+Future<String> getAppName() async {
+  final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  return packageInfo.appName;
 }
 
 String formatDate(String format, DateTime? date,
