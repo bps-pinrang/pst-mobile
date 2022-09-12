@@ -194,6 +194,8 @@ const kJsonKeyInstitution = 'institution';
 const kJsonKeyGender = 'gender';
 const kJsonKeyNationalId = 'national_id';
 const kJsonKeyEmail = 'email';
+const kJsonKeyInstitutionName = 'institution_name';
+const kJsonKeyInstitutionCategory = 'institution_category';
 
 
 const kQueryKeyId = 'id';
