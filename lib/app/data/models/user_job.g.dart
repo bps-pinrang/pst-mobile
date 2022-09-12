@@ -8,7 +8,7 @@ part of 'user_job.dart';
 
 UserJob _$UserJobFromJson(Map<String, dynamic> json) => UserJob(
       id: json['id'] as int,
-      name: json['job_name'] as String,
+      name: json['job_name'] as String?,
       startDate: DateTime.parse(json['start_date'] as String),
       endDate: json['end_date'] == null
           ? null
