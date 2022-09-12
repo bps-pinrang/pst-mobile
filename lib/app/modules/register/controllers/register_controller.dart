@@ -4,7 +4,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pst_online/app/core/enums/tables/institution_columns.dart';
 import 'package:pst_online/app/core/enums/tables/user_job_columns.dart';
 import 'package:pst_online/app/core/enums/tables/user_profile_columns.dart';
