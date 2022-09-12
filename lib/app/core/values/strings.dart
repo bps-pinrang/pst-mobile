@@ -24,6 +24,7 @@ const kEnvKeyDomain = 'DOMAIN';
 const kEnvKeyYoutubeApiKey = 'YOUTUBE_API_KEY';
 const kEnvKeyYoutubeChannelId = 'YOUTUBE_CHANNEL_ID';
 const kEnvKeyTawkToChatUrl = 'TAWK_TO_CHAT_URL';
+const kEnvKeyOneSignalAppId = 'ONE_SIGNAL_APP_ID';
 
 const kDataKeyModel = 'model';
 const kDataKeyTitle = 'title';
