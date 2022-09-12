@@ -450,13 +450,19 @@ class MainView extends GetView<HomeController> {
                                     sideTitles: SideTitles(showTitles: false),
                                   ),
                                   topTitles: AxisTitles(
-                                    axisNameWidget: Text(
-                                      title,
-                                      style:
-                                          theme.textTheme.labelLarge?.copyWith(
-                                        fontWeight: FontWeight.w600,
+                                    axisNameWidget: FittedBox(
+                                      child: Text(
+                                        title,
+                                        style:
+                                        theme.textTheme.labelLarge?.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
+                                    sideTitles: SideTitles(
+                                      showTitles: true,
+                                      getTitlesWidget: (_,__) => const SizedBox.shrink(),
+                                    )
                                   ),
                                   bottomTitles: AxisTitles(
                                     axisNameWidget: Text(

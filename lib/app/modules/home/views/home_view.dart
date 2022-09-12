@@ -20,7 +20,7 @@ class HomeView extends GetView<HomeController> {
     return UpgradeAlert(
       upgrader: Upgrader(
         canDismissDialog: true,
-        debugDisplayAlways: true,
+        debugDisplayAlways: false,
         debugLogging: true,
         durationUntilAlertAgain: 1.minutes,
         shouldPopScope: () => true,
