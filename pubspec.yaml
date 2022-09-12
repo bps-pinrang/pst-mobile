@@ -62,6 +62,7 @@ dependencies:
   firebase_analytics: any
   age_calculator: any
   firebase_crashlytics: any
+  onesignal_flutter: any
   flutter: 
     sdk: flutter
   flutter_localizations: 
