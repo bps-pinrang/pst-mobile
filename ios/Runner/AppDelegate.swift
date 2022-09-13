@@ -1,7 +1,6 @@
 import UIKit
 import Flutter
 import flutter_downloader
-import FirebaseCore
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -11,7 +10,6 @@ import FirebaseCore
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
       FlutterDownloaderPlugin.setPluginRegistrantCallback(registerPlugins)
-      FirebaseApp.configure()
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
