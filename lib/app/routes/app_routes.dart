@@ -10,6 +10,7 @@ abstract class Routes {
   static const liveChat = _Paths.liveChat;
   static const register = _Paths.register;
   static const login = _Paths.login;
+  static const downloadHistory = _Paths.downloadHistory;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const liveChat = '/live-chat';
   static const register = '/register';
   static const login = '/login';
+  static const downloadHistory = '/download-history';
 }
