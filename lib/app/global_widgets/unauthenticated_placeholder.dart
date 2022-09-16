@@ -8,6 +8,7 @@ import '../core/enums/button_variant.dart';
 import '../core/utils/view_helper.dart';
 import '../routes/app_pages.dart';
 import 'app_button.dart';
+import '../../i18n/strings.g.dart';
 
 class UnauthenticatedPlaceholder extends StatelessWidget {
   const UnauthenticatedPlaceholder({super.key});
@@ -20,16 +21,15 @@ class UnauthenticatedPlaceholder extends StatelessWidget {
         children: [
           LottieWithAuthor(
             title: 'Oooppss',
-            message: 'Anda harus masuk terlebih dahulu!',
+            message: t.unauthenticated.label,
             animation: AppAnimation.login,
             height: Get.height * 0.3,
-            semanticLabel:
-                'Anda harus masuk atau mendaftar terlebih dahulu untuk menggunakan fitur ini!',
+            semanticLabel: t.unauthenticated.semantics,
           ),
           verticalSpace(8),
           AppButton(
             size: ButtonSize.large,
-            label: 'Masuk',
+            label: t.label.btn.login,
             variant: ButtonVariant.primary,
             onPressed: () {
               Navigator.of(context).pop();

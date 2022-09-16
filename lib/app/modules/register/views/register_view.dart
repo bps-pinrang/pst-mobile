@@ -115,13 +115,13 @@ class RegisterView extends GetView<RegisterController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Informasi Akun',
+                              t.label.form.personalInformation,
                               style: textTheme.titleLarge,
                             ),
                             verticalSpace(16),
                             AppTextField(
-                              label: 'Nama',
-                              hintText: 'Nama Lengkap (Gelar jika ada)',
+                              label: t.label.form.name,
+                              hintText: t.label.placeholder.name,
                               helperText: 'mis: Fulan, S.Sos.',
                               prefixIcon: LineIcons.user,
                               formControl: form.control(kFormKeyName),
@@ -140,7 +140,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                             verticalSpace(16),
                             AppTextField(
-                              label: 'Email',
+                              label: t.label.form.email,
                               prefixIcon: Icons.alternate_email_rounded,
                               formControl: form.control(kFormKeyEmail),
                               validationMessages: {
@@ -155,7 +155,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                             verticalSpace(16),
                             AppPasswordField(
-                              label: 'Password',
+                              label: t.label.form.password,
                               formControl: form.control(kFormKeyPassword),
                               validationMessages: {
                                 ValidationMessage.required: (control) =>
@@ -171,7 +171,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                             verticalSpace(16),
                             AppPasswordField(
-                              label: 'Konfirmasi Password',
+                              label: t.label.form.confirmPassword,
                               formControl:
                                   form.control(kFormKeyPasswordConfirm),
                               validationMessages: {
@@ -195,13 +195,13 @@ class RegisterView extends GetView<RegisterController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Informasi Pribadi',
+                             t.label.form.personalInformation,
                               style: textTheme.titleLarge,
                             ),
                             verticalSpace(16),
                             AppTextField(
-                              label: 'Nomor Induk Kependudukan (NIK)',
-                              hintText: 'Masukkan 16 digit nomor KTP Anda',
+                              label: t.label.form.nationalId,
+                              hintText: t.label.placeholder.nationalId,
                               prefixIcon: LineIcons.identificationCard,
                               maxLength: 16,
                               formControl: form.control(
@@ -220,7 +220,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                             verticalSpace(16),
                             AppTextField(
-                              label: 'Tanggal Lahir',
+                              label: t.label.form.birthday,
                               prefixIcon: LineIcons.calendarAlt,
                               inputFormatters: [
                                 controller.dateFormatter,
@@ -237,7 +237,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                             verticalSpace(16),
                             AppPhoneField(
-                              label: 'Nomor Handphone',
+                              label: t.label.form.phone,
                               formControl: form.control(kFormKeyPhone),
                               prefixIcon: LineIcons.phone,
                               validationMessages: {
@@ -258,7 +258,7 @@ class RegisterView extends GetView<RegisterController> {
                                   )
                                   .toList(),
                               value: form.control(kFormKeyGenderId).value,
-                              label: 'Jenis Kelamin',
+                              label: t.label.form.gender,
                               validationMessage: {
                                 ValidationMessage.required: (control) =>
                                     'Pilih jenis kelamin terlebih dahulu!',
@@ -279,7 +279,7 @@ class RegisterView extends GetView<RegisterController> {
                                   )
                                   .toList(),
                               value: form.control(kFormKeyEducationId).value,
-                              label: 'Pendidikan Terakhir',
+                              label: t.label.form.lastEducation,
                               validationMessage: {
                                 ValidationMessage.required: (control) =>
                                     'Pilih pendidikan terakhir terlebih dahulu!',
@@ -296,7 +296,7 @@ class RegisterView extends GetView<RegisterController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Informasi Pekerjaan',
+                              t.label.form.jobInformation,
                               style: textTheme.titleLarge,
                             ),
                             verticalSpace(16),
@@ -310,7 +310,7 @@ class RegisterView extends GetView<RegisterController> {
                                   )
                                   .toList(),
                               value: form.control(kFormKeyJobId).value,
-                              label: 'Pekerjaan',
+                              label: t.label.form.job,
                               validationMessage: {
                                 ValidationMessage.required: (control) =>
                                     'Pilih pekerjaan terlebih dahulu!',
@@ -334,7 +334,7 @@ class RegisterView extends GetView<RegisterController> {
                               value: form
                                   .control(kFormKeyInstitutionCategoryId)
                                   .value,
-                              label: 'Jenis Institusi',
+                              label: t.label.form.institutionType,
                               validationMessage: {
                                 ValidationMessage.required: (control) =>
                                     'Pilih jenis institusi terlebih dahulu!',
@@ -357,7 +357,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                             verticalSpace(16),
                             AppTextField(
-                              label: 'Tanggal Mulai',
+                              label: t.label.form.startDate,
                               prefixIcon: LineIcons.calendarAlt,
                               inputFormatters: [
                                 controller.dateFormatter,
@@ -374,7 +374,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                             verticalSpace(16),
                             AppTextField(
-                              label: 'Tanggal Selesai',
+                              label: t.label.form.endDate,
                               prefixIcon: LineIcons.calendarAlt,
                               inputFormatters: [
                                 controller.dateFormatter,
@@ -408,11 +408,11 @@ class RegisterView extends GetView<RegisterController> {
                       child: RichText(
                         text: TextSpan(
                           text:
-                              'Dengan menekan daftar saya menyatakan bahwa saya setuju terhadap ',
+                              '${t.label.agreement.label} ',
                           style: textTheme.bodySmall,
                           children: [
                             TextSpan(
-                              text: 'Ketentuan Penggunaan',
+                              text: t.label.agreement.terms,
                               style: textTheme.bodySmall?.copyWith(
                                 color: theme.primaryColorLight,
                               ),
@@ -428,7 +428,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                             const TextSpan(text: ' & '),
                             TextSpan(
-                                text: 'Kebijakan Privasi',
+                                text: t.label.agreement.privacyPolicy,
                                 style: textTheme.bodySmall?.copyWith(
                                   color: theme.primaryColorLight,
                                 ),

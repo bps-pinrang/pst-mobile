@@ -2,17 +2,56 @@
   "poweredBy": "Powered by",
   "animationBy(rich)": "Animation by $name",
   "noInternet": "No internet connection!",
+  "processing": "Processing",
+  "forgotPassword": "Forgot Password?",
   "label": {
     "btn": {
       "skip": "Skip",
-      "see_more": "See More"
+      "see_more": "See More",
+      "login": "Login",
+      "signUp": "Sign Up",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "form": {
+      "email": "Email Address",
+      "password": "Password",
+      "name": "Full Name",
+      "gender": "Gender",
+      "institution": "Institution",
+      "lastEducation": "Last Education",
+      "confirmPassword": "Confirm Password",
+      "birthday": "Date of Birth",
+      "nationalId": "National ID",
+      "phone": "Phone Number",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "institutionType": "Institution Type",
+      "job": "Job",
+      "jobInformation": "Job Information",
+      "accountInformation": "Account Information",
+      "personalInformation": "Personal Information"
+    },
+    "placeholder": {
+      "name": "Full Name (Academic degree if present)",
+      "email": "Email address",
+      "password": "Password",
+      "nationalId": "Your KTP/Passport Number"
+    },
+    "agreement": {
+      "label": "By clicking on Register I agree to the",
+      "terms": "Terms & Condition",
+      "privacyPolicy": "Privacy Policy"
     },
     "page": {
       "infographic": {
         "one": "Infographic",
         "other": "Infographics"
-      }
+      },
+      "comingSoon": "Coming Soon",
+      "comingSoonDesc": "Sorry, this feature is still in work!"
     },
+    "or": "Or",
     "menu": {
       "publication": {
         "one": "Publication",
@@ -71,6 +110,10 @@
         }
       }
     }
+  },
+  "unauthenticated": {
+    "label": "You must be logged in before using this feature.",
+    "semantics": "You must be logged in or signed up before using this feature."
   },
   "dialogs": {
     "title": {
