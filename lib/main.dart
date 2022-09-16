@@ -40,6 +40,13 @@ void main() async {
     url: FlutterConfig.get(kEnvKeySupabaseApiUrl),
     anonKey: FlutterConfig.get(kEnvKeySupabaseApiKey),
   );
+  Supabase.instance.client.auth.onAuthStateChange(
+    (event, session) {
+      if(event == AuthChangeEvent.passwordRecovery) {
+        Get.toNamed(Routes.resetPassword);
+      }
+    },
+  );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

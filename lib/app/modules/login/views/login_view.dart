@@ -101,15 +101,16 @@ class LoginView extends GetView<LoginController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      AppButton.flat(
-                        buttonSize: ButtonSize.small,
-                        label: 'Lupa Password?',
+                      TextButton(
                         onPressed: () {
-                          showBottomSheetDialog(
-                            context: context,
-                            content: const ComingSoon(),
-                          );
+                          Get.toNamed(Routes.forgotPassword);
                         },
+                        style: TextButton.styleFrom(
+                          textStyle: textTheme.labelMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          )
+                        ),
+                        child:  const Text('Lupa Password?'),
                       ),
                     ],
                   ),
