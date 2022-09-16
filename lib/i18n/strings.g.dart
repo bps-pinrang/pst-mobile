@@ -1,9 +1,9 @@
 /// Generated file. Do not edit.
 ///
 /// Locales: 2
-/// Strings: 84 (42 per locale)
+/// Strings: 154 (77 per locale)
 ///
-/// Built on 2022-09-09 at 09:44 UTC
+/// Built on 2022-09-16 at 05:45 UTC
 
 
 // coverage:ignore-file
@@ -154,9 +154,12 @@ class _StringsEn implements BaseTranslations {
 		name,
 	]);
 	String get noInternet => 'No internet connection!';
+	String get processing => 'Processing';
+	String get forgotPassword => 'Forgot Password?';
 	late final _StringsLabelEn label = _StringsLabelEn._(_root);
 	late final _StringsOnBoardingEn onBoarding = _StringsOnBoardingEn._(_root);
 	late final _StringsSemanticsEn semantics = _StringsSemanticsEn._(_root);
+	late final _StringsUnauthenticatedEn unauthenticated = _StringsUnauthenticatedEn._(_root);
 	late final _StringsDialogsEn dialogs = _StringsDialogsEn._(_root);
 }
 
@@ -168,7 +171,11 @@ class _StringsLabelEn {
 
 	// Translations
 	late final _StringsLabelBtnEn btn = _StringsLabelBtnEn._(_root);
+	late final _StringsLabelFormEn form = _StringsLabelFormEn._(_root);
+	late final _StringsLabelPlaceholderEn placeholder = _StringsLabelPlaceholderEn._(_root);
+	late final _StringsLabelAgreementEn agreement = _StringsLabelAgreementEn._(_root);
 	late final _StringsLabelPageEn page = _StringsLabelPageEn._(_root);
+	String get or => 'Or';
 	late final _StringsLabelMenuEn menu = _StringsLabelMenuEn._(_root);
 	String video({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('en'))(count,
 		one: 'Video',
@@ -205,6 +212,17 @@ class _StringsSemanticsEn {
 	late final _StringsSemanticsDialogsEn dialogs = _StringsSemanticsDialogsEn._(_root);
 }
 
+// Path: unauthenticated
+class _StringsUnauthenticatedEn {
+	_StringsUnauthenticatedEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get label => 'You must be logged in before using this feature.';
+	String get semantics => 'You must be logged in or signed up before using this feature.';
+}
+
 // Path: dialogs
 class _StringsDialogsEn {
 	_StringsDialogsEn._(this._root);
@@ -225,6 +243,61 @@ class _StringsLabelBtnEn {
 	// Translations
 	String get skip => 'Skip';
 	String get see_more => 'See More';
+	String get login => 'Login';
+	String get signUp => 'Sign Up';
+	String get previous => 'Previous';
+	String get next => 'Next';
+}
+
+// Path: label.form
+class _StringsLabelFormEn {
+	_StringsLabelFormEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get email => 'Email Address';
+	String get password => 'Password';
+	String get name => 'Full Name';
+	String get gender => 'Gender';
+	String get institution => 'Institution';
+	String get lastEducation => 'Last Education';
+	String get confirmPassword => 'Confirm Password';
+	String get birthday => 'Date of Birth';
+	String get nationalId => 'National ID';
+	String get phone => 'Phone Number';
+	String get startDate => 'Start Date';
+	String get endDate => 'End Date';
+	String get institutionType => 'Institution Type';
+	String get job => 'Job';
+	String get jobInformation => 'Job Information';
+	String get accountInformation => 'Account Information';
+	String get personalInformation => 'Personal Information';
+}
+
+// Path: label.placeholder
+class _StringsLabelPlaceholderEn {
+	_StringsLabelPlaceholderEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get name => 'Full Name (Academic degree if present)';
+	String get email => 'Email address';
+	String get password => 'Password';
+	String get nationalId => 'Your KTP/Passport Number';
+}
+
+// Path: label.agreement
+class _StringsLabelAgreementEn {
+	_StringsLabelAgreementEn._(this._root);
+
+	final _StringsEn _root; // ignore: unused_field
+
+	// Translations
+	String get label => 'By clicking on Register I agree to the';
+	String get terms => 'Terms & Condition';
+	String get privacyPolicy => 'Privacy Policy';
 }
 
 // Path: label.page
@@ -238,6 +311,8 @@ class _StringsLabelPageEn {
 		one: 'Infographic',
 		other: 'Infographics',
 	);
+	String get comingSoon => 'Coming Soon';
+	String get comingSoonDesc => 'Sorry, this feature is still in work!';
 }
 
 // Path: label.menu
@@ -408,9 +483,12 @@ class _StringsId implements _StringsEn {
 		name,
 	]);
 	@override String get noInternet => 'Tidak ada koneksi internet!';
+	@override String get processing => 'Memproses';
+	@override String get forgotPassword => 'Lupa Kata Sandi?';
 	@override late final _StringsLabelId label = _StringsLabelId._(_root);
 	@override late final _StringsOnBoardingId onBoarding = _StringsOnBoardingId._(_root);
 	@override late final _StringsSemanticsId semantics = _StringsSemanticsId._(_root);
+	@override late final _StringsUnauthenticatedId unauthenticated = _StringsUnauthenticatedId._(_root);
 	@override late final _StringsDialogsId dialogs = _StringsDialogsId._(_root);
 }
 
@@ -422,7 +500,11 @@ class _StringsLabelId implements _StringsLabelEn {
 
 	// Translations
 	@override late final _StringsLabelBtnId btn = _StringsLabelBtnId._(_root);
+	@override late final _StringsLabelFormId form = _StringsLabelFormId._(_root);
+	@override late final _StringsLabelPlaceholderId placeholder = _StringsLabelPlaceholderId._(_root);
+	@override late final _StringsLabelAgreementId agreement = _StringsLabelAgreementId._(_root);
 	@override late final _StringsLabelPageId page = _StringsLabelPageId._(_root);
+	@override String get or => 'Atau';
 	@override late final _StringsLabelMenuId menu = _StringsLabelMenuId._(_root);
 	@override String video({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('id'))(count,
 		one: 'Video',
@@ -459,6 +541,17 @@ class _StringsSemanticsId implements _StringsSemanticsEn {
 	@override late final _StringsSemanticsDialogsId dialogs = _StringsSemanticsDialogsId._(_root);
 }
 
+// Path: unauthenticated
+class _StringsUnauthenticatedId implements _StringsUnauthenticatedEn {
+	_StringsUnauthenticatedId._(this._root);
+
+	@override final _StringsId _root; // ignore: unused_field
+
+	// Translations
+	@override String get label => 'Anda harus masuk terlebih dahulu sebelum dapat menggunakan fitur ini.';
+	@override String get semantics => 'Anda harus masuk atau mendaftar terlebih dahulu sebelum dapat menggunakan fitur ini.';
+}
+
 // Path: dialogs
 class _StringsDialogsId implements _StringsDialogsEn {
 	_StringsDialogsId._(this._root);
@@ -479,6 +572,61 @@ class _StringsLabelBtnId implements _StringsLabelBtnEn {
 	// Translations
 	@override String get skip => 'Lewati';
 	@override String get see_more => 'Lihat Semua';
+	@override String get login => 'Masuk';
+	@override String get signUp => 'Daftar';
+	@override String get previous => 'Sebelumnya';
+	@override String get next => 'Selanjutnya';
+}
+
+// Path: label.form
+class _StringsLabelFormId implements _StringsLabelFormEn {
+	_StringsLabelFormId._(this._root);
+
+	@override final _StringsId _root; // ignore: unused_field
+
+	// Translations
+	@override String get email => 'Alamat Surel';
+	@override String get password => 'Kata Sandi';
+	@override String get name => 'Nama Lengkap';
+	@override String get gender => 'Jenis Kelamin';
+	@override String get institution => 'Institusi';
+	@override String get lastEducation => 'Pendidikan Terakhir';
+	@override String get confirmPassword => 'Konfirmasi Kata Sandi';
+	@override String get birthday => 'Tanggal Lahir';
+	@override String get nationalId => 'Nomor Induk Kependudukan (NIK)';
+	@override String get phone => 'Nomor Ponsel';
+	@override String get startDate => 'Tanggal Mulai';
+	@override String get endDate => 'Tanggal Selesai';
+	@override String get institutionType => 'Jenis Institusi';
+	@override String get job => 'Pekerjaan';
+	@override String get jobInformation => 'Informasi Pekerjaan';
+	@override String get accountInformation => 'Informasi Akun';
+	@override String get personalInformation => 'Informasi Pribadi';
+}
+
+// Path: label.placeholder
+class _StringsLabelPlaceholderId implements _StringsLabelPlaceholderEn {
+	_StringsLabelPlaceholderId._(this._root);
+
+	@override final _StringsId _root; // ignore: unused_field
+
+	// Translations
+	@override String get name => 'Nama Lengkap (Gelar jika ada)';
+	@override String get email => 'Alamat Surel/Email';
+	@override String get password => 'Kata Sandi';
+	@override String get nationalId => 'Masukkan nomor KTP/Paspor anda';
+}
+
+// Path: label.agreement
+class _StringsLabelAgreementId implements _StringsLabelAgreementEn {
+	_StringsLabelAgreementId._(this._root);
+
+	@override final _StringsId _root; // ignore: unused_field
+
+	// Translations
+	@override String get label => 'Dengan menekan daftar saya menyatakan bahwa saya setuju terhadap';
+	@override String get terms => 'Ketentuan Penggunaan';
+	@override String get privacyPolicy => 'Kebijakan Privasi';
 }
 
 // Path: label.page
@@ -492,6 +640,8 @@ class _StringsLabelPageId implements _StringsLabelPageEn {
 		one: 'Infografis',
 		other: 'Infografis',
 	);
+	@override String get comingSoon => 'Akan Datang';
+	@override String get comingSoonDesc => 'Mohon maaf, fitur ini masih dalam pengerjaan!';
 }
 
 // Path: label.menu
@@ -647,12 +797,45 @@ extension on _StringsEn {
 				name,
 			]),
 			'noInternet': 'No internet connection!',
+			'processing': 'Processing',
+			'forgotPassword': 'Forgot Password?',
 			'label.btn.skip': 'Skip',
 			'label.btn.see_more': 'See More',
+			'label.btn.login': 'Login',
+			'label.btn.signUp': 'Sign Up',
+			'label.btn.previous': 'Previous',
+			'label.btn.next': 'Next',
+			'label.form.email': 'Email Address',
+			'label.form.password': 'Password',
+			'label.form.name': 'Full Name',
+			'label.form.gender': 'Gender',
+			'label.form.institution': 'Institution',
+			'label.form.lastEducation': 'Last Education',
+			'label.form.confirmPassword': 'Confirm Password',
+			'label.form.birthday': 'Date of Birth',
+			'label.form.nationalId': 'National ID',
+			'label.form.phone': 'Phone Number',
+			'label.form.startDate': 'Start Date',
+			'label.form.endDate': 'End Date',
+			'label.form.institutionType': 'Institution Type',
+			'label.form.job': 'Job',
+			'label.form.jobInformation': 'Job Information',
+			'label.form.accountInformation': 'Account Information',
+			'label.form.personalInformation': 'Personal Information',
+			'label.placeholder.name': 'Full Name (Academic degree if present)',
+			'label.placeholder.email': 'Email address',
+			'label.placeholder.password': 'Password',
+			'label.placeholder.nationalId': 'Your KTP/Passport Number',
+			'label.agreement.label': 'By clicking on Register I agree to the',
+			'label.agreement.terms': 'Terms & Condition',
+			'label.agreement.privacyPolicy': 'Privacy Policy',
 			'label.page.infographic': ({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('en'))(count,
 				one: 'Infographic',
 				other: 'Infographics',
 			),
+			'label.page.comingSoon': 'Coming Soon',
+			'label.page.comingSoonDesc': 'Sorry, this feature is still in work!',
+			'label.or': 'Or',
 			'label.menu.publication': ({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('en'))(count,
 				one: 'Publication',
 				other: 'Publications',
@@ -689,6 +872,8 @@ extension on _StringsEn {
 			'semantics.btn.done': 'Done Button. Press here to finish the slideshow.',
 			'semantics.dialogs.title.failure.header': 'Failure!',
 			'semantics.dialogs.message.failure.permission': 'There is some permissions your not granted! Please give apps required permission to make it worked properly!',
+			'unauthenticated.label': 'You must be logged in before using this feature.',
+			'unauthenticated.semantics': 'You must be logged in or signed up before using this feature.',
 			'dialogs.title.failure': 'Failure!',
 			'dialogs.title.success': 'Success!',
 			'dialogs.message.failure.permission': 'There is some permissions your not granted!',
@@ -705,12 +890,45 @@ extension on _StringsId {
 				name,
 			]),
 			'noInternet': 'Tidak ada koneksi internet!',
+			'processing': 'Memproses',
+			'forgotPassword': 'Lupa Kata Sandi?',
 			'label.btn.skip': 'Lewati',
 			'label.btn.see_more': 'Lihat Semua',
+			'label.btn.login': 'Masuk',
+			'label.btn.signUp': 'Daftar',
+			'label.btn.previous': 'Sebelumnya',
+			'label.btn.next': 'Selanjutnya',
+			'label.form.email': 'Alamat Surel',
+			'label.form.password': 'Kata Sandi',
+			'label.form.name': 'Nama Lengkap',
+			'label.form.gender': 'Jenis Kelamin',
+			'label.form.institution': 'Institusi',
+			'label.form.lastEducation': 'Pendidikan Terakhir',
+			'label.form.confirmPassword': 'Konfirmasi Kata Sandi',
+			'label.form.birthday': 'Tanggal Lahir',
+			'label.form.nationalId': 'Nomor Induk Kependudukan (NIK)',
+			'label.form.phone': 'Nomor Ponsel',
+			'label.form.startDate': 'Tanggal Mulai',
+			'label.form.endDate': 'Tanggal Selesai',
+			'label.form.institutionType': 'Jenis Institusi',
+			'label.form.job': 'Pekerjaan',
+			'label.form.jobInformation': 'Informasi Pekerjaan',
+			'label.form.accountInformation': 'Informasi Akun',
+			'label.form.personalInformation': 'Informasi Pribadi',
+			'label.placeholder.name': 'Nama Lengkap (Gelar jika ada)',
+			'label.placeholder.email': 'Alamat Surel/Email',
+			'label.placeholder.password': 'Kata Sandi',
+			'label.placeholder.nationalId': 'Masukkan nomor KTP/Paspor anda',
+			'label.agreement.label': 'Dengan menekan daftar saya menyatakan bahwa saya setuju terhadap',
+			'label.agreement.terms': 'Ketentuan Penggunaan',
+			'label.agreement.privacyPolicy': 'Kebijakan Privasi',
 			'label.page.infographic': ({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('id'))(count,
 				one: 'Infografis',
 				other: 'Infografis',
 			),
+			'label.page.comingSoon': 'Akan Datang',
+			'label.page.comingSoonDesc': 'Mohon maaf, fitur ini masih dalam pengerjaan!',
+			'label.or': 'Atau',
 			'label.menu.publication': ({required num count}) => (_root._cardinalResolver ?? PluralResolvers.cardinal('id'))(count,
 				one: 'Publikasi',
 				other: 'Publikasi',
@@ -747,6 +965,8 @@ extension on _StringsId {
 			'semantics.btn.done': 'Tombol Selesai. Tekan disini untuk mengakhiri petunjuk atau tayangan slide.',
 			'semantics.dialogs.title.failure.header': 'Kesalahan!',
 			'semantics.dialogs.message.failure.permission': 'Masih ada izin yang belum anda izinkan! Mohon izinkan izin yang diperlukan agar aplikasi dapat berjalan sebagaimana mestinya!',
+			'unauthenticated.label': 'Anda harus masuk terlebih dahulu sebelum dapat menggunakan fitur ini.',
+			'unauthenticated.semantics': 'Anda harus masuk atau mendaftar terlebih dahulu sebelum dapat menggunakan fitur ini.',
 			'dialogs.title.failure': 'Kesalahan!',
 			'dialogs.title.success': 'Berhasil!',
 			'dialogs.message.failure.permission': 'Masih ada izin yang belum anda izinkan!',

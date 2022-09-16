@@ -2,17 +2,56 @@
   "poweredBy": "Dipersembahkan oleh",
   "animationBy(rich)": "Animasi oleh $name",
   "noInternet": "Tidak ada koneksi internet!",
+  "processing": "Memproses",
+  "forgotPassword": "Lupa Kata Sandi?",
   "label": {
     "btn": {
       "skip": "Lewati",
-      "see_more": "Lihat Semua"
+      "see_more": "Lihat Semua",
+      "login": "Masuk",
+      "signUp": "Daftar",
+      "previous": "Sebelumnya",
+      "next": "Selanjutnya"
+    },
+    "form": {
+      "email": "Alamat Surel",
+      "password": "Kata Sandi",
+      "name": "Nama Lengkap",
+      "gender": "Jenis Kelamin",
+      "institution": "Institusi",
+      "lastEducation": "Pendidikan Terakhir",
+      "confirmPassword": "Konfirmasi Kata Sandi",
+      "birthday": "Tanggal Lahir",
+      "nationalId": "Nomor Induk Kependudukan (NIK)",
+      "phone": "Nomor Ponsel",
+      "startDate": "Tanggal Mulai",
+      "endDate": "Tanggal Selesai",
+      "institutionType": "Jenis Institusi",
+      "job": "Pekerjaan",
+      "jobInformation": "Informasi Pekerjaan",
+      "accountInformation": "Informasi Akun",
+      "personalInformation": "Informasi Pribadi"
+    },
+    "placeholder": {
+      "name": "Nama Lengkap (Gelar jika ada)",
+      "email": "Alamat Surel/Email",
+      "password": "Kata Sandi",
+      "nationalId": "Masukkan nomor KTP/Paspor anda"
+    },
+    "agreement": {
+      "label": "Dengan menekan daftar saya menyatakan bahwa saya setuju terhadap",
+      "terms": "Ketentuan Penggunaan",
+      "privacyPolicy": "Kebijakan Privasi"
     },
     "page": {
       "infographic": {
         "one": "Infografis",
         "other": "Infografis"
-      }
+      },
+      "comingSoon": "Akan Datang",
+      "comingSoonDesc": "Mohon maaf, fitur ini masih dalam pengerjaan!"
     },
+    "or": "Atau",
     "menu": {
       "publication": {
         "one": "Publikasi",
@@ -71,6 +110,10 @@
         }
       }
     }
+  },
+  "unauthenticated": {
+    "label": "Anda harus masuk terlebih dahulu sebelum dapat menggunakan fitur ini.",
+    "semantics": "Anda harus masuk atau mendaftar terlebih dahulu sebelum dapat menggunakan fitur ini."
   },
   "dialogs": {
     "title": {

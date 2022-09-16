@@ -7,6 +7,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pst_online/app/core/enums/tables/user_profile_columns.dart';
 import 'package:pst_online/app/core/utils/helper.dart';
@@ -164,6 +165,18 @@ class HomeController extends GetxController {
             UserProfileColumns.userId.key: user.value?.id,
           },
         ),
+        OneSignal.shared.removeExternalUserId(),
+        OneSignal.shared.deleteTags([
+          UserProfileColumns.name.key,
+          UserProfileColumns.dateOfBirth.key,
+          kJsonKeyInstitutionName,
+          kJsonKeyInstitutionCategory,
+          kJsonKeyEmail,
+          kJsonKeyPhone,
+          kJsonKeyGender,
+          kJsonKeyInstitution,
+          kJsonKeyJob,
+        ])
       ]);
     } catch (e) {
       showGetSnackBar(

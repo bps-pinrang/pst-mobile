@@ -12,7 +12,7 @@ class UserJob {
   final int id;
   final Job job;
   @JsonKey(name: 'job_name')
-  final String name;
+  final String? name;
   @JsonKey(name: 'start_date')
   final DateTime startDate;
   @JsonKey(name: 'end_date')
@@ -21,7 +21,7 @@ class UserJob {
 
   UserJob({
     required this.id,
-    required this.name,
+    this.name,
     required this.startDate,
     this.endDate,
     required this.job,

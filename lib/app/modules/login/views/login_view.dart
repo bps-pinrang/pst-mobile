@@ -64,7 +64,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   verticalSpace(8),
                   Text(
-                    'Masuk',
+                    t.label.btn.login,
                     style: textTheme.displaySmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: theme.colorScheme.onSurface,
@@ -72,7 +72,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   verticalSpace(32),
                   AppTextField(
-                    label: 'Email',
+                    label: t.label.form.email,
                     prefixIcon: Icons.alternate_email_rounded,
                     formControl: form.control(kFormKeyEmail),
                     validationMessages: {
@@ -87,7 +87,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   verticalSpace(16),
                   AppPasswordField(
-                    label: 'Password',
+                    label: t.label.form.password,
                     formControl: form.control(kFormKeyPassword),
                     validationMessages: {
                       ValidationMessage.required: (control) =>
@@ -103,7 +103,7 @@ class LoginView extends GetView<LoginController> {
                     children: [
                       AppButton.flat(
                         buttonSize: ButtonSize.small,
-                        label: 'Lupa Password?',
+                        label: t.forgotPassword,
                         onPressed: () {
                           showBottomSheetDialog(
                             context: context,
@@ -119,8 +119,8 @@ class LoginView extends GetView<LoginController> {
                       () => AppButton.primary(
                         buttonSize: ButtonSize.large,
                         label: controller.isProcessing.value
-                            ? 'Memproses'
-                            : 'Masuk',
+                            ? t.processing
+                            : t.label.btn.login,
                         onPressed: formInstance.valid
                             ? (controller.isProcessing.value
                                 ? () {}
@@ -143,7 +143,7 @@ class LoginView extends GetView<LoginController> {
                           color: theme.cardColor,
                           padding: kPadding16H,
                           child: Text(
-                            'Atau',
+                            t.label.or,
                             style: textTheme.bodyMedium,
                           ),
                         ),
@@ -157,7 +157,7 @@ class LoginView extends GetView<LoginController> {
                       Get.toNamed(Routes.register);
                     },
                     isDense: true,
-                    label: 'Daftar',
+                    label: t.label.btn.signUp,
                   ),
                   verticalSpace(32),
                   FadeInUp(

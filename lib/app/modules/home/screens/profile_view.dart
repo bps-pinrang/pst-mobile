@@ -10,6 +10,7 @@ import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/size.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/global_widgets/unauthenticated_placeholder.dart';
+import 'package:pst_online/app/routes/app_pages.dart';
 
 import '../../../core/enums/app_logo.dart';
 import '../../../global_widgets/coming_soon.dart';
@@ -343,9 +344,7 @@ class ProfileView extends GetView<HomeController> {
         kJsonKeyTitle: 'Riwayat Unduh',
         kJsonKeyDescription: '',
         'on_tap': () {
-          showBottomSheetDialog(
-            content: const ComingSoon(),
-          );
+          Get.toNamed(Routes.downloadHistory);
         },
         'icon': LineIcons.download,
       },

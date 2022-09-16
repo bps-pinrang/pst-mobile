@@ -8,6 +8,7 @@ import 'package:pst_online/app/core/enums/tables/institution_columns.dart';
 import 'package:pst_online/app/core/enums/tables/user_job_columns.dart';
 import 'package:pst_online/app/core/enums/tables/user_profile_columns.dart';
 import 'package:pst_online/app/core/exceptions/app_exception.dart';
+import 'package:pst_online/app/core/utils/helper.dart';
 import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/data/models/app_user.dart';
@@ -233,6 +234,8 @@ class RegisterController extends GetxController {
 
       final AppUser appUser = AppUser.fromJson(appUserData);
 
+      registerOneSignalUser(appUser);
+
       box.write(kStorageKeySession, session);
       box.write(kStorageKeyToken, token);
       box.write(kStorageKeyUser, jsonEncode(appUser.toJson()));
@@ -254,6 +257,9 @@ class RegisterController extends GetxController {
       Get.offAllNamed(Routes.home);
     } catch (e) {
       client.auth.signOut();
+      box.remove(kStorageKeyUser);
+      box.remove(kStorageKeyToken);
+      box.remove(kStorageKeySession);
       showGetSnackBar(
           title: 'Kesalahan!',
           message: 'Gagal menambahkan user: ${e.toString()}!',

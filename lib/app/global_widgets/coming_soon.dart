@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../core/enums/app_animation.dart';
 import 'lottie_with_author.dart';
+import '../../i18n/strings.g.dart';
 
 class ComingSoon extends StatelessWidget {
   const ComingSoon({
@@ -19,15 +20,12 @@ class ComingSoon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LottieWithAuthor(
-      title: title.isEmpty ? 'Akan Datang' : title,
-      message: message.isEmpty
-          ? 'Mohon maaf, fitur ini masih dalam pengerjaan!'
-          : message,
+      title: title.isEmpty ? t.label.page.comingSoon : title,
+      message: message.isEmpty ? t.label.page.comingSoonDesc : message,
       animation: AppAnimation.construction,
       height: Get.height * 0.3,
-      semanticLabel: semanticLabels.isEmpty
-          ? 'Mohon maaf, fitur ini masih dalam pengerjaan'
-          : semanticLabels,
+      semanticLabel:
+          semanticLabels.isEmpty ? t.label.page.comingSoonDesc : semanticLabels,
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/download_history/bindings/download_history_binding.dart';
+import '../modules/download_history/views/download_history_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/live_chat/bindings/live_chat_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.login,
       page: () => const LoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.downloadHistory,
+      page: () => const DownloadHistoryView(),
+      binding: DownloadHistoryBinding(),
     ),
   ];
 }

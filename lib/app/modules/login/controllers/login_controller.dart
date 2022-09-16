@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pst_online/app/core/enums/tables/user_job_columns.dart';
 import 'package:pst_online/app/core/enums/tables/user_profile_columns.dart';
 import 'package:pst_online/app/core/exceptions/app_exception.dart';
+import 'package:pst_online/app/core/utils/helper.dart';
 import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/data/models/education.dart';
@@ -102,7 +103,7 @@ class LoginController extends GetxController {
       box.write(kStorageKeyToken, token);
       box.write(kStorageKeySession, session);
       box.write(kStorageKeyUser, jsonEncode(appUser.toJson()));
-
+      registerOneSignalUser(appUser);
       await Future.wait([
         FirebaseAnalytics.instance.logLogin(
           loginMethod: 'Email',
@@ -110,7 +111,7 @@ class LoginController extends GetxController {
             global: true,
           ),
         ),
-        FirebaseAnalytics.instance.setCurrentScreen(screenName: 'Login')
+        FirebaseAnalytics.instance.setCurrentScreen(screenName: 'Login'),
       ]);
 
       showGetSnackBar(
@@ -121,7 +122,11 @@ class LoginController extends GetxController {
 
       Get.offAllNamed(Routes.home);
     } catch (e) {
+      print(e.toString());
       client.auth.signOut();
+      box.remove(kStorageKeyUser);
+      box.remove(kStorageKeyToken);
+      box.remove(kStorageKeySession);
       showGetSnackBar(
         title: 'Kesalahan!',
         message: 'Gagal masuk ke akun anda: ${e.toString()}',

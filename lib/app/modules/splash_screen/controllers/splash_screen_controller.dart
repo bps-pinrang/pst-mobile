@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pst_online/app/core/utils/helper.dart';
 
@@ -26,6 +27,8 @@ class SplashScreenController extends GetxController {
       Permission.notification,
       Permission.calendar,
     ].request();
+
+    await OneSignal.shared.promptUserForPushNotificationPermission();
 
     if (permissions.values.where((element) => element.isGranted).isEmpty) {
       return const Right(false);
