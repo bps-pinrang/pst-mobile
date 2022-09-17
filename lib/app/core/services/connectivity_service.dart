@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pst_online/app/global_widgets/alert_variant.dart';
 
 import '../../routes/app_pages.dart';
 import '../enums/app_animation.dart';
@@ -62,7 +63,7 @@ class ConnectivityService extends GetxService {
           showGetSnackBar(
             title: 'Kesalahan',
             message: 'Terjadi kesalahan saat mengecek koneksi: ${e.toString()}',
-            variant: 'error',
+            variant: AlertVariant.error,
           );
         }
       },
@@ -71,7 +72,7 @@ class ConnectivityService extends GetxService {
         showGetSnackBar(
           title: 'Kesalahan',
           message: 'Terjadi kesalahan saat mengecek koneksi: ${error.toString()}',
-          variant: 'error',
+          variant: AlertVariant.error,
         );
       },
     );

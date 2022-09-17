@@ -21,6 +21,7 @@ import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/color.dart';
 import 'package:pst_online/app/core/values/size.dart';
 import 'package:pst_online/app/core/values/strings.dart';
+import 'package:pst_online/app/global_widgets/alert_variant.dart';
 import 'package:pst_online/app/global_widgets/app_button.dart';
 import 'package:pst_online/app/global_widgets/coming_soon.dart';
 import 'package:pst_online/app/global_widgets/menu_button.dart';
@@ -130,10 +131,7 @@ class MainView extends GetView<HomeController> {
                               textColor: theme.colorScheme.onErrorContainer,
                               label: t.label.menu.publication(count: 2),
                               onTap: () {
-                                showBottomSheetDialog(
-                                  context: context,
-                                  content: const ComingSoon(),
-                                );
+                                Get.toNamed(Routes.publications);
                               },
                             ),
                           ),
@@ -230,7 +228,7 @@ class MainView extends GetView<HomeController> {
                                 } else {
                                   showBottomSheetDialog(
                                     context: context,
-                                    content: const ComingSoon(),
+                                    content: const UnauthenticatedPlaceholder(),
                                   );
                                 }
                               },
@@ -312,7 +310,7 @@ class MainView extends GetView<HomeController> {
                                   showGetSnackBar(
                                     title: 'Kesalahan!',
                                     message: 'Gagal menjalankan Molasapp!',
-                                    variant: 'error',
+                                    variant: AlertVariant.error,
                                   );
                                 }
                               },
@@ -450,20 +448,20 @@ class MainView extends GetView<HomeController> {
                                     sideTitles: SideTitles(showTitles: false),
                                   ),
                                   topTitles: AxisTitles(
-                                    axisNameWidget: FittedBox(
-                                      child: Text(
-                                        title,
-                                        style:
-                                        theme.textTheme.labelLarge?.copyWith(
-                                          fontWeight: FontWeight.w600,
+                                      axisNameWidget: FittedBox(
+                                        child: Text(
+                                          title,
+                                          style: theme.textTheme.labelLarge
+                                              ?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    sideTitles: SideTitles(
-                                      showTitles: true,
-                                      getTitlesWidget: (_,__) => const SizedBox.shrink(),
-                                    )
-                                  ),
+                                      sideTitles: SideTitles(
+                                        showTitles: true,
+                                        getTitlesWidget: (_, __) =>
+                                            const SizedBox.shrink(),
+                                      )),
                                   bottomTitles: AxisTitles(
                                     axisNameWidget: Text(
                                       xLabel.toString(),

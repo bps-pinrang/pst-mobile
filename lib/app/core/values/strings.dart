@@ -8,6 +8,13 @@ const kTableInstitutionCategories = 'institution_categories';
 const kTableEducations = 'educations';
 const kTableJobs = 'jobs';
 const kTableUserJobs = 'user_jobs';
+const kTableUsageHistories = 'usage_histories';
+
+const kArgumentKeyUser = 'user';
+const kArgumentKeyPublication = 'publication';
+const kArgumentKeyPublicationId = 'publication_id';
+const kArgumentKeyTitle = 'title';
+const kArgumentKeyUrl = 'url';
 
 const kStorageKeyIsDarkMode = 'is_dark_mode';
 const kStorageKeyIsFirstSeen = 'is_first_seen';
@@ -26,6 +33,7 @@ const kEnvKeyYoutubeChannelId = 'YOUTUBE_CHANNEL_ID';
 const kEnvKeyTawkToChatUrl = 'TAWK_TO_CHAT_URL';
 const kEnvKeyOneSignalAppId = 'ONE_SIGNAL_APP_ID';
 
+const kDataKeyId = 'id';
 const kDataKeyModel = 'model';
 const kDataKeyTitle = 'title';
 const kDataKeyMessage = 'message';

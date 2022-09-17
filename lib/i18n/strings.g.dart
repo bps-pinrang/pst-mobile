@@ -1,9 +1,9 @@
 /// Generated file. Do not edit.
 ///
 /// Locales: 2
-/// Strings: 154 (77 per locale)
+/// Strings: 156 (78 per locale)
 ///
-/// Built on 2022-09-16 at 05:45 UTC
+/// Built on 2022-09-17 at 17:50 UTC
 
 
 // coverage:ignore-file
@@ -161,6 +161,7 @@ class _StringsEn implements BaseTranslations {
 	late final _StringsSemanticsEn semantics = _StringsSemanticsEn._(_root);
 	late final _StringsUnauthenticatedEn unauthenticated = _StringsUnauthenticatedEn._(_root);
 	late final _StringsDialogsEn dialogs = _StringsDialogsEn._(_root);
+	String get loaded => 'loaded';
 }
 
 // Path: label
@@ -490,6 +491,7 @@ class _StringsId implements _StringsEn {
 	@override late final _StringsSemanticsId semantics = _StringsSemanticsId._(_root);
 	@override late final _StringsUnauthenticatedId unauthenticated = _StringsUnauthenticatedId._(_root);
 	@override late final _StringsDialogsId dialogs = _StringsDialogsId._(_root);
+	@override String get loaded => 'dimuat';
 }
 
 // Path: label
@@ -877,6 +879,7 @@ extension on _StringsEn {
 			'dialogs.title.failure': 'Failure!',
 			'dialogs.title.success': 'Success!',
 			'dialogs.message.failure.permission': 'There is some permissions your not granted!',
+			'loaded': 'loaded',
 		};
 	}
 }
@@ -970,6 +973,7 @@ extension on _StringsId {
 			'dialogs.title.failure': 'Kesalahan!',
 			'dialogs.title.success': 'Berhasil!',
 			'dialogs.message.failure.permission': 'Masih ada izin yang belum anda izinkan!',
+			'loaded': 'dimuat',
 		};
 	}
 }

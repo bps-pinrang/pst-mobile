@@ -18,6 +18,7 @@ import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/core/values/theme.dart';
 import 'package:pst_online/i18n/strings.g.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'app/core/utils/helper.dart';
 import 'firebase_options.dart';
 
 import 'app/core/services/connectivity_service.dart';
@@ -33,6 +34,7 @@ void main() async {
     debug: true,
     ignoreSsl: true,
   );
+  await FlutterDownloader.registerCallback(downloadCallback);
   await GetStorage.init();
   await FlutterConfig.loadEnvVariables();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
