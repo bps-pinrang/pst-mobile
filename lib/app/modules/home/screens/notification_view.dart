@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pst_online/app/core/extensions/custom_color.dart';
 import 'package:pst_online/app/global_widgets/coming_soon.dart';
 
 import '../../../core/values/size.dart';
@@ -11,6 +10,8 @@ import '../../../global_widgets/unauthenticated_placeholder.dart';
 import '../controllers/home_controller.dart';
 
 class NotificationView extends GetView<HomeController> {
+  const NotificationView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +20,6 @@ class NotificationView extends GetView<HomeController> {
   }
 
   Widget _buildBody(BuildContext context) {
-    final theme = Theme.of(context);
-    final extensionColor = Theme.of(context).extension<CustomColors>();
 
     if (controller.user.value == null) {
       return Container(
