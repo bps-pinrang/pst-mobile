@@ -11,6 +11,7 @@ import 'package:pst_online/app/data/models/api_meta.dart';
 import 'package:pst_online/app/data/models/api_response.dart';
 import 'package:pst_online/app/data/models/infographic.dart';
 import 'package:pst_online/app/data/models/news.dart';
+import 'package:pst_online/app/data/models/publication.dart';
 import 'package:pst_online/app/routes/bps_api_routes.dart';
 
 import '../models/dynamic_table/data_response.dart';
@@ -160,6 +161,86 @@ class ApiProvider extends GetConnect {
     return response.fold(
       (failure) => Left(failure),
       (data) => Right(data),
+    );
+  }
+
+  Future<Either<Failure, ApiResponse<List<Publication>>>> loadPublications(
+    int page, {
+    String? keyword,
+
+    int? year,
+  }) async {
+    var queries = <String, String?>{
+      kDataKeyModel: 'publication',
+      kDataKeyPage: page.toString(),
+    };
+
+    queries.addIf(
+      keyword != null && keyword.isNotEmpty,
+      kDataKeyKeyword,
+      keyword,
+    );
+
+
+
+    queries.addIf(
+      year != null,
+      kDataKeyYear,
+      year.toString(),
+    );
+
+
+    final response = await _getData(
+      route: BpsApiRoutes.list,
+      queries: queries,
+      responseTransformer: (data) {
+        final decoded = jsonDecode(data);
+        final resp = decoded[kJsonKeyData][1] as List<dynamic>;
+        final publications = resp.map((e) => Publication.fromJson(e)).toList();
+        final apiResponse = ApiResponse(
+          data: publications,
+          dataAvailability: decoded[kJsonKeyDataAvailability],
+          status: decoded[kJsonKeyStatus],
+          meta: ApiMeta.fromJson(decoded[kJsonKeyData][0]),
+        );
+
+        return apiResponse;
+      },
+    );
+
+    return response.fold(
+      (failure) => Left(failure),
+      (data) => Right(data),
+    );
+  }
+
+  Future<Either<Failure, ApiResponse<Publication>>> loadPublication(
+      String id) async {
+    var queries = <String, String?>{
+      kDataKeyModel: 'publication',
+      kDataKeyId: id,
+    };
+
+    final response = await _getData(
+      route: BpsApiRoutes.view,
+      queries: queries,
+      responseTransformer: (data) {
+        final decoded = jsonDecode(data);
+        final resp = decoded[kJsonKeyData];
+        final publication =Publication.fromJson(resp);
+        final apiResponse = ApiResponse(
+          data: publication,
+          dataAvailability: decoded[kJsonKeyDataAvailability],
+          status: decoded[kJsonKeyStatus],
+        );
+
+        return apiResponse;
+      },
+    );
+
+    return response.fold(
+          (failure) => Left(failure),
+          (data) => Right(data),
     );
   }
 

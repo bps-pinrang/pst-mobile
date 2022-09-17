@@ -1,6 +1,15 @@
+import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
+
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:intl/intl.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path_provider_android/path_provider_android.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:pst_online/app/core/exceptions/app_exception.dart';
 
 import '../../data/models/app_user.dart';
 import '../enums/tables/user_profile_columns.dart';
@@ -50,4 +59,49 @@ void registerOneSignalUser(AppUser user) {
         user.userJob.institution.institutionCategory?.name,
     kJsonKeyJob: user.userJob.name ?? user.userJob.job.name,
   });
+}
+
+Future<String?> downloadFile(
+    String url, String fileName, String extension) async {
+  final result = await Permission.storage.status;
+
+  if (result != PermissionStatus.granted) {
+    await Permission.storage.request();
+  }
+
+  Directory? directory;
+
+  if (Platform.isIOS) {
+    directory = await getApplicationDocumentsDirectory();
+  } else if (Platform.isAndroid) {
+    try {
+      directory = Directory((await PathProviderAndroid().getDownloadsPath())!);
+    } catch (e) {
+      directory = await getExternalStorageDirectory();
+    }
+  }
+
+  if (directory == null) {
+    throw AppException('Gagal mengambil lokasi unduhan!');
+  }
+
+  final path = Platform.isIOS ? directory.absolute.path : directory.path;
+
+  final taskId = await FlutterDownloader.enqueue(
+    url: url,
+    savedDir: path,
+    showNotification: true,
+    openFileFromNotification: true,
+    requiresStorageNotLow: true,
+    saveInPublicStorage: true,
+    fileName: '$fileName.$extension',
+  );
+  return taskId;
+}
+
+@pragma('vm:entry-point')
+void downloadCallback(String id, DownloadTaskStatus status, int progress) {
+  final SendPort? send =
+      IsolateNameServer.lookupPortByName('downloader_send_port');
+  send?.send([id, status, progress]);
 }

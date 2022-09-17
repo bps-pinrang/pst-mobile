@@ -125,5 +125,6 @@
         "permission": "Masih ada izin yang belum anda izinkan!"
       }
     }
-  }
+  },
+  "loaded": "dimuat"
 }

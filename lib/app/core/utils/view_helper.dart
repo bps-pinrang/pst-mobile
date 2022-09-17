@@ -9,6 +9,7 @@ import 'package:pst_online/app/core/enums/button_variant.dart';
 import 'package:pst_online/app/core/extensions/custom_color.dart';
 import 'package:pst_online/app/core/values/color.dart';
 import 'package:pst_online/app/core/values/size.dart';
+import 'package:pst_online/app/global_widgets/alert_variant.dart';
 import 'package:pst_online/app/global_widgets/app_button.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
@@ -175,7 +176,7 @@ void showGetSnackBar({
   Widget? leading,
   required String title,
   required String message,
-  String variant = 'info',
+  AlertVariant variant = AlertVariant.info,
   double overlayBlur = 0.0,
   bool isDismissible = true,
   bool showProgressIndicator = false,
@@ -186,11 +187,11 @@ void showGetSnackBar({
     var bgColor = theme.primaryColor;
     final extensionColor = theme.extension<CustomColors>();
 
-    if (variant == 'success') {
+    if (variant == AlertVariant.success) {
       bgColor = extensionColor!.success!;
     }
 
-    if (variant == 'error') {
+    if (variant == AlertVariant.error) {
       bgColor = theme.errorColor;
     }
 
@@ -210,13 +211,18 @@ void showGetSnackBar({
         backgroundColor: bgColor,
         duration: 3.seconds,
         isDismissible: isDismissible,
-        messageText: Text(
-          message,
-          style: textTheme.caption?.copyWith(
-            color: Colors.white,
+        messageText: Container(
+          constraints: BoxConstraints(
+            maxHeight: Get.height * 0.5,
           ),
-          maxLines: 10,
-          overflow: TextOverflow.ellipsis,
+          child: Text(
+            message,
+            style: textTheme.caption?.copyWith(
+              color: Colors.white,
+            ),
+            maxLines: 10,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         overlayBlur: overlayBlur,
         mainButton: IconButton(

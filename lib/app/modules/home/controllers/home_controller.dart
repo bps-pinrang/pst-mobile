@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:age_calculator/age_calculator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -17,6 +20,7 @@ import 'package:pst_online/app/data/models/app_user.dart';
 import 'package:pst_online/app/data/models/banner_model.dart';
 import 'package:pst_online/app/data/models/dynamic_table/data_response.dart';
 import 'package:pst_online/app/data/providers/youtube_provider.dart';
+import 'package:pst_online/app/global_widgets/alert_variant.dart';
 import 'package:pst_online/app/modules/home/screens/booking_history_view.dart';
 import 'package:pst_online/app/modules/home/screens/main_view.dart';
 import 'package:pst_online/app/modules/home/screens/notification_view.dart';
@@ -37,8 +41,8 @@ class HomeController extends GetxController {
     initialIndex: 0,
   );
 
-  final client = Supabase.instance.client;
   Rx<AppUser?> user = Rx(null);
+  final client = Supabase.instance.client;
   Rxn<DataResponse> totalPopulation = Rxn(null);
   YoutubePlayerController youtubePlayerController = YoutubePlayerController(
     initialVideoId: 'z-7yCWZ6B-U',
@@ -71,6 +75,8 @@ class HomeController extends GetxController {
   final isBannerError = false.obs;
   final isBannerLoading = false.obs;
 
+  final ReceivePort _receivePort = ReceivePort();
+
   @override
   void onInit() async {
     provider = GetInstance().find<ApiProvider>();
@@ -80,12 +86,27 @@ class HomeController extends GetxController {
     );
     appName.value = await getAppName();
     super.onInit();
+    IsolateNameServer.registerPortWithName(
+      _receivePort.sendPort,
+      'downloader_send_port',
+    );
+    _receivePort.listen((message) {
+      if ((message as List)[1] == DownloadTaskStatus.complete) {
+        showGetSnackBar(
+          title: 'Berhasil',
+          message: 'Berhasil mengunduh publikasi!',
+          variant: AlertVariant.success,
+        );
+      }
+    });
+
     await Future.wait([
       _authentication(),
       loadBanners(),
       loadTotalPopulations(),
     ]);
   }
+
 
   Future<void> _authentication() async {
     final session = box.read(kStorageKeySession);
@@ -182,7 +203,7 @@ class HomeController extends GetxController {
       showGetSnackBar(
         title: 'Kesalahan!',
         message: 'Terjadi kesalahan saat mencoba keluar dari aplikasi!',
-        variant: 'error',
+        variant: AlertVariant.error,
       );
     }
   }
@@ -217,7 +238,7 @@ class HomeController extends GetxController {
       showGetSnackBar(
         title: 'Kesalahan',
         message: 'Terjadi kesalahan saat memuat banner: ${e.toString()}',
-        variant: 'error',
+        variant: AlertVariant.error,
       );
       isBannerError.value = true;
     } finally {
@@ -267,6 +288,7 @@ class HomeController extends GetxController {
     scrollController.dispose();
     youtubePlayerController.dispose();
     persistentTabController.dispose();
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
     super.onClose();
   }
 }

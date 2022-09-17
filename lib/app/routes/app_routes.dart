@@ -11,6 +11,9 @@ abstract class Routes {
   static const register = _Paths.register;
   static const login = _Paths.login;
   static const downloadHistory = _Paths.downloadHistory;
+  static const publications = _Paths.publications;
+  static const publicationDetail = _Paths.publicationDetail;
+  static const pdfReader = _Paths.pdfReader;
 }
 
 abstract class _Paths {
@@ -23,4 +26,7 @@ abstract class _Paths {
   static const register = '/register';
   static const login = '/login';
   static const downloadHistory = '/download-history';
+  static const publications = '/publications';
+  static const publicationDetail = '/publication-detail';
+  static const pdfReader = '/pdf-reader';
 }

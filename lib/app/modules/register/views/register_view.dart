@@ -195,7 +195,7 @@ class RegisterView extends GetView<RegisterController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                             t.label.form.personalInformation,
+                              t.label.form.personalInformation,
                               style: textTheme.titleLarge,
                             ),
                             verticalSpace(16),
@@ -263,8 +263,7 @@ class RegisterView extends GetView<RegisterController> {
                                 ValidationMessage.required: (control) =>
                                     'Pilih jenis kelamin terlebih dahulu!',
                               },
-                              onChanged: (value) {
-                              },
+                              onChanged: (value) {},
                               prefixIcon: LineIcons.genderless,
                               formControl: form.control(kFormKeyGenderId),
                             ),
@@ -284,8 +283,7 @@ class RegisterView extends GetView<RegisterController> {
                                 ValidationMessage.required: (control) =>
                                     'Pilih pendidikan terakhir terlebih dahulu!',
                               },
-                              onChanged: (value) {
-                              },
+                              onChanged: (value) {},
                               prefixIcon: LineIcons.school,
                               formControl: form.control(kFormKeyEducationId),
                             )
@@ -315,8 +313,7 @@ class RegisterView extends GetView<RegisterController> {
                                 ValidationMessage.required: (control) =>
                                     'Pilih pekerjaan terlebih dahulu!',
                               },
-                              onChanged: (value) {
-                              },
+                              onChanged: (value) {},
                               prefixIcon: LineIcons.alternateFileAlt,
                               formControl: form.control(kFormKeyJobId),
                             ),
@@ -407,8 +404,7 @@ class RegisterView extends GetView<RegisterController> {
                     Expanded(
                       child: RichText(
                         text: TextSpan(
-                          text:
-                              '${t.label.agreement.label} ',
+                          text: '${t.label.agreement.label} ',
                           style: textTheme.bodySmall,
                           children: [
                             TextSpan(
@@ -456,7 +452,7 @@ class RegisterView extends GetView<RegisterController> {
                         Expanded(
                           child: AppButton.secondary(
                             buttonSize: ButtonSize.large,
-                            label: 'Sebelumnya',
+                            label: t.label.btn.previous,
                             onPressed: controller.currentStep.value == 0
                                 ? null
                                 : () {
@@ -471,8 +467,8 @@ class RegisterView extends GetView<RegisterController> {
                             buttonSize: ButtonSize.large,
                             isBusy: controller.isProcessing.value,
                             label: controller.currentStep.value == 2
-                                ? 'Daftar'
-                                : 'Selanjutnya',
+                                ? t.label.btn.signUp
+                                : t.label.btn.next,
                             onPressed: controller.currentStep.value == 2
                                 ? (formInstance.valid
                                     ? controller.registerUser
@@ -577,8 +573,7 @@ class _InstitutionSection extends StatelessWidget {
         ValidationMessage.required: (control) =>
             'Pilih institusi terlebih dahulu!',
       },
-      onChanged: (value) {
-      },
+      onChanged: (value) {},
       prefixIcon: LineIcons.building,
       formControl: form.control(kFormKeyInstitutionId),
     );
