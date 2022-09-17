@@ -9,8 +9,10 @@ import 'package:line_icons/line_icons.dart';
 import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/size.dart';
 import 'package:pst_online/app/core/values/strings.dart';
+import 'package:pst_online/app/global_widgets/alert_variant.dart';
 import 'package:pst_online/app/global_widgets/unauthenticated_placeholder.dart';
 import 'package:pst_online/app/routes/app_pages.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/enums/app_logo.dart';
 import '../../../global_widgets/coming_soon.dart';
@@ -121,7 +123,8 @@ class ProfileView extends GetView<HomeController> {
                   trailing: const Icon(Icons.chevron_right),
                 );
               },
-              separatorBuilder: (_, __) => const Divider(
+              separatorBuilder: (_, __) =>
+              const Divider(
                 height: 2,
               ),
               itemCount: _accountMenuList.length,
@@ -158,7 +161,8 @@ class ProfileView extends GetView<HomeController> {
                   trailing: const Icon(Icons.chevron_right),
                 );
               },
-              separatorBuilder: (_, __) => const Divider(
+              separatorBuilder: (_, __) =>
+              const Divider(
                 height: 2,
               ),
               itemCount: _workMenuList.length,
@@ -195,7 +199,8 @@ class ProfileView extends GetView<HomeController> {
                   trailing: const Icon(Icons.chevron_right),
                 );
               },
-              separatorBuilder: (_, __) => const Divider(
+              separatorBuilder: (_, __) =>
+              const Divider(
                 height: 2,
               ),
               itemCount: _appMenuList.length,
@@ -208,62 +213,63 @@ class ProfileView extends GetView<HomeController> {
             verticalSpace(16),
             Center(
               child: Obx(
-                () => Column(
-                  children: [
-                    ExtendedImage.asset(
-                      AppLogo.pstV.value,
-                      height: 60,
-                      semanticLabel: t.semantics.pstLogo,
-                    ),
-                    verticalSpace(8),
-                    Text(
-                      controller.appName.value,
-                      style: textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    verticalSpace(4),
-                    Text(
-                      controller.appVersion.value,
-                      style: textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    verticalSpace(8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    () =>
+                    Column(
                       children: [
-                        Expanded(
-                          child: FadeInLeft(
-                            duration: 1.seconds,
-                            child: ExtendedImage.asset(
-                              AppLogo.berakhlak.value,
-                              height: 40,
-                            ),
+                        ExtendedImage.asset(
+                          AppLogo.pstV.value,
+                          height: 60,
+                          semanticLabel: t.semantics.pstLogo,
+                        ),
+                        verticalSpace(8),
+                        Text(
+                          controller.appName.value,
+                          style: textTheme.labelLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Expanded(
-                          child: FadeInUp(
-                            duration: 1.seconds,
-                            child: ExtendedImage.asset(
-                              AppLogo.bpsH.value,
-                              height: 70,
-                            ),
+                        verticalSpace(4),
+                        Text(
+                          controller.appVersion.value,
+                          style: textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Expanded(
-                          child: FadeInRight(
-                            duration: 1.seconds,
-                            child: ExtendedImage.asset(
-                              AppLogo.berakhlakAlt.value,
-                              height: 30,
+                        verticalSpace(8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: FadeInLeft(
+                                duration: 1.seconds,
+                                child: ExtendedImage.asset(
+                                  AppLogo.berakhlak.value,
+                                  height: 40,
+                                ),
+                              ),
                             ),
-                          ),
-                        )
+                            Expanded(
+                              child: FadeInUp(
+                                duration: 1.seconds,
+                                child: ExtendedImage.asset(
+                                  AppLogo.bpsH.value,
+                                  height: 70,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: FadeInRight(
+                                duration: 1.seconds,
+                                child: ExtendedImage.asset(
+                                  AppLogo.berakhlakAlt.value,
+                                  height: 30,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
               ),
             )
           ],
@@ -333,10 +339,18 @@ class ProfileView extends GetView<HomeController> {
       {
         kJsonKeyTitle: 'Beri Rating',
         kJsonKeyDescription: '',
-        'on_tap': () {
-          showBottomSheetDialog(
-            content: const ComingSoon(),
-          );
+        'on_tap': () async {
+          if (!(await launchUrl(
+            Uri.parse(
+                'https://play.google.com/store/apps/details?id=id.go.bps.pinrangkab.pst_mobile'),
+            mode: LaunchMode.externalApplication,
+          ))) {
+            showGetSnackBar(
+              title: 'Gagal!',
+              message: 'Tidak bisa membuka aplikasi!',
+              variant: AlertVariant.error,
+            );
+          }
         },
         'icon': LineIcons.star,
       },

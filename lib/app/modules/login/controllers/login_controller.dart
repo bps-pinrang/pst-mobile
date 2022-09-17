@@ -11,6 +11,7 @@ import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/data/models/education.dart';
 import 'package:pst_online/app/data/models/gender.dart';
+import 'package:pst_online/app/global_widgets/alert_variant.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -117,7 +118,7 @@ class LoginController extends GetxController {
       showGetSnackBar(
         title: 'Berhasil masuk!',
         message: 'Selamat datang kembali ${appUser.name}',
-        variant: 'success',
+        variant: AlertVariant.success,
       );
 
       Get.offAllNamed(Routes.home);
@@ -130,7 +131,7 @@ class LoginController extends GetxController {
       showGetSnackBar(
         title: 'Kesalahan!',
         message: 'Gagal masuk ke akun anda: ${e.toString()}',
-        variant: 'error',
+        variant: AlertVariant.error,
       );
     } finally {
       isProcessing.value = false;

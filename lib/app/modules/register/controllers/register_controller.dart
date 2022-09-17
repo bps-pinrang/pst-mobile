@@ -17,6 +17,7 @@ import 'package:pst_online/app/data/models/gender.dart';
 import 'package:pst_online/app/data/models/institution.dart';
 import 'package:pst_online/app/data/models/institution_category.dart';
 import 'package:pst_online/app/data/models/job.dart';
+import 'package:pst_online/app/global_widgets/alert_variant.dart';
 import 'package:pst_online/app/routes/app_pages.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:reactive_phone_form_field/reactive_phone_form_field.dart';
@@ -125,7 +126,7 @@ class RegisterController extends GetxController {
         title: 'Kesalahan',
         message:
             'Terjadi kesalahan saat memuat data jenis kelamin: ${e.toString()}',
-        variant: 'error',
+        variant: AlertVariant.error,
       );
     }
   }
@@ -252,7 +253,7 @@ class RegisterController extends GetxController {
       showGetSnackBar(
         title: 'Pendaftaran berhasil!',
         message: 'Selamat datang ${appUser.name}',
-        variant: 'success',
+        variant: AlertVariant.success,
       );
       Get.offAllNamed(Routes.home);
     } catch (e) {
@@ -261,9 +262,10 @@ class RegisterController extends GetxController {
       box.remove(kStorageKeyToken);
       box.remove(kStorageKeySession);
       showGetSnackBar(
-          title: 'Kesalahan!',
-          message: 'Gagal menambahkan user: ${e.toString()}!',
-          variant: 'error');
+        title: 'Kesalahan!',
+        message: 'Gagal menambahkan user: ${e.toString()}!',
+        variant: AlertVariant.error,
+      );
     } finally {
       isProcessing.value = false;
     }
