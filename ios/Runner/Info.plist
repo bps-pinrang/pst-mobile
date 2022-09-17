@@ -19,6 +19,15 @@
 		<string>en</string>
 		<string>de</string>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>https</string>
+      <string>file</string>
+    </array>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    <key>UIFileSharingEnabled</key>
+    <true/>
 	<key>CFBundleName</key>
 	<string>PST Mobile BPS Pinrang</string>
 	<key>CFBundlePackageType</key>
