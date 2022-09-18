@@ -16,6 +16,8 @@ abstract class Routes {
   static const pdfReader = _Paths.pdfReader;
   static const news = _Paths.news;
   static const newsDetail = _Paths.newsDetail;
+  static const statistics = _Paths.statistics;
+  static const statisticDetail = _Paths.statisticDetail;
 }
 
 abstract class _Paths {
@@ -33,4 +35,6 @@ abstract class _Paths {
   static const pdfReader = '/pdf-reader';
   static const news = '/news';
   static const newsDetail = '/news-detail';
+  static const statistics = '/statistics';
+  static const statisticDetail = '/statistic-detail';
 }

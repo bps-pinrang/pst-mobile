@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pst_online/app/core/utils/helper.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/values/strings.dart';
 import '../../../data/models/failure.dart';
@@ -19,6 +21,7 @@ class SplashScreenController extends GetxController {
   final isFirstSeen = false.obs;
   final isTimerInitialized = false.obs;
   late Timer timer;
+  final client = Supabase.instance.client;
 
   Future<Either<Failure, bool>> askPermissions() async {
     Map<Permission, PermissionStatus> permissions = await [
@@ -70,6 +73,7 @@ class SplashScreenController extends GetxController {
   void onInit() async {
     appVersion.value = await getAppVersion();
     checkIfFirstSeen();
+    await refreshToken();
     await askPermissions();
     await Future.wait([
       FirebaseAnalytics.instance.logAppOpen(),
@@ -79,6 +83,39 @@ class SplashScreenController extends GetxController {
     ]);
     loadPage();
     super.onInit();
+  }
+
+  Future<void> refreshToken() async {
+    try {
+      if (box.hasData(kStorageKeyUser)) {
+        final data = box.read(kStorageKeyTokenUpdatedAt);
+
+        if (data == null) {
+          box.write(
+            kStorageKeyTokenUpdatedAt,
+            formatDate('yyyy-MM-dd HH:mm:ss', DateTime.now(), showTimezone: false),
+          );
+        } else {
+          final diff = DateTime.parse(data.toString().replaceAll(' WITA', '')).difference(DateTime.now());
+
+          if(diff.inMinutes < 60) {
+            return;
+          }
+
+          final result = await client.auth.refreshSession();
+          if (result.statusCode == 200) {
+            box.write(kStorageKeyToken, result.data!.accessToken);
+            box.write(kStorageKeySession, result.data!.persistSessionString);
+            box.write(
+              kStorageKeyTokenUpdatedAt,
+              formatDate('yyyy-MM-dd HH:mm:ss', DateTime.now()),
+            );
+          }
+        }
+      }
+    }catch(exception, stack) {
+      FirebaseCrashlytics.instance.recordError(exception, stack);
+    }
   }
 
   @override

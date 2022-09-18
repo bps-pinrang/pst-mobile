@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pst_online/app/core/enums/tables/usage_history_columns.dart';
 import 'package:pst_online/app/core/exceptions/app_exception.dart';
@@ -20,7 +17,6 @@ import '../../../core/values/strings.dart';
 import '../../../data/models/app_user.dart';
 
 class PublicationsController extends GetxController {
-  final box = GetStorage();
   late ApiProvider provider;
 
   Rxn<AppUser> user = Rxn(null);
@@ -42,11 +38,8 @@ class PublicationsController extends GetxController {
     pagingController = PagingController(
       firstPageKey: 1,
     )..addPageRequestListener(loadPublications);
-    final userData = box.read(kStorageKeyUser);
 
-    if (userData != null) {
-      user.value = AppUser.fromJson(jsonDecode(userData));
-    }
+    user.value = Get.arguments[kArgumentKeyUser];
     super.onInit();
 
     await FirebaseAnalytics.instance
@@ -148,6 +141,7 @@ class PublicationsController extends GetxController {
 
   @override
   void onClose() {
+    pagingController.removePageRequestListener(loadPublications);
     pagingController.dispose();
     scrollController.dispose();
     super.onClose();

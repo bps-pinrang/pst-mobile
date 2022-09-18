@@ -19,7 +19,6 @@ class NewsDetailController extends GetxController {
 
   final isLoading = false.obs;
   Rxn<Failure> failure = Rxn(null);
-  final isDownloadProcessing = false.obs;
 
   @override
   void onInit() async {
@@ -41,10 +40,7 @@ class NewsDetailController extends GetxController {
           failure.value = failData;
           FirebaseCrashlytics.instance.log(failData.message);
         },
-        (resp) {
-          print(resp.data.toJson());
-          news.value = resp.data;
-        },
+        (resp)=>   news.value = resp.data,
       );
     } catch (e, stack) {
       FirebaseCrashlytics.instance.recordError(e, stack);

@@ -13,6 +13,7 @@ import 'package:pst_online/app/data/models/infographic.dart';
 import 'package:pst_online/app/data/models/news.dart';
 import 'package:pst_online/app/data/models/news_category.dart';
 import 'package:pst_online/app/data/models/publication.dart';
+import 'package:pst_online/app/data/models/statistic_table.dart';
 import 'package:pst_online/app/routes/bps_api_routes.dart';
 
 import '../models/dynamic_table/data_response.dart';
@@ -252,6 +253,36 @@ class ApiProvider extends GetConnect {
     );
   }
 
+  Future<Either<Failure, ApiResponse<StatisticTable>>> loadStatisticTableDetail(
+      String id) async {
+    var queries = {
+      kDataKeyModel: 'statictable',
+      kDataKeyId: id,
+    };
+
+    final response = await _getData(
+      route: BpsApiRoutes.view,
+      queries: queries,
+      responseTransformer: (data) {
+        final decoded = jsonDecode(data);
+        final resp = decoded[kJsonKeyData];
+        final staticTable = StatisticTable.fromJson(resp);
+        final apiResponse = ApiResponse(
+          data: staticTable,
+          dataAvailability: decoded[kJsonKeyDataAvailability],
+          status: decoded[kJsonKeyStatus],
+        );
+
+        return apiResponse;
+      },
+    );
+
+    return response.fold(
+          (failure) => Left(failure),
+          (data) => Right(data),
+    );
+  }
+
   Future<Either<Failure, ApiResponse<List<Publication>>>> loadPublications(
     int page, {
     String? keyword,
@@ -295,6 +326,46 @@ class ApiProvider extends GetConnect {
     return response.fold(
       (failure) => Left(failure),
       (data) => Right(data),
+    );
+  }
+
+  Future<Either<Failure, ApiResponse<List<StatisticTable>>>> loadStatisticTables(
+      int page, {
+        String? keyword,
+
+      }) async {
+    var queries = <String, String?>{
+      kDataKeyModel: 'statictable',
+      kDataKeyPage: page.toString(),
+    };
+
+    queries.addIf(
+      keyword != null && keyword.isNotEmpty,
+      kDataKeyKeyword,
+      keyword,
+    );
+
+    final response = await _getData(
+      route: BpsApiRoutes.list,
+      queries: queries,
+      responseTransformer: (data) {
+        final decoded = jsonDecode(data);
+        final resp = decoded[kJsonKeyData][1] as List<dynamic>;
+        final statisticTables = resp.map((e) => StatisticTable.fromJson(e)).toList();
+        final apiResponse = ApiResponse(
+          data: statisticTables,
+          dataAvailability: decoded[kJsonKeyDataAvailability],
+          status: decoded[kJsonKeyStatus],
+          meta: ApiMeta.fromJson(decoded[kJsonKeyData][0]),
+        );
+
+        return apiResponse;
+      },
+    );
+
+    return response.fold(
+          (failure) => Left(failure),
+          (data) => Right(data),
     );
   }
 
