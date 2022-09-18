@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/appointments/bindings/appointments_binding.dart';
+import '../modules/appointments/views/appointments_view.dart';
 import '../modules/download_history/bindings/download_history_binding.dart';
 import '../modules/download_history/views/download_history_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -113,6 +115,11 @@ class AppPages {
       name: _Paths.statisticDetail,
       page: () => const StatisticDetailView(),
       binding: StatisticDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.appointments,
+      page: () => const AppointmentsView(),
+      binding: AppointmentsBinding(),
     ),
   ];
 }

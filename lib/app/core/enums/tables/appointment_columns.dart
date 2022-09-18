@@ -8,6 +8,8 @@ enum AppointmentColumns {
   score('score'),
   ratingCategoryId('rating_category_id'),
   comment('comment'),
+  purpose('purpose'),
+  appointmentStatusId('appointment_status_id'),
   createdAt('created_at'),
   usageId('usage_id'),
   ;
