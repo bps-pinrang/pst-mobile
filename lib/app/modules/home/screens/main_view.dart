@@ -23,6 +23,7 @@ import 'package:pst_online/app/core/values/size.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/global_widgets/alert_variant.dart';
 import 'package:pst_online/app/global_widgets/app_button.dart';
+import 'package:pst_online/app/global_widgets/app_network_image.dart';
 import 'package:pst_online/app/global_widgets/coming_soon.dart';
 import 'package:pst_online/app/global_widgets/menu_button.dart';
 import 'package:pst_online/app/global_widgets/theme_toggle_button.dart';
@@ -701,16 +702,12 @@ class MainView extends GetView<HomeController> {
                   itemId: banner.id.toString(),
                 );
               },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: ExtendedImage.network(
-                  imageUrl ?? '',
+              child: Semantics(
+                label:  '${banner.title}. ${Bidi.stripHtmlIfNeeded(banner.description)}',
+                child: AppNetworkImage(
+                  url: imageUrl ?? '',
                   width: Get.width,
-                  border: Border.all(color: theme.dividerColor),
-                  fit: BoxFit.fill,
-                  semanticLabel:
-                      '${banner.title}. ${Bidi.stripHtmlIfNeeded(banner.description)}',
-                  borderRadius: BorderRadius.circular(12),
+                  height: Get.height * 0.2,
                 ),
               ),
             );

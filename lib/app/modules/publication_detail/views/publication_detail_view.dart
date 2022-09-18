@@ -12,6 +12,7 @@ import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/size.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/global_widgets/app_button.dart';
+import 'package:pst_online/app/global_widgets/app_network_image.dart';
 import 'package:pst_online/app/global_widgets/shimmer_widget.dart';
 import 'package:pst_online/app/routes/app_pages.dart';
 
@@ -369,7 +370,7 @@ class _PublicationReleaseDateWidget extends StatelessWidget {
     }
 
     return Text(
-      formatDate('dd MMMM yyyy', publication?.releaseDate) ?? '',
+      formatDate('dd MMMM yyyy', publication?.releaseDate),
       style: textTheme.caption,
       maxLines: 2,
       textAlign: TextAlign.center,
@@ -432,11 +433,13 @@ class _PublicationCoverWidget extends StatelessWidget {
       );
     }
 
-    return ExtendedImage.network(
-      publication?.cover ?? '',
-      width: Get.width * 0.25,
-      height: Get.height * 0.18,
-      fit: BoxFit.fill,
+    return Semantics(
+      label: 'Cover ${publication?.title}',
+      child: AppNetworkImage(
+        url: publication?.cover ?? '',
+        width: Get.width * 0.25,
+        height: Get.height * 0.18,
+      ),
     );
   }
 }

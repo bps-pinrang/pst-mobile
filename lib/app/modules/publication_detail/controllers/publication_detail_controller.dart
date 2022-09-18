@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get/get.dart';
 import 'package:pst_online/app/core/values/strings.dart';
@@ -30,6 +31,9 @@ class PublicationDetailController extends GetxController {
     provider = GetInstance().find<ApiProvider>();
     user.value = Get.arguments[kArgumentKeyUser];
     publicationId.value = Get.arguments[kArgumentKeyPublicationId];
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'Publication Detail',
+    );
     await loadPublicationDetail();
     super.onInit();
   }
