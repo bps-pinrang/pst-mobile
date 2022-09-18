@@ -66,7 +66,7 @@ class HomeController extends GetxController {
   final totalPopulationsData = List<FlSpot>.empty(growable: true).obs;
   final pages = <Widget>[
     const MainView(),
-    NotificationView(),
+    const NotificationView(),
     const BookingHistoryView(),
     const ProfileView(),
   ];
