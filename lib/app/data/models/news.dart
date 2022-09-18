@@ -10,9 +10,9 @@ class News {
   @JsonKey(name: kJsonKeyNewsId)
   final int id;
   @JsonKey(name: kJsonKeyNewsCatId)
-  final String categoryId;
+  final String? categoryId;
   @JsonKey(name: kJsonKeyNewsCatName)
-  final String categoryName;
+  final String? categoryName;
   final String title;
   @JsonKey(name: kJsonKeyNewsType)
   final String? type;

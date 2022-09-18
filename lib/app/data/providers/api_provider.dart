@@ -11,6 +11,7 @@ import 'package:pst_online/app/data/models/api_meta.dart';
 import 'package:pst_online/app/data/models/api_response.dart';
 import 'package:pst_online/app/data/models/infographic.dart';
 import 'package:pst_online/app/data/models/news.dart';
+import 'package:pst_online/app/data/models/news_category.dart';
 import 'package:pst_online/app/data/models/publication.dart';
 import 'package:pst_online/app/routes/bps_api_routes.dart';
 
@@ -127,8 +128,44 @@ class ApiProvider extends GetConnect {
     );
   }
 
-  Future<Either<Failure, ApiResponse<List<News>>>> loadNews(int page,
-      {String? keyword}) async {
+  Future<Either<Failure, ApiResponse<List<NewsCategory>>>>
+      loadNewsCategories() async {
+    var queries = {
+      kDataKeyModel: 'newscategory',
+    };
+
+    final response = await _getData(
+      route: BpsApiRoutes.list,
+      queries: queries,
+      responseTransformer: (data) {
+        final decoded = jsonDecode(data);
+        final resp = decoded[kJsonKeyData][1] as List<dynamic>;
+        final newsCategories =
+            resp.map((e) => NewsCategory.fromJson(e)).toList();
+        final apiResponse = ApiResponse(
+          data: newsCategories,
+          dataAvailability: decoded[kJsonKeyDataAvailability],
+          status: decoded[kJsonKeyStatus],
+          meta: ApiMeta.fromJson(decoded[kJsonKeyData][0]),
+        );
+
+        return apiResponse;
+      },
+    );
+
+    return response.fold(
+      (failure) => Left(failure),
+      (data) => Right(data),
+    );
+  }
+
+  Future<Either<Failure, ApiResponse<List<News>>>> loadNews(
+    int page, {
+    String? keyword,
+    String? newsCategory,
+    String? year,
+    String? month,
+  }) async {
     var queries = {
       kDataKeyModel: 'news',
       kDataKeyPage: page.toString(),
@@ -139,6 +176,27 @@ class ApiProvider extends GetConnect {
       kDataKeyKeyword,
       keyword.toString(),
     );
+    queries.addIf(
+      newsCategory != null && newsCategory.isNotEmpty,
+      kDataKeyNewsCat,
+      newsCategory.toString(),
+    );
+
+    queries.addIf(
+      year != null && year.isNotEmpty,
+      kDataKeyYear,
+      year.toString(),
+    );
+
+    queries.addIf(
+      month != null && month.isNotEmpty,
+      kDataKeyMonth,
+      month.toString().padLeft(2, '0'),
+    );
+
+
+
+
 
     final response = await _getData(
       route: BpsApiRoutes.list,
@@ -164,10 +222,39 @@ class ApiProvider extends GetConnect {
     );
   }
 
+  Future<Either<Failure, ApiResponse<News>>> loadNewsDetail(
+      String id) async {
+    var queries = {
+      kDataKeyModel: 'news',
+      kDataKeyId: id,
+    };
+
+    final response = await _getData(
+      route: BpsApiRoutes.view,
+      queries: queries,
+      responseTransformer: (data) {
+        final decoded = jsonDecode(data);
+        final resp = decoded[kJsonKeyData];
+        final news = News.fromJson(resp);
+        final apiResponse = ApiResponse(
+          data: news,
+          dataAvailability: decoded[kJsonKeyDataAvailability],
+          status: decoded[kJsonKeyStatus],
+        );
+
+        return apiResponse;
+      },
+    );
+
+    return response.fold(
+          (failure) => Left(failure),
+          (data) => Right(data),
+    );
+  }
+
   Future<Either<Failure, ApiResponse<List<Publication>>>> loadPublications(
     int page, {
     String? keyword,
-
     int? year,
   }) async {
     var queries = <String, String?>{
@@ -181,14 +268,11 @@ class ApiProvider extends GetConnect {
       keyword,
     );
 
-
-
     queries.addIf(
       year != null,
       kDataKeyYear,
       year.toString(),
     );
-
 
     final response = await _getData(
       route: BpsApiRoutes.list,
@@ -227,7 +311,7 @@ class ApiProvider extends GetConnect {
       responseTransformer: (data) {
         final decoded = jsonDecode(data);
         final resp = decoded[kJsonKeyData];
-        final publication =Publication.fromJson(resp);
+        final publication = Publication.fromJson(resp);
         final apiResponse = ApiResponse(
           data: publication,
           dataAvailability: decoded[kJsonKeyDataAvailability],
@@ -239,8 +323,8 @@ class ApiProvider extends GetConnect {
     );
 
     return response.fold(
-          (failure) => Left(failure),
-          (data) => Right(data),
+      (failure) => Left(failure),
+      (data) => Right(data),
     );
   }
 

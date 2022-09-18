@@ -8,8 +8,8 @@ part of 'news.dart';
 
 News _$NewsFromJson(Map<String, dynamic> json) => News(
       id: json['news_id'] as int,
-      categoryName: json['news_cat_name'] as String,
-      categoryId: json['news_cat_id'] as String,
+      categoryName: json['newscat_name'] as String?,
+      categoryId: json['newscat_id'] as String?,
       title: json['title'] as String,
       type: json['news_type'] as String?,
       news: json['news'] as String,
@@ -19,8 +19,8 @@ News _$NewsFromJson(Map<String, dynamic> json) => News(
 
 Map<String, dynamic> _$NewsToJson(News instance) => <String, dynamic>{
       'news_id': instance.id,
-      'news_cat_id': instance.categoryId,
-      'news_cat_name': instance.categoryName,
+      'newscat_id': instance.categoryId,
+      'newscat_name': instance.categoryName,
       'title': instance.title,
       'news_type': instance.type,
       'news': instance.news,

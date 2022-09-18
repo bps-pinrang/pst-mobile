@@ -104,14 +104,16 @@ class HomeView extends GetView<HomeController> {
         hideNavigationBarWhenKeyboardShows: true,
         resizeToAvoidBottomInset: true,
         bottomScreenMargin: 48,
-        decoration: NavBarDecoration(boxShadow: [
-          BoxShadow(
-            color: theme.shadowColor.withOpacity(0.1),
-            blurRadius: 10,
-            spreadRadius: 6,
-            blurStyle: BlurStyle.normal,
-          )
-        ]),
+        decoration: NavBarDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: theme.shadowColor.withOpacity(Get.isDarkMode ? 0.6 : 0.1),
+              blurRadius: 10,
+              spreadRadius: 6,
+              blurStyle: BlurStyle.normal,
+            )
+          ],
+        ),
         backgroundColor: theme.bottomAppBarColor,
       ),
     );

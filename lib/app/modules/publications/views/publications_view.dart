@@ -135,9 +135,9 @@ class PublicationsView extends GetView<PublicationsController> {
           return PublicationCard(
             publication: publication,
             onDetail: () {
-              FirebaseAnalytics.instance.logSelectItem(
-                itemListId: publication.id,
-                itemListName: publication.title,
+              FirebaseAnalytics.instance.logSelectContent(
+                contentType:'Publikasi',
+                itemId: publication.title,
               );
               Get.toNamed(
                 Routes.publicationDetail,

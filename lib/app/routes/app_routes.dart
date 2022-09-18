@@ -14,6 +14,8 @@ abstract class Routes {
   static const publications = _Paths.publications;
   static const publicationDetail = _Paths.publicationDetail;
   static const pdfReader = _Paths.pdfReader;
+  static const news = _Paths.news;
+  static const newsDetail = _Paths.newsDetail;
 }
 
 abstract class _Paths {
@@ -29,4 +31,6 @@ abstract class _Paths {
   static const publications = '/publications';
   static const publicationDetail = '/publication-detail';
   static const pdfReader = '/pdf-reader';
+  static const news = '/news';
+  static const newsDetail = '/news-detail';
 }

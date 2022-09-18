@@ -30,7 +30,6 @@ class PublicationsController extends GetxController {
   final ScrollController scrollController = ScrollController();
 
   final isApiMetaLoaded = false.obs;
-  final isPublicationError = false.obs;
   final isPublicationLoading = false.obs;
 
   final pageSize = 10.obs;
@@ -64,21 +63,13 @@ class PublicationsController extends GetxController {
 
   Future<void> loadPublications(int page) async {
     try {
-      isPublicationError.value = false;
       isPublicationLoading.value = true;
       final result = await provider.loadPublications(
         page,
         year: selectedDate.value?.year,
       );
       result.fold(
-        (failure) {
-          showGetSnackBar(
-            title: failure.title,
-            message: failure.message,
-            variant: AlertVariant.error,
-          );
-          pagingController.error = failure.message;
-        },
+        (failure) => pagingController.error = failure.message,
         (data) {
           currentPage.value++;
 
@@ -100,7 +91,6 @@ class PublicationsController extends GetxController {
         },
       );
     } catch (e, trace) {
-      isPublicationError.value = true;
       pagingController.error = e.toString();
 
       FirebaseCrashlytics.instance.recordError(
