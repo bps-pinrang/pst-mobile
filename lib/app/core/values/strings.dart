@@ -3,24 +3,29 @@ const kTableUsers = 'users';
 const kTableUserProfiles = 'user_profiles';
 const kTableBanners = 'banners';
 const kTableAppointments = 'appointments';
+const kTableAppointmentServices = 'appointment_services';
 const kTableInstitutions = 'institutions';
 const kTableInstitutionCategories = 'institution_categories';
 const kTableEducations = 'educations';
 const kTableJobs = 'jobs';
 const kTableUserJobs = 'user_jobs';
 const kTableUsageHistories = 'usage_histories';
+const kTableServices = 'services';
+const kTableUsages = 'usages';
 
 const kArgumentKeyUser = 'user';
 const kArgumentKeyPublication = 'publication';
 const kArgumentKeyPublicationId = 'publication_id';
 const kArgumentKeyTitle = 'title';
 const kArgumentKeyUrl = 'url';
+const kArgumentKeyId = 'id';
 
+const kStorageKeyUser = 'user';
+const kStorageKeyToken = 'token';
+const kStorageKeySession = 'session';
 const kStorageKeyIsDarkMode = 'is_dark_mode';
 const kStorageKeyIsFirstSeen = 'is_first_seen';
-const kStorageKeySession = 'session';
-const kStorageKeyToken = 'token';
-const kStorageKeyUser = 'user';
+const kStorageKeyTokenUpdatedAt = 'token_updated_at';
 
 const kEnvKeySupabaseApiUrl = 'SUPABASE_API_URL';
 const kEnvKeySupabaseApiKey = 'SUPABASE_API_KEY';
@@ -70,6 +75,9 @@ const kFormKeyJobName = 'job_name';
 const kFormKeyStartDate = 'start_date';
 const kFormKeyEndDate = 'end_date';
 const kFormKeyAgree = 'agree';
+const kFormKeyPurpose = 'purpose';
+const kFormKeyAppointmentDate = 'appointment_date';
+const kFormKeyUsageId = 'usage_id';
 
 const kValidationKeyRequiredLength = 'requiredLength';
 
@@ -121,8 +129,8 @@ const kJsonKeyAbstract = 'abstract';
 const kJsonKeyBrsId = 'brs_id';
 const kJsonKeySubjId = 'subj_id';
 const kJsonKeySubj = 'subj';
-const kJsonKeyNewsCatId = 'news_cat_id';
-const kJsonKeyNewsCatName = 'news_cat_name';
+const kJsonKeyNewsCatId = 'newscat_id';
+const kJsonKeyNewsCatName = 'newscat_name';
 const kJsonKeyNews = 'news';
 const kJsonKeyNewsType = 'news_type';
 const kJsonKeyPicture = 'picture';

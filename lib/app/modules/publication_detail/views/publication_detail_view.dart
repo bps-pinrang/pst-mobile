@@ -6,12 +6,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
+import 'package:pst_online/app/core/enums/app_animation.dart';
 import 'package:pst_online/app/core/enums/button_size.dart';
 import 'package:pst_online/app/core/utils/helper.dart';
 import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/size.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/global_widgets/app_button.dart';
+import 'package:pst_online/app/global_widgets/app_network_image.dart';
+import 'package:pst_online/app/global_widgets/lottie_with_author.dart';
 import 'package:pst_online/app/global_widgets/shimmer_widget.dart';
 import 'package:pst_online/app/routes/app_pages.dart';
 
@@ -33,7 +36,8 @@ class PublicationDetailView extends GetView<PublicationDetailController> {
             color: theme.canvasColor,
             boxShadow: [
               BoxShadow(
-                color: theme.shadowColor.withOpacity(0.2),
+                color:
+                    theme.shadowColor.withOpacity(Get.isDarkMode ? 0.6 : 0.2),
                 blurRadius: 12,
                 spreadRadius: 6,
               )
@@ -61,7 +65,6 @@ class PublicationDetailView extends GetView<PublicationDetailController> {
                                       controller.publication.value?.pdf,
                                 },
                               );
-
                             } else {
                               showBottomSheetDialog(
                                 context: context,
@@ -274,6 +277,80 @@ class PublicationDetailView extends GetView<PublicationDetailController> {
         const Divider(
           thickness: 1,
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: SizedBox(
+                width: Get.width * 0.5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'ISSN',
+                      style: textTheme.labelSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    verticalSpace(4),
+                    Row(
+                      children: [
+                        const Icon(Icons.confirmation_number_outlined),
+                        horizontalSpace(8),
+                        _ISSNWidget(
+                          failure: failure,
+                          isLoading: isLoading,
+                          publication: publication,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            horizontalSpace(8),
+            SizedBox(
+              height: 40,
+              child: VerticalDivider(
+                width: 1,
+                thickness: 2,
+                color: theme.dividerColor,
+              ),
+            ),
+            horizontalSpace(8),
+            Expanded(
+              child: SizedBox(
+                width: Get.width * 0.5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Ukuran File',
+                      style: textTheme.labelSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    verticalSpace(4),
+                    Row(
+                      children: [
+                        const Icon(Icons.attach_file_sharp),
+                        horizontalSpace(8),
+                        _FileSizeWidget(
+                          failure: failure,
+                          isLoading: isLoading,
+                          publication: publication,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+        const Divider(
+          thickness: 1,
+        ),
         Text(
           'Abstrak',
           style: textTheme.labelMedium?.copyWith(
@@ -285,6 +362,7 @@ class PublicationDetailView extends GetView<PublicationDetailController> {
           failure: failure,
           isLoading: isLoading,
           publication: publication,
+          onRetry: controller.loadPublicationDetail,
         ),
       ],
     );
@@ -369,7 +447,7 @@ class _PublicationReleaseDateWidget extends StatelessWidget {
     }
 
     return Text(
-      formatDate('dd MMMM yyyy', publication?.releaseDate) ?? '',
+      formatDate('dd MMMM yyyy', publication?.releaseDate),
       style: textTheme.caption,
       maxLines: 2,
       textAlign: TextAlign.center,
@@ -432,11 +510,13 @@ class _PublicationCoverWidget extends StatelessWidget {
       );
     }
 
-    return ExtendedImage.network(
-      publication?.cover ?? '',
-      width: Get.width * 0.25,
-      height: Get.height * 0.18,
-      fit: BoxFit.fill,
+    return Semantics(
+      label: 'Cover ${publication?.title}',
+      child: AppNetworkImage(
+        url: publication?.cover ?? '',
+        width: Get.width * 0.25,
+        height: Get.height * 0.18,
+      ),
     );
   }
 }
@@ -503,6 +583,64 @@ class _LastUpdateWidget extends StatelessWidget {
   }
 }
 
+class _ISSNWidget extends StatelessWidget {
+  const _ISSNWidget({
+    required this.isLoading,
+    this.failure,
+    this.publication,
+  });
+
+  final bool isLoading;
+  final Failure? failure;
+  final Publication? publication;
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
+      return ShimmerWidget(width: Get.width * 0.15, height: 10);
+    }
+
+    if (failure != null) {
+      return const Text('-');
+    }
+
+    return FittedBox(
+      child: Text(
+        publication?.issn ?? '',
+      ),
+    );
+  }
+}
+
+class _FileSizeWidget extends StatelessWidget {
+  const _FileSizeWidget({
+    required this.isLoading,
+    this.failure,
+    this.publication,
+  });
+
+  final bool isLoading;
+  final Failure? failure;
+  final Publication? publication;
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
+      return ShimmerWidget(width: Get.width * 0.15, height: 10);
+    }
+
+    if (failure != null) {
+      return const Text('-');
+    }
+
+    return FittedBox(
+      child: Text(
+        publication?.size ?? '',
+      ),
+    );
+  }
+}
+
 class _PublicationNumberWidget extends StatelessWidget {
   const _PublicationNumberWidget({
     required this.isLoading,
@@ -537,11 +675,13 @@ class _AbstractSectionWidget extends StatelessWidget {
     required this.isLoading,
     this.failure,
     this.publication,
+    required this.onRetry,
   });
 
   final bool isLoading;
   final Failure? failure;
   final Publication? publication;
+  final GestureTapCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -575,7 +715,23 @@ class _AbstractSectionWidget extends StatelessWidget {
     }
 
     if (failure != null) {
-      return Column();
+      return Column(
+        children: [
+          LottieWithAuthor(
+            title: failure!.title,
+            message: failure!.message,
+            animation: AppAnimation.notFound,
+            semanticLabel: failure!.message,
+          ),
+          verticalSpace(32),
+          AppButton.primary(
+            buttonSize: ButtonSize.large,
+            label: 'Coba Lagi',
+            onPressed: onRetry,
+            isDense: true,
+          )
+        ],
+      );
     }
 
     return HtmlWidget(

@@ -123,7 +123,6 @@ class LoginController extends GetxController {
 
       Get.offAllNamed(Routes.home);
     } catch (e) {
-      print(e.toString());
       client.auth.signOut();
       box.remove(kStorageKeyUser);
       box.remove(kStorageKeyToken);

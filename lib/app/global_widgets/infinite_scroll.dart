@@ -51,7 +51,8 @@ class InfiniteScroll extends StatelessWidget {
           transitionDuration: 700.milliseconds,
           noItemsFoundIndicatorBuilder: emptyBuilder ??
               (context) {
-                return SizedBox(
+                return Container(
+                  padding: kPadding16,
                   height: Get.height * 0.84,
                   child: Center(
                     child: LottieWithAuthor(
@@ -65,39 +66,38 @@ class InfiniteScroll extends StatelessWidget {
                 );
               },
           firstPageErrorIndicatorBuilder: (_) {
-            return SizedBox(
+            return Container(
+              padding: kPadding16,
               height: Get.height * 0.84,
-              child: Padding(
-                padding: kPadding16,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    LottieWithAuthor(
-                      title: 'Kesalahan',
-                      message: 'Terjadi kesalahan saat memuat data!',
-                      animation: AppAnimation.warning,
-                      semanticLabel: 'Terjadi kesalahan saat memuat data!',
-                      height: Get.height * 0.2,
-                    ),
-                    verticalSpace(32),
-                    Text(
-                      pagingController.error.toString(),
-                      style: textTheme.bodySmall,
-                    ),
-                    verticalSpace(32),
-                    AppButton.primary(
-                      buttonSize: ButtonSize.large,
-                      onPressed: pagingController.refresh,
-                      label: 'Coba Lagi',
-                    )
-                  ],
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LottieWithAuthor(
+                    title: 'Kesalahan',
+                    message: 'Terjadi kesalahan saat memuat data!',
+                    animation: AppAnimation.warning,
+                    semanticLabel: 'Terjadi kesalahan saat memuat data!',
+                    height: Get.height * 0.2,
+                  ),
+                  verticalSpace(32),
+                  Text(
+                    pagingController.error.toString(),
+                    style: textTheme.bodySmall,
+                  ),
+                  verticalSpace(32),
+                  AppButton.primary(
+                    buttonSize: ButtonSize.large,
+                    onPressed: pagingController.refresh,
+                    label: 'Coba Lagi',
+                  )
+                ],
               ),
             );
           },
           firstPageProgressIndicatorBuilder: firstProgressIndicatorBuilder ??
               (_) {
-                return SizedBox(
+                return Container(
+                  padding: kPadding16,
                   height: Get.height * 0.84,
                   child: SpinKitFadingCircle(
                     color: theme.colorScheme.primary,
@@ -107,45 +107,51 @@ class InfiniteScroll extends StatelessWidget {
               },
           newPageProgressIndicatorBuilder: progressIndicatorBuilder ??
               (_) {
-                return Center(
-                  child: Column(
-                    children: [
-                      SpinKitFadingCircle(
-                        color: theme.colorScheme.primary,
-                        size: 30,
-                      ),
-                      verticalSpace(8),
-                      Text(
-                        'Muat Lagi..',
-                        style: textTheme.bodySmall,
-                      ),
-                      verticalSpace(8),
-                    ],
+                return Container(
+                  padding: kPadding16,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        SpinKitFadingCircle(
+                          color: theme.colorScheme.primary,
+                          size: 30,
+                        ),
+                        verticalSpace(8),
+                        Text(
+                          'Muat Lagi..',
+                          style: textTheme.bodySmall,
+                        ),
+                        verticalSpace(8),
+                      ],
+                    ),
                   ),
                 );
               },
           newPageErrorIndicatorBuilder: (_) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const LottieWithAuthor(
-                  title: 'Kesalahan!',
-                  message: 'Kesalahan memuat data terbaru!',
-                  animation: AppAnimation.warning,
-                  semanticLabel: 'Kesalahan memuat data terbaru!',
-                ),
-                verticalSpace(8),
-                Text(
-                  pagingController.error.toString(),
-                  style: textTheme.bodySmall,
-                ),
-                verticalSpace(16),
-                AppButton.primary(
-                  buttonSize: ButtonSize.large,
-                  label: 'Coba Lagi',
-                  onPressed: pagingController.refresh,
-                )
-              ],
+            return Container(
+              padding: kPadding16,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const LottieWithAuthor(
+                    title: 'Kesalahan!',
+                    message: 'Kesalahan memuat data terbaru!',
+                    animation: AppAnimation.warning,
+                    semanticLabel: 'Kesalahan memuat data terbaru!',
+                  ),
+                  verticalSpace(8),
+                  Text(
+                    pagingController.error.toString(),
+                    style: textTheme.bodySmall,
+                  ),
+                  verticalSpace(16),
+                  AppButton.primary(
+                    buttonSize: ButtonSize.large,
+                    label: 'Coba Lagi',
+                    onPressed: pagingController.refresh,
+                  )
+                ],
+              ),
             );
           },
         ),

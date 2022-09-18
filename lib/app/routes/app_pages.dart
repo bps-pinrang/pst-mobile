@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/appointments/bindings/appointments_binding.dart';
+import '../modules/appointments/views/appointments_view.dart';
 import '../modules/download_history/bindings/download_history_binding.dart';
 import '../modules/download_history/views/download_history_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -8,6 +10,10 @@ import '../modules/live_chat/bindings/live_chat_binding.dart';
 import '../modules/live_chat/views/live_chat_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/news/bindings/news_binding.dart';
+import '../modules/news/views/news_view.dart';
+import '../modules/news_detail/bindings/news_detail_binding.dart';
+import '../modules/news_detail/views/news_detail_view.dart';
 import '../modules/on_boarding/bindings/on_boarding_binding.dart';
 import '../modules/on_boarding/views/on_boarding_view.dart';
 import '../modules/pdf_reader/bindings/pdf_reader_binding.dart';
@@ -20,6 +26,10 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
 import '../modules/splash_screen/views/splash_screen_view.dart';
+import '../modules/statistic_detail/bindings/statistic_detail_binding.dart';
+import '../modules/statistic_detail/views/statistic_detail_view.dart';
+import '../modules/statistics/bindings/statistics_binding.dart';
+import '../modules/statistics/views/statistics_view.dart';
 import '../modules/warning_screen/bindings/warning_screen_binding.dart';
 import '../modules/warning_screen/views/warning_screen_view.dart';
 
@@ -85,6 +95,31 @@ class AppPages {
       name: _Paths.pdfReader,
       page: () => const PdfReaderView(),
       binding: PdfReaderBinding(),
+    ),
+    GetPage(
+      name: _Paths.news,
+      page: () => const NewsView(),
+      binding: NewsBinding(),
+    ),
+    GetPage(
+      name: _Paths.newsDetail,
+      page: () => const NewsDetailView(),
+      binding: NewsDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.statistics,
+      page: () => const StatisticsView(),
+      binding: StatisticsBinding(),
+    ),
+    GetPage(
+      name: _Paths.statisticDetail,
+      page: () => const StatisticDetailView(),
+      binding: StatisticDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.appointments,
+      page: () => const AppointmentsView(),
+      binding: AppointmentsBinding(),
     ),
   ];
 }

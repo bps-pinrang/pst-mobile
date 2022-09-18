@@ -23,6 +23,7 @@ import 'package:pst_online/app/core/values/size.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/global_widgets/alert_variant.dart';
 import 'package:pst_online/app/global_widgets/app_button.dart';
+import 'package:pst_online/app/global_widgets/app_network_image.dart';
 import 'package:pst_online/app/global_widgets/coming_soon.dart';
 import 'package:pst_online/app/global_widgets/menu_button.dart';
 import 'package:pst_online/app/global_widgets/theme_toggle_button.dart';
@@ -131,7 +132,9 @@ class MainView extends GetView<HomeController> {
                               textColor: theme.colorScheme.onErrorContainer,
                               label: t.label.menu.publication(count: 2),
                               onTap: () {
-                                Get.toNamed(Routes.publications);
+                                Get.toNamed(Routes.publications, arguments: {
+                                  kArgumentKeyUser: controller.user.value,
+                                });
                               },
                             ),
                           ),
@@ -172,9 +175,11 @@ class MainView extends GetView<HomeController> {
                               bgColor: extensionColor?.successContainer,
                               textColor: extensionColor?.onSuccessContainer,
                               onTap: () {
-                                showBottomSheetDialog(
-                                  context: context,
-                                  content: const ComingSoon(),
+                                Get.toNamed(
+                                  Routes.statistics,
+                                  arguments: {
+                                    kArgumentKeyUser: controller.user.value,
+                                  },
                                 );
                               },
                             ),
@@ -194,9 +199,11 @@ class MainView extends GetView<HomeController> {
                               bgColor: extensionColor?.warningContainer,
                               textColor: extensionColor?.onWarningContainer,
                               onTap: () {
-                                showBottomSheetDialog(
-                                  context: context,
-                                  content: const ComingSoon(),
+                                Get.toNamed(
+                                  Routes.news,
+                                  arguments: {
+                                    kArgumentKeyUser: controller.user.value,
+                                  },
                                 );
                               },
                             ),
@@ -251,9 +258,11 @@ class MainView extends GetView<HomeController> {
                               onTap: () {
                                 final user = controller.user.value;
                                 if (user != null) {
-                                  showBottomSheetDialog(
-                                    context: context,
-                                    content: const ComingSoon(),
+                                  Get.toNamed(
+                                    Routes.appointments,
+                                    arguments: {
+                                      kArgumentKeyUser: user,
+                                    },
                                   );
                                 } else {
                                   showBottomSheetDialog(
@@ -399,7 +408,8 @@ class MainView extends GetView<HomeController> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: theme.shadowColor.withOpacity(0.1),
+                        color: theme.shadowColor
+                            .withOpacity(Get.isDarkMode ? 0.6 : 0.1),
                         blurRadius: 20,
                       )
                     ],
@@ -701,16 +711,13 @@ class MainView extends GetView<HomeController> {
                   itemId: banner.id.toString(),
                 );
               },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: ExtendedImage.network(
-                  imageUrl ?? '',
+              child: Semantics(
+                label:
+                    '${banner.title}. ${Bidi.stripHtmlIfNeeded(banner.description)}',
+                child: AppNetworkImage(
+                  url: imageUrl ?? '',
                   width: Get.width,
-                  border: Border.all(color: theme.dividerColor),
-                  fit: BoxFit.fill,
-                  semanticLabel:
-                      '${banner.title}. ${Bidi.stripHtmlIfNeeded(banner.description)}',
-                  borderRadius: BorderRadius.circular(12),
+                  height: Get.height * 0.2,
                 ),
               ),
             );

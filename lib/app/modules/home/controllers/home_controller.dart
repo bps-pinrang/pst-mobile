@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:age_calculator/age_calculator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -12,11 +13,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:pst_online/app/core/enums/tables/appointment_columns.dart';
 import 'package:pst_online/app/core/enums/tables/user_profile_columns.dart';
 import 'package:pst_online/app/core/utils/helper.dart';
 import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/core/values/strings.dart';
 import 'package:pst_online/app/data/models/app_user.dart';
+import 'package:pst_online/app/data/models/appointment.dart';
 import 'package:pst_online/app/data/models/banner_model.dart';
 import 'package:pst_online/app/data/models/dynamic_table/data_response.dart';
 import 'package:pst_online/app/data/providers/youtube_provider.dart';
@@ -36,37 +39,26 @@ class HomeController extends GetxController {
 
   final ScrollController scrollController = ScrollController();
   final CarouselController carouselController = CarouselController();
-  final PersistentTabController persistentTabController =
-      PersistentTabController(
-    initialIndex: 0,
-  );
+  late PersistentTabController persistentTabController;
 
   Rx<AppUser?> user = Rx(null);
   final client = Supabase.instance.client;
   Rxn<DataResponse> totalPopulation = Rxn(null);
-  YoutubePlayerController youtubePlayerController = YoutubePlayerController(
-    initialVideoId: 'z-7yCWZ6B-U',
-    flags: const YoutubePlayerFlags(
-      autoPlay: false,
-      controlsVisibleAtStart: false,
-      hideControls: false,
-      hideThumbnail: false,
-      loop: false,
-      showLiveFullscreenButton: false,
-      useHybridComposition: false,
-      mute: false,
-    ),
-  );
+  late YoutubePlayerController youtubePlayerController;
 
   final activeCarousel = 0.obs;
   final appName = ''.obs;
   final appVersion = ''.obs;
 
   final banners = List<BannerModel>.empty(growable: true).obs;
+  final appointments = List<Appointment>.empty(growable: true).obs;
+  final isAppointmentError = false.obs;
+  final isAppointmentLoading = false.obs;
   final totalPopulationsData = List<FlSpot>.empty(growable: true).obs;
+  late RealtimeSubscription realtimeAppointment;
   final pages = <Widget>[
     const MainView(),
-    NotificationView(),
+    const NotificationView(),
     const BookingHistoryView(),
     const ProfileView(),
   ];
@@ -80,6 +72,22 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     provider = GetInstance().find<ApiProvider>();
+    persistentTabController = PersistentTabController(
+      initialIndex: 0,
+    );
+    youtubePlayerController = YoutubePlayerController(
+      initialVideoId: 'z-7yCWZ6B-U',
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        controlsVisibleAtStart: false,
+        hideControls: false,
+        hideThumbnail: false,
+        loop: false,
+        showLiveFullscreenButton: false,
+        useHybridComposition: false,
+        mute: false,
+      ),
+    );
     appVersion.value = await getAppVersion(
       prefix: 'Versi ',
       showBuildNumber: true,
@@ -103,10 +111,37 @@ class HomeController extends GetxController {
     await Future.wait([
       _authentication(),
       loadBanners(),
+      loadAppointments(),
       loadTotalPopulations(),
     ]);
+
+    realtimeAppointment =
+        client.from(kTableAppointments).on(SupabaseEventTypes.all, (payload) {
+      loadAppointments();
+    }).subscription;
   }
 
+  Future<void> loadAppointments() async {
+    try {
+      isAppointmentError.value = false;
+      isAppointmentLoading.value = true;
+
+      final result = await client
+          .from(kTableAppointments)
+          .select(
+              '*,services:appointment_services(service:service_id(*)),facility:facility_id(*),status:appointment_statuses(*),usage:usage_id(*)')
+          .eq(AppointmentColumns.userId.key, user.value?.id)
+          .execute();
+
+      final data = result.data as List;
+      appointments.value = data.map((e) => Appointment.fromJson(e)).toList();
+    } catch (exception, stack) {
+      FirebaseCrashlytics.instance.recordError(exception, stack);
+      isAppointmentError.value = true;
+    } finally {
+      isAppointmentLoading.value = false;
+    }
+  }
 
   Future<void> _authentication() async {
     final session = box.read(kStorageKeySession);

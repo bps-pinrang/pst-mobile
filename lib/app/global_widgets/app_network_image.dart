@@ -8,23 +8,25 @@ class AppNetworkImage extends StatelessWidget {
     required this.url,
     required this.width,
     required this.height,
+    this.borderRadius,
   });
 
   final String url;
   final double width;
   final double height;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: borderRadius ?? BorderRadius.circular(12),
       child: ExtendedImage.network(
         url,
         width: width,
         height: height,
         fit: BoxFit.fill,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: borderRadius ?? BorderRadius.circular(12),
         border: Border.all(
           color: theme.dividerColor,
         ),

@@ -7,12 +7,12 @@ part of 'news_category.dart';
 // **************************************************************************
 
 NewsCategory _$NewsCategoryFromJson(Map<String, dynamic> json) => NewsCategory(
-      id: json['news_cat_id'] as String,
-      name: json['news_cat_name'] as String,
+      id: json['newscat_id'] as String,
+      name: json['newscat_name'] as String,
     );
 
 Map<String, dynamic> _$NewsCategoryToJson(NewsCategory instance) =>
     <String, dynamic>{
-      'news_cat_id': instance.id,
-      'news_cat_name': instance.name,
+      'newscat_id': instance.id,
+      'newscat_name': instance.name,
     };
