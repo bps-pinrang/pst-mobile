@@ -17,11 +17,12 @@ const kArgumentKeyTitle = 'title';
 const kArgumentKeyUrl = 'url';
 const kArgumentKeyId = 'id';
 
+const kStorageKeyUser = 'user';
+const kStorageKeyToken = 'token';
+const kStorageKeySession = 'session';
 const kStorageKeyIsDarkMode = 'is_dark_mode';
 const kStorageKeyIsFirstSeen = 'is_first_seen';
-const kStorageKeySession = 'session';
-const kStorageKeyToken = 'token';
-const kStorageKeyUser = 'user';
+const kStorageKeyTokenUpdatedAt = 'token_updated_at';
 
 const kEnvKeySupabaseApiUrl = 'SUPABASE_API_URL';
 const kEnvKeySupabaseApiKey = 'SUPABASE_API_KEY';

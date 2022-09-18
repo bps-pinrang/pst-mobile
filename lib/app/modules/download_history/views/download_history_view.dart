@@ -61,6 +61,13 @@ class DownloadHistoryView extends GetView<DownloadHistoryController> {
                 status = 'Dalam Antrian';
               }
 
+              var percentage = item.progress / 100;
+              if(percentage > 1) {
+                percentage = 1;
+              } else if (percentage < 0) {
+                percentage = 0;
+              }
+
               return Slidable(
                 enabled: true,
                 endActionPane: ActionPane(
@@ -132,7 +139,7 @@ class DownloadHistoryView extends GetView<DownloadHistoryController> {
                                 animation: true,
                                 barRadius: const Radius.circular(10),
                                 padding: EdgeInsets.zero,
-                                percent: item.progress / 100,
+                                percent: percentage,
                                 progressColor: progressColor,
                               ),
                               verticalSpace(4),

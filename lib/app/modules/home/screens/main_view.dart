@@ -132,7 +132,9 @@ class MainView extends GetView<HomeController> {
                               textColor: theme.colorScheme.onErrorContainer,
                               label: t.label.menu.publication(count: 2),
                               onTap: () {
-                                Get.toNamed(Routes.publications);
+                                Get.toNamed(Routes.publications, arguments: {
+                                  kArgumentKeyUser: controller.user.value,
+                                });
                               },
                             ),
                           ),
@@ -173,9 +175,11 @@ class MainView extends GetView<HomeController> {
                               bgColor: extensionColor?.successContainer,
                               textColor: extensionColor?.onSuccessContainer,
                               onTap: () {
-                                showBottomSheetDialog(
-                                  context: context,
-                                  content: const ComingSoon(),
+                                Get.toNamed(
+                                  Routes.statistics,
+                                  arguments: {
+                                    kArgumentKeyUser: controller.user.value,
+                                  },
                                 );
                               },
                             ),
@@ -195,7 +199,12 @@ class MainView extends GetView<HomeController> {
                               bgColor: extensionColor?.warningContainer,
                               textColor: extensionColor?.onWarningContainer,
                               onTap: () {
-                                Get.toNamed(Routes.news);
+                                Get.toNamed(
+                                  Routes.news,
+                                  arguments: {
+                                    kArgumentKeyUser: controller.user.value,
+                                  },
+                                );
                               },
                             ),
                           ),
@@ -397,7 +406,8 @@ class MainView extends GetView<HomeController> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: theme.shadowColor.withOpacity(Get.isDarkMode ? 0.6 : 0.1),
+                        color: theme.shadowColor
+                            .withOpacity(Get.isDarkMode ? 0.6 : 0.1),
                         blurRadius: 20,
                       )
                     ],
@@ -700,7 +710,8 @@ class MainView extends GetView<HomeController> {
                 );
               },
               child: Semantics(
-                label:  '${banner.title}. ${Bidi.stripHtmlIfNeeded(banner.description)}',
+                label:
+                    '${banner.title}. ${Bidi.stripHtmlIfNeeded(banner.description)}',
                 child: AppNetworkImage(
                   url: imageUrl ?? '',
                   width: Get.width,

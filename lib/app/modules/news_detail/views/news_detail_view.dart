@@ -29,6 +29,7 @@ class NewsDetailView extends GetView<NewsDetailController> {
       appBar: AppBar(
         title: Text(t.label.menu.news),
         surfaceTintColor: theme.canvasColor,
+        scrolledUnderElevation: 10,
         actions: [
           IconButton(
             onPressed: () {},

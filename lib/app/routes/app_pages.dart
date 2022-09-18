@@ -24,6 +24,10 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
 import '../modules/splash_screen/views/splash_screen_view.dart';
+import '../modules/statistic_detail/bindings/statistic_detail_binding.dart';
+import '../modules/statistic_detail/views/statistic_detail_view.dart';
+import '../modules/statistics/bindings/statistics_binding.dart';
+import '../modules/statistics/views/statistics_view.dart';
 import '../modules/warning_screen/bindings/warning_screen_binding.dart';
 import '../modules/warning_screen/views/warning_screen_view.dart';
 
@@ -99,6 +103,16 @@ class AppPages {
       name: _Paths.newsDetail,
       page: () => const NewsDetailView(),
       binding: NewsDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.statistics,
+      page: () => const StatisticsView(),
+      binding: StatisticsBinding(),
+    ),
+    GetPage(
+      name: _Paths.statisticDetail,
+      page: () => const StatisticDetailView(),
+      binding: StatisticDetailBinding(),
     ),
   ];
 }

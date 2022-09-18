@@ -1,10 +1,8 @@
-import 'dart:convert';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pst_online/app/core/utils/view_helper.dart';
 import 'package:pst_online/app/data/models/app_user.dart';
@@ -21,7 +19,6 @@ import '../../../data/models/news_category.dart';
 import '../../../data/providers/api_provider.dart';
 
 class NewsController extends GetxController {
-  final box = GetStorage();
   late ApiProvider provider;
 
   Rxn<ApiMeta> apiMeta = Rxn(null);
@@ -49,10 +46,7 @@ class NewsController extends GetxController {
     provider = GetInstance().find<ApiProvider>();
     pagingController = PagingController(firstPageKey: 1)
       ..addPageRequestListener(loadNews);
-    final userData = box.read(kStorageKeyUser);
-    if (userData != null) {
-      user.value = AppUser.fromJson(jsonDecode(userData));
-    }
+    user.value = Get.arguments[kArgumentKeyUser];
     super.onInit();
     await loadNewsCategories();
     await FirebaseAnalytics.instance.setCurrentScreen(screenName: 'News');
@@ -190,6 +184,7 @@ class NewsController extends GetxController {
   @override
   void onClose() {
     scrollController.dispose();
+    pagingController.removePageRequestListener(loadNews);
     pagingController.dispose();
     super.onClose();
   }
