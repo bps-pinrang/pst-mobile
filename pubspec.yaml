@@ -69,8 +69,9 @@ dependencies:
   syncfusion_flutter_pdfviewer: 20.2.49-beta
   flutter_slidable: any
   path_provider_android: any
-  reading_time: 2.0.0
-  html: 0.15.0
+  reading_time: any
+  multi_select_flutter: any
+  flutter_rating_bar: any
   flutter: 
     sdk: flutter
   flutter_localizations: 

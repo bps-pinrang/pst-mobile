@@ -258,9 +258,11 @@ class MainView extends GetView<HomeController> {
                               onTap: () {
                                 final user = controller.user.value;
                                 if (user != null) {
-                                  showBottomSheetDialog(
-                                    context: context,
-                                    content: const ComingSoon(),
+                                  Get.toNamed(
+                                    Routes.appointments,
+                                    arguments: {
+                                      kArgumentKeyUser: user,
+                                    },
                                   );
                                 } else {
                                   showBottomSheetDialog(

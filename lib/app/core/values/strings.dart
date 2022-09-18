@@ -3,12 +3,15 @@ const kTableUsers = 'users';
 const kTableUserProfiles = 'user_profiles';
 const kTableBanners = 'banners';
 const kTableAppointments = 'appointments';
+const kTableAppointmentServices = 'appointment_services';
 const kTableInstitutions = 'institutions';
 const kTableInstitutionCategories = 'institution_categories';
 const kTableEducations = 'educations';
 const kTableJobs = 'jobs';
 const kTableUserJobs = 'user_jobs';
 const kTableUsageHistories = 'usage_histories';
+const kTableServices = 'services';
+const kTableUsages = 'usages';
 
 const kArgumentKeyUser = 'user';
 const kArgumentKeyPublication = 'publication';
@@ -72,6 +75,9 @@ const kFormKeyJobName = 'job_name';
 const kFormKeyStartDate = 'start_date';
 const kFormKeyEndDate = 'end_date';
 const kFormKeyAgree = 'agree';
+const kFormKeyPurpose = 'purpose';
+const kFormKeyAppointmentDate = 'appointment_date';
+const kFormKeyUsageId = 'usage_id';
 
 const kValidationKeyRequiredLength = 'requiredLength';
 

@@ -18,6 +18,7 @@ abstract class Routes {
   static const newsDetail = _Paths.newsDetail;
   static const statistics = _Paths.statistics;
   static const statisticDetail = _Paths.statisticDetail;
+  static const appointments = _Paths.appointments;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const newsDetail = '/news-detail';
   static const statistics = '/statistics';
   static const statisticDetail = '/statistic-detail';
+  static const appointments = '/appointments';
 }
